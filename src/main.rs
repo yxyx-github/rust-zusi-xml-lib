@@ -67,7 +67,7 @@ fn main() {
         ],
     };
 
-    // let serialized = serde_xml_rs::to_string(&zusi).unwrap();
-    let serialized = se::to_string(&zusi).unwrap();
+    let serialized = serde_xml_rs::to_string(&zusi).unwrap();
+    // let serialized = se::to_string(&zusi).unwrap();
     println!("{serialized}");
 }
