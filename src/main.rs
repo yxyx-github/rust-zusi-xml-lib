@@ -1,20 +1,20 @@
-use quick_xml::se;
+use quick_xml::{de, se};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct Zusi {
     #[serde(rename = "$value")]
     value: Vec<ZusiValue>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 enum ZusiValue {
     Info(Info),
     #[serde(rename = "result")]
     Result(ZusiResult),
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct Info {
     #[serde(rename = "@DateiTyp")]
     datei_typ: String,
@@ -24,18 +24,18 @@ struct Info {
     min_version: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct ZusiResult {
     #[serde(rename = "$value")]
     value: Vec<ResultValue>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 enum ResultValue {
     FahrtEintrag(FahrtEintrag),
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp")]
     fahrt_typ: u32, // TODO: check correct type
@@ -75,4 +75,7 @@ fn main() {
 
     let serialized = se::to_string(&zusi).unwrap();
     println!("{serialized}");
+    let deserialized: Zusi = de::from_str(&serialized).unwrap();
+    println!("{deserialized:?}");
+    assert_eq!(zusi, deserialized);
 }
