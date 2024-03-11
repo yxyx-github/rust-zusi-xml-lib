@@ -10,14 +10,18 @@ struct Zusi {
 #[derive(Serialize, Deserialize, Debug)]
 enum ZusiValue {
     Info(Info),
+    #[serde(rename = "result")]
     Result(ZusiResult),
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Info {
+    #[serde(rename = "@DateiTyp")]
     datei_typ: String,
+    #[serde(rename = "@Version")]
     version: String,
-    min_version: String
+    #[serde(rename = "@MinVersion")]
+    min_version: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -33,7 +37,9 @@ enum ResultValue {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct FahrtEintrag {
+    #[serde(rename = "@FahrtTyp")]
     fahrt_typ: u32, // TODO: check correct type
+    #[serde(rename = "@FahrtWeg")]
     fahrt_weg: f32, // TODO: check correct type
     // TODO: add missing attributes
 }
