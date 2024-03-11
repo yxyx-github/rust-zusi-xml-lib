@@ -23,7 +23,7 @@ struct Info {
 #[derive(Serialize, Deserialize, Debug)]
 struct ZusiResult {
     #[serde(rename = "$value")]
-    value: Vec<FahrtEintrag>,
+    value: Vec<ResultValue>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -53,21 +53,21 @@ fn main() {
             ZusiValue::Result(
                 ZusiResult {
                     value: vec![
-                        FahrtEintrag {
+                        ResultValue::FahrtEintrag(FahrtEintrag {
                             fahrt_typ: 0,
                             fahrt_weg: 22.33,
-                        },
-                        FahrtEintrag {
+                        }),
+                        ResultValue::FahrtEintrag(FahrtEintrag {
                             fahrt_typ: 0,
                             fahrt_weg: 22.43,
-                        },
+                        }),
                     ],
                 }
             ),
         ],
     };
 
-    let serialized = serde_xml_rs::to_string(&zusi).unwrap();
-    // let serialized = se::to_string(&zusi).unwrap();
+    // let serialized = serde_xml_rs::to_string(&zusi).unwrap();
+    let serialized = se::to_string(&zusi).unwrap();
     println!("{serialized}");
 }
