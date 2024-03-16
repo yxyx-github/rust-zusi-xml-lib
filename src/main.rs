@@ -1,6 +1,26 @@
 use quick_xml::{de, se};
 use serde::{Deserialize, Serialize};
+use time::macros::datetime;
 use time::PrimitiveDateTime;
+
+mod date_time_format {
+    use serde::{Deserialize, Deserializer, ser, Serializer};
+    use time::{format_description, PrimitiveDateTime};
+
+    const FORMAT: &str = "[year]-[month]-[day] [hour]:[minute]:[second]";
+
+    pub fn serialize<S>(pdt: &PrimitiveDateTime, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer {
+        let format = format_description::parse(FORMAT).map_err(ser::Error::custom)?;
+        let formatted = pdt.format(&format).map_err(ser::Error::custom)?;
+        serializer.serialize_str(&formatted).map_err(ser::Error::custom)
+    }
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<PrimitiveDateTime, D::Error> where D: Deserializer<'de> {
+        let format = format_description::parse(FORMAT).map_err(serde::de::Error::custom)?;
+        let s = String::deserialize(deserializer)?;
+        PrimitiveDateTime::parse(&s, &format).map_err(serde::de::Error::custom)
+    }
+}
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct Zusi {
@@ -39,7 +59,8 @@ struct ZusiResult {
     tf_nummer: String,
 
     #[serde(rename = "@Datum")]
-    datum: PrimitiveDateTime, // TODO: check correct type
+    #[serde(with = "date_time_format")]
+    datum: PrimitiveDateTime,
 
     #[serde(rename = "@Verbrauch")]
     #[serde(default)]
@@ -118,7 +139,8 @@ struct FahrtEintrag {
     fahrt_weg: f32,
 
     #[serde(rename = "@FahrtZeit")]
-    fahrt_zeit: String, // TODO: check correct type
+    #[serde(with = "date_time_format")]
+    fahrt_zeit: PrimitiveDateTime,
 
     #[serde(rename = "@Fahrtsp")]
     #[serde(default)]
@@ -153,10 +175,12 @@ struct FahrtEintrag {
     fahrt_parameter: u32,
 
     #[serde(rename = "@FahrtFplAnk")]
-    fahrt_fpl_ank: String, // TODO: check correct type
+    #[serde(with = "date_time_format")]
+    fahrt_fpl_ank: PrimitiveDateTime,
 
     #[serde(rename = "@FahrtFplAbf")]
-    fahrt_fpl_abf: String, // TODO: check correct type
+    #[serde(with = "date_time_format")]
+    fahrt_fpl_abf: PrimitiveDateTime,
 
     #[serde(rename = "@FahrtFBSchalter")]
     #[serde(default)]
@@ -179,7 +203,7 @@ fn main() {
                 ZusiResult {
                     zugnummer: "12345".into(),
                     tf_nummer: "67890".into(),
-                    datum: "datum".into(),
+                    datum: datetime!(2019-01-01 0:00),
                     verbrauch: 0.0,
                     bemerkung: "".to_string(),
                     schummel: false,
@@ -189,7 +213,7 @@ fn main() {
                         ResultValue::FahrtEintrag(FahrtEintrag {
                             fahrt_typ: FahrtTyp::Standard,
                             fahrt_weg: 22.33,
-                            fahrt_zeit: "fzt".into(),
+                            fahrt_zeit: datetime!(2019-01-01 0:00),
                             fahrt_speed: 0.0,
                             fahrt_speed_strecke: 0.0,
                             fahrt_speed_signal: 0.0,
@@ -198,14 +222,14 @@ fn main() {
                             fahrt_km: 0.0,
                             fahrt_hl_druck: 0.0,
                             fahrt_parameter: 0,
-                            fahrt_fpl_ank: "ank".to_string(),
-                            fahrt_fpl_abf: "abf".to_string(),
+                            fahrt_fpl_ank: datetime!(2019-01-01 0:00),
+                            fahrt_fpl_abf: datetime!(2019-01-01 0:00),
                             fahrt_fb_schalter: 0,
                         }),
                         ResultValue::FahrtEintrag(FahrtEintrag {
                             fahrt_typ: FahrtTyp::Standard,
                             fahrt_weg: 22.43,
-                            fahrt_zeit: "fzt".into(),
+                            fahrt_zeit: datetime!(2019-01-01 0:00),
                             fahrt_speed: 0.0,
                             fahrt_speed_strecke: 0.0,
                             fahrt_speed_signal: 0.0,
@@ -214,8 +238,8 @@ fn main() {
                             fahrt_km: 0.0,
                             fahrt_hl_druck: 0.0,
                             fahrt_parameter: 0,
-                            fahrt_fpl_ank: "ank".into(),
-                            fahrt_fpl_abf: "abf".into(),
+                            fahrt_fpl_ank: datetime!(2019-01-01 0:00),
+                            fahrt_fpl_abf: datetime!(2019-01-01 0:00),
                             fahrt_fb_schalter: 0,
                         }),
                     ],
