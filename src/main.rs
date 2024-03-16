@@ -1,5 +1,6 @@
 use quick_xml::{de, se};
 use serde::{Deserialize, Serialize};
+use time::PrimitiveDateTime;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct Zusi {
@@ -38,7 +39,7 @@ struct ZusiResult {
     tf_nummer: String,
 
     #[serde(rename = "@Datum")]
-    datum: String, // TODO: check correct type
+    datum: PrimitiveDateTime, // TODO: check correct type
 
     #[serde(rename = "@Verbrauch")]
     #[serde(default)]
