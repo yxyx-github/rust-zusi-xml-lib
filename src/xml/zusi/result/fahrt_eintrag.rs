@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 
-use crate::xml::date_time_format;
-use crate::xml::date_time_format_option;
+use crate::xml::format::date_time_format;
+use crate::xml::format::date_time_format_option;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {

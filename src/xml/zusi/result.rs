@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 
-use crate::xml::date_time_format;
+use crate::xml::format::date_time_format;
 use crate::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
 
 pub mod fahrt_eintrag;
