@@ -1,6 +1,7 @@
 pub mod info;
 pub mod result;
 
+use quick_xml::{de, DeError, se};
 use serde::{Deserialize, Serialize};
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
@@ -9,6 +10,16 @@ use crate::xml::zusi::result::ZusiResult;
 pub struct Zusi {
     #[serde(rename = "$value")]
     pub value: Vec<ZusiValue>,
+}
+
+impl Zusi {
+    pub fn from_xml(xml: &str) -> Result<Zusi, DeError> {
+        de::from_str(xml)
+    }
+
+    pub fn to_xml(&self) -> Result<String, DeError> {
+        se::to_string(self)
+    }
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
@@ -28,11 +39,10 @@ pub mod test {
     use crate::xml::zusi::result::{ResultValue, ZusiResult};
     use crate::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 
-    #[test]
-    fn test_serialize_deserialize() {
-        const EXPECTED_XML: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-01 23:16:00\" FahrtFplAbf=\"2019-01-01 23:17:00\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-02 01:01:00\" FahrtFplAbf=\"2019-01-03 08:46:00\" FahrtFBSchalter=\"0\"/></result></Zusi>";
-        
-        let zusi = Zusi {
+    const EXPECTED_XML: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-01 23:16:00\" FahrtFplAbf=\"2019-01-01 23:17:00\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-02 01:01:00\" FahrtFplAbf=\"2019-01-03 08:46:00\" FahrtFBSchalter=\"0\"/></result></Zusi>";
+
+    fn expected_zusi() -> Zusi {
+        Zusi {
             value: vec![
                 ZusiValue::Info(
                     Info {
@@ -88,14 +98,27 @@ pub mod test {
                     }
                 ),
             ],
-        };
+        }
+    }
 
-        let serialized = se::to_string(&zusi).unwrap();
-        // println!("{serialized}");
+    #[test]
+    fn test_serialize_deserialize() {
+        let serialized = se::to_string(&expected_zusi()).unwrap();
         assert_eq!(EXPECTED_XML, serialized);
 
         let deserialized: Zusi = de::from_str(&serialized).unwrap();
-        // println!("{deserialized:?}");
-        assert_eq!(zusi, deserialized);
+        assert_eq!(expected_zusi(), deserialized);
+    }
+
+    #[test]
+    fn test_from_xml() {
+        let zusi: Zusi = de::from_str(EXPECTED_XML).unwrap();
+        assert_eq!(expected_zusi(), zusi);
+    }
+
+    #[test]
+    fn test_to_xml() {
+        let xml = se::to_string(&expected_zusi()).unwrap();
+        assert_eq!(xml, EXPECTED_XML);
     }
 }
