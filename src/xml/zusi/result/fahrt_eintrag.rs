@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 
 use crate::xml::date_time_format;
+use crate::xml::date_time_format_option;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {
@@ -86,12 +87,16 @@ pub struct FahrtEintrag {
     pub fahrt_parameter: u32,
 
     #[serde(rename = "@FahrtFplAnk")]
-    #[serde(with = "date_time_format")]
-    pub fahrt_fpl_ank: PrimitiveDateTime,
+    #[serde(with = "date_time_format_option")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub fahrt_fpl_ank: Option<PrimitiveDateTime>,
 
     #[serde(rename = "@FahrtFplAbf")]
-    #[serde(with = "date_time_format")]
-    pub fahrt_fpl_abf: PrimitiveDateTime,
+    #[serde(with = "date_time_format_option")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub fahrt_fpl_abf: Option<PrimitiveDateTime>,
 
     #[serde(rename = "@FahrtFBSchalter")]
     #[serde(default)]

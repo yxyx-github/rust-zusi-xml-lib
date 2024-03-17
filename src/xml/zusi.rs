@@ -40,8 +40,9 @@ pub mod test {
     use crate::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 
     const EXPECTED_XML: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-01 23:16:00\" FahrtFplAbf=\"2019-01-01 23:17:00\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-02 01:01:00\" FahrtFplAbf=\"2019-01-03 08:46:00\" FahrtFBSchalter=\"0\"/></result></Zusi>";
+    const EXPECTED_XML_WITHOUT_OPTIONALS: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFBSchalter=\"0\"/></result></Zusi>";
 
-    fn expected_zusi() -> Zusi {
+    fn expected_zusi(include_optionals: bool) -> Zusi {
         Zusi {
             value: vec![
                 ZusiValue::Info(
@@ -74,8 +75,8 @@ pub mod test {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: datetime!(2019-01-01 23:16),
-                                fahrt_fpl_abf: datetime!(2019-01-01 23:17),
+                                fahrt_fpl_ank: if include_optionals { Some(datetime!(2019-01-01 23:16)) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(datetime!(2019-01-01 23:17)) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                             ResultValue::FahrtEintrag(FahrtEintrag {
@@ -90,8 +91,8 @@ pub mod test {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: datetime!(2019-01-02 1:01),
-                                fahrt_fpl_abf: datetime!(2019-01-03 8:46),
+                                fahrt_fpl_ank: if include_optionals { Some(datetime!(2019-01-02 1:01)) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(datetime!(2019-01-03 8:46)) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                         ],
@@ -103,22 +104,31 @@ pub mod test {
 
     #[test]
     fn test_serialize_deserialize() {
-        let serialized = se::to_string(&expected_zusi()).unwrap();
+        let serialized = se::to_string(&expected_zusi(true)).unwrap();
         assert_eq!(EXPECTED_XML, serialized);
 
         let deserialized: Zusi = de::from_str(&serialized).unwrap();
-        assert_eq!(expected_zusi(), deserialized);
+        assert_eq!(expected_zusi(true), deserialized);
+    }
+
+    #[test]
+    fn test_serialize_deserialize_optionals() {
+        let serialized = se::to_string(&expected_zusi(false)).unwrap();
+        assert_eq!(EXPECTED_XML_WITHOUT_OPTIONALS, serialized);
+
+        let deserialized: Zusi = de::from_str(&serialized).unwrap();
+        assert_eq!(expected_zusi(false), deserialized);
     }
 
     #[test]
     fn test_from_xml() {
         let zusi: Zusi = de::from_str(EXPECTED_XML).unwrap();
-        assert_eq!(expected_zusi(), zusi);
+        assert_eq!(expected_zusi(true), zusi);
     }
 
     #[test]
     fn test_to_xml() {
-        let xml = se::to_string(&expected_zusi()).unwrap();
+        let xml = se::to_string(&expected_zusi(true)).unwrap();
         assert_eq!(xml, EXPECTED_XML);
     }
 }
