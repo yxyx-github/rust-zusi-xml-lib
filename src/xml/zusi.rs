@@ -31,7 +31,7 @@ pub enum ZusiValue {
 }
 
 #[cfg(test)]
-pub mod test {
+mod tests {
     use quick_xml::{de, se};
     use time::macros::datetime;
     use crate::xml::zusi::{Zusi, ZusiValue};
