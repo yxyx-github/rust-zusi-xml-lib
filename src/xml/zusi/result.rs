@@ -52,7 +52,7 @@ pub struct ZusiResult {
     pub value: Vec<ResultValue>,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum ResultValue {
     FahrtEintrag(FahrtEintrag),
     // TODO: add FahrtEventEintrag?

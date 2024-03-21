@@ -5,7 +5,7 @@ use typed_builder::TypedBuilder;
 use crate::xml::format::date_time_format;
 use crate::xml::format::date_time_format_option;
 
-#[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {
     #[serde(rename = "0")]
     Standard = 0,
@@ -41,7 +41,7 @@ impl Default for FahrtTyp {
     }
 }
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Clone, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 pub struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp")]
     #[serde(default)]
