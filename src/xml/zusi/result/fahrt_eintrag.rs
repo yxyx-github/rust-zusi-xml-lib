@@ -1,4 +1,3 @@
-#[cfg(feature = "builder")]
 use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
@@ -42,8 +41,7 @@ impl Default for FahrtTyp {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
-#[cfg_attr(feature = "builder", derive(Builder))]
+#[derive(Serialize, Deserialize, Builder, PartialEq, Clone, Debug)]
 pub struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp")]
     #[serde(default)]
