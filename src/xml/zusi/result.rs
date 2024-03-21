@@ -1,13 +1,13 @@
-use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
+use typed_builder::TypedBuilder;
 
 use crate::xml::format::date_time_format;
 use crate::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
 
 pub mod fahrt_eintrag;
 
-#[derive(Serialize, Deserialize, Builder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 pub struct ZusiResult {
     #[serde(rename = "@Zugnummer")]
     #[serde(default)]

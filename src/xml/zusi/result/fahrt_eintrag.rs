@@ -1,6 +1,6 @@
-use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
+use typed_builder::TypedBuilder;
 
 use crate::xml::format::date_time_format;
 use crate::xml::format::date_time_format_option;
@@ -41,7 +41,7 @@ impl Default for FahrtTyp {
     }
 }
 
-#[derive(Serialize, Deserialize, Builder, PartialEq, Clone, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Clone, Debug)]
 pub struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp")]
     #[serde(default)]
