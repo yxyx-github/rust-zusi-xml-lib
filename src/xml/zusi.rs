@@ -1,10 +1,12 @@
-pub mod info;
-pub mod result;
-
-use quick_xml::{de, DeError, se};
+use quick_xml::{de, se};
+pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
+
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
+
+pub mod info;
+pub mod result;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct Zusi {
@@ -34,6 +36,7 @@ pub enum ZusiValue {
 mod tests {
     use quick_xml::{de, se};
     use time::macros::datetime;
+
     use crate::xml::zusi::{Zusi, ZusiValue};
     use crate::xml::zusi::info::Info;
     use crate::xml::zusi::result::{ResultValue, ZusiResult};
