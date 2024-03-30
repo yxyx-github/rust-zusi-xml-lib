@@ -10,3 +10,6 @@ quick-xml = { version = "0.31.0", features = ["serialize", "overlapped-lists"] }
 serde = { version = "1.0.197", features = ["derive"] }
 time = { version = "0.3.34", features = ["macros", "serde-human-readable"] }
 typed-builder = "0.18.1"
+
+[dev-dependencies]
+tempfile = "3.10.1"

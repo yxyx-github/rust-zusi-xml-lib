@@ -1,3 +1,8 @@
+use std::fs::File;
+use std::io;
+use std::io::Read;
+use std::path::Path;
+
 use quick_xml::{de, se};
 pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
@@ -15,13 +20,32 @@ pub struct Zusi {
 }
 
 impl Zusi {
-    pub fn from_xml(xml: &str) -> Result<Zusi, DeError> {
+    pub fn from_xml(xml: &str) -> Result<Self, DeError> {
         de::from_str(xml)
+    }
+
+    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadResultFileError> {
+        let mut file = File::open(path)
+            .map_err(|err| ReadResultFileError::IOError(err))?;
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)
+            .map_err(|err| ReadResultFileError::IOError(err))?;
+        Ok(
+            Zusi::from_xml(&contents)
+                .map_err(|err| ReadResultFileError::DeError(err))?
+        )
     }
 
     pub fn to_xml(&self) -> Result<String, DeError> {
         se::to_string(self)
     }
+}
+
+#[derive(Debug)]
+pub enum ReadResultFileError {
+    IOError(io::Error),
+    DeError(DeError),
+    NoResult,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
@@ -34,7 +58,11 @@ pub enum ZusiValue {
 
 #[cfg(test)]
 mod tests {
+    use std::fs::File;
+    use std::io::Write;
+
     use quick_xml::{de, se};
+    use tempfile::tempdir;
     use time::macros::datetime;
 
     use crate::xml::zusi::{Zusi, ZusiValue};
@@ -125,13 +153,25 @@ mod tests {
 
     #[test]
     fn test_from_xml() {
-        let zusi: Zusi = de::from_str(EXPECTED_XML).unwrap();
+        let zusi: Zusi = de::from_str(EXPECTED_XML).unwrap(); // TODO: use struct method
+        assert_eq!(expected_zusi(true), zusi);
+    }
+
+    #[test]
+    fn test_from_xml_file_by_path() {
+        let tmp_dir = tempdir().unwrap();
+        let file_path = tmp_dir.path().join("xml_input_file.result.xml");
+        let mut file = File::create(&file_path).unwrap();
+        file.write_all(EXPECTED_XML.as_bytes()).unwrap();
+
+        let zusi: Zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
+
         assert_eq!(expected_zusi(true), zusi);
     }
 
     #[test]
     fn test_to_xml() {
-        let xml = se::to_string(&expected_zusi(true)).unwrap();
+        let xml = se::to_string(&expected_zusi(true)).unwrap(); // TODO: use struct method
         assert_eq!(xml, EXPECTED_XML);
     }
 }
