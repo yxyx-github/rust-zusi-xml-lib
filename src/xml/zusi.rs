@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io;
-use std::io::Read;
+use std::io::{Read, Write};
 use std::path::Path;
 
 use quick_xml::{de, se};
@@ -24,35 +24,37 @@ impl Zusi {
         de::from_str(xml)
     }
 
-    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadZusiFileError> {
+    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ZusiXMLFileError> {
         let mut file = File::open(path)
-            .map_err(|err| ReadZusiFileError::IOError(err))?;
+            .map_err(|err| ZusiXMLFileError::IOError(err))?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)
-            .map_err(|err| ReadZusiFileError::IOError(err))?;
+            .map_err(|err| ZusiXMLFileError::IOError(err))?;
         Ok(
             Zusi::from_xml(&contents)
-                .map_err(|err| ReadZusiFileError::DeError(err))?
+                .map_err(|err| ZusiXMLFileError::DeError(err))?
         )
     }
 
     pub fn to_xml(&self) -> Result<String, DeError> {
         se::to_string(self)
     }
+
+    pub fn to_xml_file_by_path<P: AsRef<Path>>(&self, path: P) -> Result<(), ZusiXMLFileError> {
+        let xml = self.to_xml()
+            .map_err(|err| ZusiXMLFileError::DeError(err))?;
+        let mut file = File::create(path)
+            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+        file.write_all(xml.as_bytes())
+            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+        Ok(())
+    }
 }
 
 #[derive(Debug)]
-pub enum ReadZusiFileError {
+pub enum ZusiXMLFileError {
     IOError(io::Error),
     DeError(DeError),
-    NoResult,
-}
-
-#[derive(Debug)]
-pub enum WriteZusiFileError {
-    IOError(io::Error),
-    DeError(DeError),
-    NoResult,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
@@ -66,7 +68,7 @@ pub enum ZusiValue {
 #[cfg(test)]
 mod tests {
     use std::fs::File;
-    use std::io::Write;
+    use std::io::{Read, Write};
 
     use quick_xml::{de, se};
     use tempfile::tempdir;
@@ -179,6 +181,19 @@ mod tests {
     #[test]
     fn test_to_xml() {
         let xml = expected_zusi(true).to_xml().unwrap();
+        assert_eq!(xml, EXPECTED_XML);
+    }
+
+    #[test]
+    fn test_to_xml_file_by_path() {
+        let tmp_dir = tempdir().unwrap();
+        let file_path = tmp_dir.path().join("xml_output_file.xml");
+
+        expected_zusi(true).to_xml_file_by_path(&file_path).unwrap();
+
+        let mut file = File::open(&file_path).unwrap();
+        let mut xml = String::new();
+        file.read_to_string(&mut xml).unwrap();
         assert_eq!(xml, EXPECTED_XML);
     }
 }
