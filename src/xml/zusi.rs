@@ -153,7 +153,7 @@ mod tests {
 
     #[test]
     fn test_from_xml() {
-        let zusi: Zusi = de::from_str(EXPECTED_XML).unwrap(); // TODO: use struct method
+        let zusi = Zusi::from_xml(EXPECTED_XML).unwrap();
         assert_eq!(expected_zusi(true), zusi);
     }
 
@@ -171,7 +171,7 @@ mod tests {
 
     #[test]
     fn test_to_xml() {
-        let xml = se::to_string(&expected_zusi(true)).unwrap(); // TODO: use struct method
+        let xml = expected_zusi(true).to_xml().unwrap();
         assert_eq!(xml, EXPECTED_XML);
     }
 }
