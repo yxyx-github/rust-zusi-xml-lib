@@ -24,15 +24,15 @@ impl Zusi {
         de::from_str(xml)
     }
 
-    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadResultFileError> {
+    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadZusiFileError> {
         let mut file = File::open(path)
-            .map_err(|err| ReadResultFileError::IOError(err))?;
+            .map_err(|err| ReadZusiFileError::IOError(err))?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)
-            .map_err(|err| ReadResultFileError::IOError(err))?;
+            .map_err(|err| ReadZusiFileError::IOError(err))?;
         Ok(
             Zusi::from_xml(&contents)
-                .map_err(|err| ReadResultFileError::DeError(err))?
+                .map_err(|err| ReadZusiFileError::DeError(err))?
         )
     }
 
@@ -42,7 +42,14 @@ impl Zusi {
 }
 
 #[derive(Debug)]
-pub enum ReadResultFileError {
+pub enum ReadZusiFileError {
+    IOError(io::Error),
+    DeError(DeError),
+    NoResult,
+}
+
+#[derive(Debug)]
+pub enum WriteZusiFileError {
     IOError(io::Error),
     DeError(DeError),
     NoResult,
@@ -160,7 +167,7 @@ mod tests {
     #[test]
     fn test_from_xml_file_by_path() {
         let tmp_dir = tempdir().unwrap();
-        let file_path = tmp_dir.path().join("xml_input_file.result.xml");
+        let file_path = tmp_dir.path().join("xml_input_file.xml");
         let mut file = File::create(&file_path).unwrap();
         file.write_all(EXPECTED_XML.as_bytes()).unwrap();
 
