@@ -51,6 +51,12 @@ impl Zusi {
     }
 }
 
+impl AsRef<Zusi> for Zusi {
+    fn as_ref(&self) -> &Zusi {
+        &self
+    }
+}
+
 #[derive(Debug)]
 pub enum ZusiXMLFileError {
     IOError(io::Error),

@@ -57,3 +57,9 @@ pub enum ResultValue {
     FahrtEintrag(FahrtEintrag),
     // TODO: add FahrtEventEintrag?
 }
+
+impl AsRef<ZusiResult> for ZusiResult {
+    fn as_ref(&self) -> &ZusiResult {
+        &self
+    }
+}

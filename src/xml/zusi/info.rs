@@ -11,3 +11,9 @@ pub struct Info {
     #[serde(rename = "@MinVersion")]
     pub min_version: String,
 }
+
+impl AsRef<Info> for Info {
+    fn as_ref(&self) -> &Info {
+        &self
+    }
+}
