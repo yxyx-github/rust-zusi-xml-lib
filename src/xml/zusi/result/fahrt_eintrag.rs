@@ -116,3 +116,9 @@ pub struct FahrtEintrag {
     #[builder(default)]
     pub fahrt_fb_schalter: u32,
 }
+
+impl AsRef<FahrtEintrag> for FahrtEintrag {
+    fn as_ref(&self) -> &FahrtEintrag {
+        &self
+    }
+}
