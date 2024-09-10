@@ -85,7 +85,7 @@ mod tests {
     use crate::xml::zusi::result::{ResultValue, ZusiResult};
     use crate::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 
-    const EXPECTED_XML: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-01 23:16:00\" FahrtFplAbf=\"2019-01-01 23:17:00\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"2019-01-02 01:01:00\" FahrtFplAbf=\"2019-01-03 08:46:00\" FahrtFBSchalter=\"0\"/></result></Zusi>";
+    const EXPECTED_XML: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"43410.3125\" FahrtFplAbf=\"43410.316406\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFplAnk=\"43410.347656\" FahrtFplAbf=\"43410.351563\" FahrtFBSchalter=\"0\"/></result></Zusi>";
     const EXPECTED_XML_WITHOUT_OPTIONALS: &str = "<Zusi><Info DateiTyp=\"result\" Version=\"A.1\" MinVersion=\"A.0\"/><result Zugnummer=\"12345\" TfNummer=\"67890\" Datum=\"2019-01-01 23:14:00\" Verbrauch=\"0\" Bemerkung=\"\" Schummel=\"false\" Schwierigkeitsgrad=\"0\" EnergieVorgabe=\"0\"><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.33\" FahrtZeit=\"2019-01-01 23:18:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFBSchalter=\"0\"/><FahrtEintrag FahrtTyp=\"0\" FahrtWeg=\"22.43\" FahrtZeit=\"2019-01-02 01:07:00\" Fahrtsp=\"0\" FahrtspStrecke=\"0\" FahrtspSignal=\"0\" FahrtspZugsicherung=\"0\" FahrtAutopilot=\"false\" Fahrtkm=\"0\" FahrtHLDruck=\"0\" FahrtParameter=\"0\" FahrtFBSchalter=\"0\"/></result></Zusi>";
 
     fn expected_zusi(include_optionals: bool) -> Zusi {
@@ -121,8 +121,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some(datetime!(2019-01-01 23:16)) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some(datetime!(2019-01-01 23:17)) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some("43410.3125".into()) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some("43410.316406".into()) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                             ResultValue::FahrtEintrag(FahrtEintrag {
@@ -137,8 +137,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some(datetime!(2019-01-02 1:01)) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some(datetime!(2019-01-03 8:46)) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some("43410.347656".into()) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some("43410.351563".into()) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                         ],
