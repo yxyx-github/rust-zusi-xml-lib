@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-quick-xml = { version = "0.31.0", features = ["serialize", "overlapped-lists"] }
-serde = { version = "1.0.197", features = ["derive"] }
-time = { version = "0.3.34", features = ["macros", "serde-human-readable"] }
-typed-builder = "0.18.1"
+quick-xml = { version = "0.36.1", features = ["serialize", "overlapped-lists"] }
+serde = { version = "1.0.210", features = ["derive"] }
+time = { version = "0.3.36", features = ["macros", "serde-human-readable"] }
+typed-builder = "0.20.0"
 
 [dev-dependencies]
-tempfile = "3.10.1"
+tempfile = "3.12.0"
