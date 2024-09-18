@@ -121,8 +121,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some("43410.3125".into()) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some("43410.316406".into()) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some(43410.3125) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(43410.316406) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                             ResultValue::FahrtEintrag(FahrtEintrag {
@@ -137,8 +137,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some("43410.347656".into()) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some("43410.351563".into()) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some(43410.347656) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(43410.351563) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                         ],
@@ -151,25 +151,25 @@ mod tests {
     #[test]
     fn test_serialize_deserialize() {
         let serialized = se::to_string(&expected_zusi(true)).unwrap();
-        assert_eq!(EXPECTED_XML, serialized);
+        assert_eq!(serialized, EXPECTED_XML);
 
         let deserialized: Zusi = de::from_str(&serialized).unwrap();
-        assert_eq!(expected_zusi(true), deserialized);
+        assert_eq!(deserialized, expected_zusi(true));
     }
 
     #[test]
     fn test_serialize_deserialize_optionals() {
         let serialized = se::to_string(&expected_zusi(false)).unwrap();
-        assert_eq!(EXPECTED_XML_WITHOUT_OPTIONALS, serialized);
+        assert_eq!(serialized, EXPECTED_XML_WITHOUT_OPTIONALS);
 
         let deserialized: Zusi = de::from_str(&serialized).unwrap();
-        assert_eq!(expected_zusi(false), deserialized);
+        assert_eq!(deserialized, expected_zusi(false));
     }
 
     #[test]
     fn test_from_xml() {
         let zusi = Zusi::from_xml(EXPECTED_XML).unwrap();
-        assert_eq!(expected_zusi(true), zusi);
+        assert_eq!(zusi, expected_zusi(true));
     }
 
     #[test]
@@ -181,7 +181,7 @@ mod tests {
 
         let zusi: Zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
 
-        assert_eq!(expected_zusi(true), zusi);
+        assert_eq!(zusi, expected_zusi(true));
     }
 
     #[test]
