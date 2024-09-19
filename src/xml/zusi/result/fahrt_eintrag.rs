@@ -1,9 +1,8 @@
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
-
-use crate::xml::format::{date_time_format, delphi_timestamp_option_format};
-use crate::xml::format::delphi_timestamp_option_format::DelphiTimestamp;
+use crate::delphi_timestamp::DelphiTimestamp;
+use crate::serde_helpers::{date_time_format, delphi_timestamp_option_format};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {

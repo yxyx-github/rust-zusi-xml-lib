@@ -79,7 +79,7 @@ mod tests {
     use quick_xml::{de, se};
     use tempfile::tempdir;
     use time::macros::datetime;
-    use crate::xml::format::delphi_timestamp_option_format::DelphiTimestamp;
+    use crate::delphi_timestamp::DelphiTimestamp;
     use crate::xml::zusi::{Zusi, ZusiValue};
     use crate::xml::zusi::info::Info;
     use crate::xml::zusi::result::{ResultValue, ZusiResult};
