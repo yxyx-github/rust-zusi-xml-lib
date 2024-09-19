@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-use crate::xml::format::{date_time_format, delphi_timestamp_format};
+use crate::xml::format::{date_time_format, delphi_timestamp_option_format};
+use crate::xml::format::delphi_timestamp_option_format::DelphiTimestamp;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {
@@ -97,14 +98,18 @@ pub struct FahrtEintrag {
     pub fahrt_parameter: u32,
 
     #[serde(rename = "@FahrtFplAnk")]
+    #[serde(with = "delphi_timestamp_option_format")]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     #[builder(default)]
-    pub fahrt_fpl_ank: Option<f64>,
+    pub fahrt_fpl_ank: Option<DelphiTimestamp>,
 
     #[serde(rename = "@FahrtFplAbf")]
+    #[serde(with = "delphi_timestamp_option_format")]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     #[builder(default)]
-    pub fahrt_fpl_abf: Option<f64>,
+    pub fahrt_fpl_abf: Option<DelphiTimestamp>,
 
     #[serde(rename = "@FahrtFBSchalter")]
     #[serde(default)]

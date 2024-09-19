@@ -79,7 +79,7 @@ mod tests {
     use quick_xml::{de, se};
     use tempfile::tempdir;
     use time::macros::datetime;
-
+    use crate::xml::format::delphi_timestamp_option_format::DelphiTimestamp;
     use crate::xml::zusi::{Zusi, ZusiValue};
     use crate::xml::zusi::info::Info;
     use crate::xml::zusi::result::{ResultValue, ZusiResult};
@@ -121,8 +121,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some(43410.3125) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some(43410.316406) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some(DelphiTimestamp(43410.3125)) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(DelphiTimestamp(43410.316406)) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                             ResultValue::FahrtEintrag(FahrtEintrag {
@@ -137,8 +137,8 @@ mod tests {
                                 fahrt_km: 0.0,
                                 fahrt_hl_druck: 0.0,
                                 fahrt_parameter: 0,
-                                fahrt_fpl_ank: if include_optionals { Some(43410.347656) } else { None },
-                                fahrt_fpl_abf: if include_optionals { Some(43410.351563) } else { None },
+                                fahrt_fpl_ank: if include_optionals { Some(DelphiTimestamp(43410.347656)) } else { None },
+                                fahrt_fpl_abf: if include_optionals { Some(DelphiTimestamp(43410.351563)) } else { None },
                                 fahrt_fb_schalter: 0,
                             }),
                         ],
