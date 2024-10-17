@@ -1,0 +1,45 @@
+<Zusi>
+    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <result
+            Zugnummer="12345"
+            TfNummer="67890"
+            Datum="2019-01-01 23:14:00"
+            Verbrauch="0"
+            Bemerkung=""
+            Schummel="false"
+            Schwierigkeitsgrad="0"
+            EnergieVorgabe="0"
+    >
+        <FahrtEintrag
+                FahrtTyp="0"
+                FahrtWeg="22.33"
+                FahrtZeit="2019-01-01 23:18:00"
+                Fahrtsp="0" FahrtspStrecke="0"
+                FahrtspSignal="0"
+                FahrtspZugsicherung="0"
+                FahrtAutopilot="false"
+                Fahrtkm="0"
+                FahrtHLDruck="0"
+                FahrtParameter="0"
+                FahrtFplAnk="43410.3125"
+                FahrtFplAbf="43410.316406"
+                FahrtFBSchalter="0"
+        />
+        <FahrtEintrag
+                FahrtTyp="0"
+                FahrtWeg="22.43"
+                FahrtZeit="2019-01-02 01:07:00"
+                Fahrtsp="0"
+                FahrtspStrecke="0"
+                FahrtspSignal="0"
+                FahrtspZugsicherung="0"
+                FahrtAutopilot="false"
+                Fahrtkm="0"
+                FahrtHLDruck="0"
+                FahrtParameter="0"
+                FahrtFplAnk="43410.347656"
+                FahrtFplAbf="43410.351563"
+                FahrtFBSchalter="0"
+        />
+    </result>
+</Zusi>

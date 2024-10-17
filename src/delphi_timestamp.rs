@@ -13,6 +13,18 @@ impl PartialEq for DelphiTimestamp {
     }
 }
 
+impl From<f64> for DelphiTimestamp {
+    fn from(value: f64) -> Self {
+        Self(value)
+    }
+}
+
+impl From<DelphiTimestamp> for f64 {
+    fn from(value: DelphiTimestamp) -> Self {
+        value.0
+    }
+}
+
 impl From<PrimitiveDateTime> for DelphiTimestamp {
     fn from(pdt: PrimitiveDateTime) -> Self {
         let value = pdt - DELPHI_EPOCH;
@@ -40,11 +52,11 @@ mod tests {
 
     #[test]
     fn test_primitive_date_time_to_delphi_timestamp() {
-        assert_eq!(DelphiTimestamp::from(datetime!(2000-12-30 12:30)), DelphiTimestamp(36890.520833333336));
+        assert_eq!(DelphiTimestamp::from(datetime!(2000-12-30 12:30)), DelphiTimestamp::from(36890.520833333336));
     }
 
     #[test]
     fn test_delphi_timestamp_to_primitive_date_time() {
-        assert_eq!(PrimitiveDateTime::from(DelphiTimestamp(36890.520833333336)), datetime!(2000-12-30 12:30:00));
+        assert_eq!(PrimitiveDateTime::from(DelphiTimestamp::from(36890.520833333336)), datetime!(2000-12-30 12:30:00));
     }
 }

@@ -12,4 +12,5 @@ time = { version = "0.3.36", features = ["macros", "serde-human-readable"] }
 typed-builder = "0.20.0"
 
 [dev-dependencies]
+regex = "1.11.0"
 tempfile = "3.12.0"

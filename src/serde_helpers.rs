@@ -38,6 +38,6 @@ pub mod delphi_timestamp_option_format {
             return Ok(None);
         }
         let value: f64 = value.parse().map_err(de::Error::custom)?;
-        Ok(Some(DelphiTimestamp(value).into()))
+        Ok(Some(DelphiTimestamp::from(value).into()))
     }
 }
