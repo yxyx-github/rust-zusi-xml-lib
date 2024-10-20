@@ -24,6 +24,7 @@ fn expected_deserialized(include_optionals: bool) -> Zusi {
                     datei_typ: "result".into(),
                     version: "A.1".into(),
                     min_version: "A.0".into(),
+                    value: vec![],
                 }
             ),
             ZusiValue::Result(
