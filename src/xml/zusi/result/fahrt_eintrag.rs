@@ -41,6 +41,7 @@ impl Default for FahrtTyp {
 }
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp")]
     #[serde(default)]

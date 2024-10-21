@@ -2,19 +2,20 @@ use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
-pub struct Datei {
-    #[serde(rename = "@Dateiname")]
+#[serde(deny_unknown_fields)]
+pub struct Phi {
+    #[serde(rename = "@X")]
     #[serde(default)]
     #[builder(default)]
-    pub dateiname: String,
+    pub x: f64,
 
-    #[serde(rename = "@inst")]
+    #[serde(rename = "@Y")]
     #[serde(default)]
     #[builder(default)]
-    pub inst: i32,
+    pub y: f64,
 
-    #[serde(rename = "@NurInfo")]
+    #[serde(rename = "@Z")]
     #[serde(default)]
     #[builder(default)]
-    pub nur_info: bool,
+    pub z: f64,
 }

@@ -1,0 +1,28 @@
+<Zusi>
+    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Buchfahrplan Gattung="RB" Nummer="1234" Zuglauf="ADorf - BDorf" BR="442" Masse="300" spMax="44.4" Bremsh="179"
+                  MBrh="178" Verkehrstage="Mo-Fr" Grenzlast="false" Laenge="88.4" LaengeLoks="0" WagenzugLaenge="88.4"
+                  kmStart="0" BremsstellungZug="5" FplBremsstellungTextvorgabe="R+Mg" GNTSpalte="false">
+        <Datei_fpn Dateiname="path/to/fpn.fpn" inst="0" NurInfo="true"/>
+        <Datei_trn Dateiname="path/to/trn.trn" inst="0" NurInfo="true"/>
+        <UTM UTM_WE="1" UTM_NS="2" UTM_Zone="3" UTM_Zone2="zone"/>
+        <Fzg FahrzeugZusatzinfo="zusatz"/>
+        <FplZeile FplRglGgl="0" FplLaufweg="3.7" FahrstrStrecke="fstr">
+            <FplvMax vMaxTyp="0" vMax="38.8"/>
+            <FplvMaxGNT vMax="38.8"/>
+            <Fplkm km="172.6" FplSprung="false" FplkmNeu="0"/>
+            <FplName FplNameText="CDorf" FplWichtigkeit="1" FplOriginaltext="orig txt"/>
+            <FplSignaltyp FplSignaltypNr="0" FplHilfssignal="false"/>
+            <FplIcon FplIconNr="3"/>
+            <FplTunnel FplNameText="Dunneler Tunnel" FplTunnelAnfang="true"/>
+            <FplNameRechts FplNameText="E60"/>
+            <FplSaegelinien FplAnzahl="40"/>
+            <FplAnk Ank="2001-01-01 01:01:01" FplEintrag="0"/>
+            <FplAbf Abf="2001-01-01 01:03:30"/>
+            <FplRichtungswechsel/>
+            <FplvMaxReduzierungen>
+                <Ereignis Er="0" Wert="7" Beschr="ctx"/>
+            </FplvMaxReduzierungen>
+        </FplZeile>
+    </Buchfahrplan>
+</Zusi>

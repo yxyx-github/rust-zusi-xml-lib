@@ -6,14 +6,21 @@ use std::path::Path;
 use quick_xml::{de, se};
 pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
-
+use crate::xml::zusi::buchfahrplan::Buchfahrplan;
+use crate::xml::zusi::fahrplan::Fahrplan;
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
+use crate::xml::zusi::zug::Zug;
 
 pub mod info;
 pub mod result;
+pub mod buchfahrplan;
+pub mod lib;
+pub mod zug;
+mod fahrplan;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct Zusi {
     #[serde(rename = "$value")]
     pub value: Vec<ZusiValue>,
@@ -65,8 +72,18 @@ pub enum ZusiXMLFileError {
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum ZusiValue {
+    #[serde(rename = "Info")]
     Info(Info),
 
     #[serde(rename = "result")]
     Result(ZusiResult),
+
+    #[serde(rename = "Fahrplan")]
+    Fahrplan(Fahrplan),
+
+    #[serde(rename = "Zug")]
+    Zug(Zug),
+
+    #[serde(rename = "Buchfahrplan")]
+    Buchfahrplan(Buchfahrplan),
 }

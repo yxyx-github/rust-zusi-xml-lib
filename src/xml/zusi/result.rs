@@ -8,6 +8,7 @@ use crate::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
 pub mod fahrt_eintrag;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct ZusiResult {
     #[serde(rename = "@Zugnummer")]
     #[serde(default)]

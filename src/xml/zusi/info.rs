@@ -1,12 +1,12 @@
 pub mod autor_eintrag;
-pub mod datei;
 
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 use crate::xml::zusi::info::autor_eintrag::AutorEintrag;
-use crate::xml::zusi::info::datei::Datei;
+use crate::xml::zusi::lib::datei::Datei;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct Info {
     #[serde(rename = "@DateiTyp")]
     pub datei_typ: String,
