@@ -5,7 +5,7 @@ pub enum FahrplanEintragsTyp {
     #[serde(rename = "0")]
     Standard = 0,
 
-    #[serde(rename = "0")]
+    #[serde(rename = "1")]
     Hilfseintrag = 1,
 
     #[serde(rename = "2")]
