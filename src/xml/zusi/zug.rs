@@ -15,7 +15,7 @@ pub enum Prioritaet {
     #[serde(rename = "0")]
     Alle = 0,
 
-    #[serde(rename = "0")]
+    #[serde(rename = "1")]
     Viele = 1,
 
     #[serde(rename = "2")]
@@ -36,7 +36,7 @@ pub enum ZugTyp {
     #[serde(rename = "0")]
     Gueterzug = 0,
 
-    #[serde(rename = "0")]
+    #[serde(rename = "1")]
     Reisezug = 1,
 }
 
@@ -72,7 +72,7 @@ pub struct Zug {
     #[serde(rename = "@Prio")]
     #[serde(default)]
     #[builder(default)]
-    pub prioritaet: Prioritaet,
+    pub prioritaet: i32,
 
     #[serde(rename = "@Standortmodus")]
     #[serde(default)]
@@ -152,7 +152,7 @@ pub struct Zug {
     #[serde(rename = "@LODzug")]
     #[serde(default)]
     #[builder(default)]
-    pub lod_zug: u8, // TODO: replace with enum
+    pub lod_zug: Prioritaet,
 
     #[serde(rename = "@ReisendenDichte")]
     #[serde(default)]
