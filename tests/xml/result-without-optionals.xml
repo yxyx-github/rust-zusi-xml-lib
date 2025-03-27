@@ -22,6 +22,7 @@
                 Fahrtkm="0"
                 FahrtHLDruck="0"
                 FahrtParameter="0"
+                FahrtText="ADorf"
                 FahrtFBSchalter="0"/>
         <FahrtEintrag
                 FahrtTyp="0"
@@ -35,6 +36,7 @@
                 Fahrtkm="0"
                 FahrtHLDruck="0"
                 FahrtParameter="0"
+                FahrtText="BDorf"
                 FahrtFBSchalter="0"
         />
     </result>

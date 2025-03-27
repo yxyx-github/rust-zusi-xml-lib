@@ -97,6 +97,11 @@ pub struct FahrtEintrag {
     #[builder(default)]
     pub fahrt_parameter: u32,
 
+    #[serde(rename = "@FahrtText")]
+    #[serde(default)]
+    #[builder(default)]
+    pub fahrt_text: String,
+
     #[serde(rename = "@FahrtFplAnk")]
     #[serde(with = "delphi_timestamp_option_format")]
     #[serde(skip_serializing_if = "Option::is_none")]
