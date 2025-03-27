@@ -3,7 +3,7 @@ use std::io;
 use std::io::{Read, Write};
 use std::path::Path;
 
-use quick_xml::{de, se};
+use quick_xml::{de, se, SeError};
 pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
 use crate::xml::zusi::buchfahrplan::Buchfahrplan;
@@ -43,13 +43,13 @@ impl Zusi {
         )
     }
 
-    pub fn to_xml(&self) -> Result<String, DeError> {
+    pub fn to_xml(&self) -> Result<String, SeError> {
         se::to_string(self)
     }
 
     pub fn to_xml_file_by_path<P: AsRef<Path>>(&self, path: P) -> Result<(), ZusiXMLFileError> {
         let xml = self.to_xml()
-            .map_err(|err| ZusiXMLFileError::DeError(err))?;
+            .map_err(|err| ZusiXMLFileError::SeError(err))?;
         let mut file = File::create(path)
             .map_err(|err| ZusiXMLFileError::IOError(err))?;
         file.write_all(xml.as_bytes())
@@ -67,6 +67,7 @@ impl AsRef<Zusi> for Zusi {
 #[derive(Debug)]
 pub enum ZusiXMLFileError {
     IOError(io::Error),
+    SeError(SeError),
     DeError(DeError),
 }
 
