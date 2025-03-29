@@ -63,6 +63,7 @@ pub struct ZusiResultDeserialize {
 
     #[serde(rename = "@AnfDatum")]
     #[serde(with = "date_time_option_format")]
+    #[serde(default)]
     pub anfang_datum: Option<PrimitiveDateTime>,
 
     #[serde(rename = "@Datum")]
