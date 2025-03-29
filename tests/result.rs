@@ -31,6 +31,7 @@ fn expected_deserialized(include_optionals: bool) -> Zusi {
                 ZusiResult {
                     zugnummer: "12345".into(),
                     tf_nummer: "67890".into(),
+                    anfang_datum: datetime!(2019-01-01 23:16),
                     datum: datetime!(2019-01-01 23:14),
                     verbrauch: 0.0,
                     bemerkung: "".to_string(),
