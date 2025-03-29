@@ -4,7 +4,7 @@ use time::{Duration, PrimitiveDateTime};
 const DELPHI_EPOCH: PrimitiveDateTime = datetime!(1899-12-30 0:00);
 const MILLISECONDS_OF_SINGLE_DAY: i128 = Duration::days(1).whole_milliseconds();
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct DelphiTimestamp(pub(crate) f64);
 
 impl PartialEq for DelphiTimestamp {
