@@ -3,7 +3,6 @@
     <result
             Zugnummer="12345"
             TfNummer="67890"
-            AnfDatum="2019-01-01 23:16:00"
             Datum="2019-01-01 23:14:00"
             Verbrauch="0"
             Bemerkung=""
