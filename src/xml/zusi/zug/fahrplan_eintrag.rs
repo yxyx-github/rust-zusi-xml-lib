@@ -55,7 +55,7 @@ pub struct FahrplanEintrag {
     pub fahrzeug_verband_aktion_wende_signal_abstand: f32,
 
     #[serde(rename = "$value")]
-    pub value: Vec<FahrplanEintragValue>,
+    pub value: Option<Vec<FahrplanEintragValue>>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]

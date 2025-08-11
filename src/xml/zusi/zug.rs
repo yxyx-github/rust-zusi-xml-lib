@@ -49,173 +49,139 @@ impl Default for ZugTyp {
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Zug {
-    #[serde(rename = "@Gattung")]
-    #[serde(default)]
+    #[serde(rename = "@Gattung", default)]
     #[builder(default)]
     pub gattung: String,
 
-    #[serde(rename = "@Nummer")]
-    #[serde(default)]
+    #[serde(rename = "@Nummer", default)]
     #[builder(default)]
     pub nummer: String,
 
-    #[serde(rename = "@Zuglauf")]
-    #[serde(default)]
+    #[serde(rename = "@Zuglauf", default)]
     #[builder(default)]
     pub zuglauf: String,
 
-    #[serde(rename = "@BRAngabe")]
-    #[serde(default)]
+    #[serde(rename = "@BRAngabe", default)]
     #[builder(default)]
     pub baureihe_angabe: String,
 
-    #[serde(rename = "@Prio")]
-    #[serde(default)]
+    #[serde(rename = "@Prio", default)]
     #[builder(default)]
     pub prioritaet: i32,
 
-    #[serde(rename = "@Standortmodus")]
-    #[serde(default)]
+    #[serde(rename = "@Standortmodus", default)]
     #[builder(default)]
     pub standort_modus: u8, // TODO: replace with enum
 
-    #[serde(rename = "@StartVorschubweg")]
-    #[serde(default)]
+    #[serde(rename = "@StartVorschubweg", default)]
     #[builder(default)]
     pub start_vorschubweg: f32,
 
-    #[serde(rename = "@BremsstellungZug")]
-    #[serde(default)]
+    #[serde(rename = "@BremsstellungZug", default)]
     #[builder(default)]
     pub bremsstellung_zug: Bremsstellung,
 
-    #[serde(rename = "@FplBremsstellungTextvorgabe")]
-    #[serde(default)]
+    #[serde(rename = "@FplBremsstellungTextvorgabe", default)]
     #[builder(default)]
     pub fahrplan_bremsstellung_textvorgabe: String,
 
-    #[serde(rename = "@EnergieVorgabe")]
-    #[serde(default)]
+    #[serde(rename = "@EnergieVorgabe", default)]
     #[builder(default)]
     pub energie_vorgabe: f32,
 
-    #[serde(rename = "@spAnfang")]
-    #[serde(default)]
+    #[serde(rename = "@spAnfang", default)]
     #[builder(default)]
     pub speed_anfang: f32,
 
-    #[serde(rename = "@MBrh")]
-    #[serde(default)]
+    #[serde(rename = "@MBrh", default)]
     #[builder(default)]
     pub mindest_bremshundertstel: f32,
 
-    #[serde(rename = "@FplMasse")]
-    #[serde(default)]
+    #[serde(rename = "@FplMasse", default)]
     #[builder(default)]
     pub fahrplan_masse: f32,
 
-    #[serde(rename = "@FplZuglaenge")]
-    #[serde(default)]
+    #[serde(rename = "@FplZuglaenge", default)]
     #[builder(default)]
     pub fahrplan_zug_laenge: f32,
 
-    #[serde(rename = "@Verkehrstage")]
-    #[serde(default)]
+    #[serde(rename = "@Verkehrstage", default)]
     #[builder(default)]
     pub verkehrstage: String,
 
-    #[serde(rename = "@Grenzlast")]
-    #[serde(default)]
+    #[serde(rename = "@Grenzlast", default)]
     #[builder(default)]
     pub grenzlast: bool,
 
-    #[serde(rename = "@spZugNiedriger")]
-    #[serde(default)]
+    #[serde(rename = "@spZugNiedriger", default)]
     #[builder(default)]
     pub speed_zug_niedriger: f32,
 
-    #[serde(rename = "@APBeschl")]
-    #[serde(default)]
+    #[serde(rename = "@APBeschl", default)]
     #[builder(default)]
     pub autopilot_beschleunigung: f32,
 
-    #[serde(rename = "@KeineVorplanKorrektur")]
-    #[serde(default)]
+    #[serde(rename = "@KeineVorplanKorrektur", default)]
     #[builder(default)]
     pub keine_vorplan_korrektur: bool,
 
-    #[serde(rename = "@Dekozug")]
-    #[serde(default)]
+    #[serde(rename = "@Dekozug", default)]
     #[builder(default)]
     pub dekozug: bool,
 
-    #[serde(rename = "@LODzug")]
-    #[serde(default)]
+    #[serde(rename = "@LODzug", default)]
     #[builder(default)]
     pub lod_zug: Prioritaet,
 
-    #[serde(rename = "@ReisendenDichte")]
-    #[serde(default)]
+    #[serde(rename = "@ReisendenDichte", default)]
     #[builder(default)]
     pub reisenden_dichte: f32,
 
-    #[serde(rename = "@FahrplanGruppe")]
-    #[serde(default)]
+    #[serde(rename = "@FahrplanGruppe", default)]
     #[builder(default)]
     pub fahrplan_gruppe: String,
 
-    #[serde(rename = "@Rekursionstiefe")]
-    #[serde(default)]
+    #[serde(rename = "@Rekursionstiefe", default)]
     #[builder(default)]
     pub rekursionstiefe: i32,
 
-    #[serde(rename = "@ZugsicherungStartmodus")]
-    #[serde(default)]
+    #[serde(rename = "@ZugsicherungStartmodus", default)]
     #[builder(default)]
     pub zugsicherung_startmodus: u8, // TODO: replace with enum
 
-    #[serde(rename = "@ColdMovement")]
-    #[serde(default)]
+    #[serde(rename = "@ColdMovement", default)]
     #[builder(default)]
     pub cold_movement: bool,
 
-    #[serde(rename = "@FahrstrName")]
-    #[serde(default)]
+    #[serde(rename = "@FahrstrName", default)]
     #[builder(default)]
     pub fahrstrassen_name: String,
 
-    #[serde(rename = "@AufgleisenRegisterpruefen")]
-    #[serde(default)]
+    #[serde(rename = "@AufgleisenRegisterpruefen", default)]
     #[builder(default)]
     pub aufgleisen_register_pruefen: bool,
 
-    #[serde(rename = "@Zugtyp")]
-    #[serde(default)]
+    #[serde(rename = "@Zugtyp", default)]
     #[builder(default)]
     pub zug_typ: ZugTyp,
 
-    #[serde(rename = "@Ueberschrift")]
-    #[serde(default)]
+    #[serde(rename = "@Ueberschrift", default)]
     #[builder(default)]
     pub ueberschrift: String,
 
-    #[serde(rename = "@odtDateiAbs")]
-    #[serde(default)]
+    #[serde(rename = "@odtDateiAbs", default)]
     #[builder(default)]
     pub odt_datei_absolut: String,
 
-    #[serde(rename = "@BuchfahrplanEinfach")]
-    #[serde(default)]
+    #[serde(rename = "@BuchfahrplanEinfach", default)]
     #[builder(default)]
     pub buchfahrplan_einfach: bool,
 
-    #[serde(rename = "@Buchfahrplandll")]
-    #[serde(default)]
+    #[serde(rename = "@Buchfahrplandll", default)]
     #[builder(default)]
     pub buchfahrplan_dll: String,
 
-    #[serde(rename = "@TuerSystemBezeichner")]
-    #[serde(default)]
+    #[serde(rename = "@TuerSystemBezeichner", default)]
     #[builder(default)]
     pub tuer_system_bezeichner: String,
 
