@@ -3,21 +3,25 @@ use std::io;
 use std::io::{Read, Write};
 use std::path::Path;
 
-use quick_xml::{de, se, SeError};
-pub use quick_xml::DeError;
-use serde::{Deserialize, Serialize};
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
+pub use quick_xml::DeError;
+use quick_xml::{de, se, SeError};
+use serde::{Deserialize, Serialize};
+use typed_builder::TypedBuilder;
 
 pub mod info;
 pub mod result;
 pub mod lib;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Zusi {
+    #[serde(rename = "Info")]
+    pub info: Info,
+
     #[serde(rename = "$value")]
-    pub value: Vec<ZusiValue>,
+    pub value: ZusiValue,
 }
 
 impl Zusi {
@@ -67,9 +71,6 @@ pub enum ZusiXMLFileError {
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum ZusiValue {
-    #[serde(rename = "Info")]
-    Info(Info),
-
     #[serde(rename = "result")]
     Result(ZusiResult),
 }
