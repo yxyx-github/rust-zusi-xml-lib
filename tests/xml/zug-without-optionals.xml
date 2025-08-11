@@ -6,8 +6,5 @@
          KeineVorplanKorrektur="false" Dekozug="false" LODzug="0" ReisendenDichte="0" FahrplanGruppe=""
          Rekursionstiefe="0" ZugsicherungStartmodus="0" ColdMovement="false" FahrstrName=""
          AufgleisenRegisterpruefen="false" Zugtyp="0" Ueberschrift="" odtDateiAbs="" BuchfahrplanEinfach="false"
-         Buchfahrplandll="" TuerSystemBezeichner="">
-        <FahrplanEintrag Betrst="" FplEintrag="0" ErsatzsignalzeilePlus1="0" FzgVerbandAktionWendesignal="false"
-                         FzgVerbandAktionWendeSignalabstand="0"/>
-    </Zug>
+         Buchfahrplandll="" TuerSystemBezeichner=""/>
 </Zusi>

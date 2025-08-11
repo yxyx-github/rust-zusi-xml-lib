@@ -1,5 +1,6 @@
 mod utils;
 
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Read, Write};
 use quick_xml::{de, se};
@@ -64,7 +65,19 @@ fn expected_deserialized(include_optionals: bool) -> Zusi {
                 buchfahrplan_einfach: false,
                 buchfahrplan_dll: "".to_string(),
                 tuer_system_bezeichner: "".to_string(),
-                value: vec![
+                fahrplan_eintraege: vec![
+                    FahrplanEintrag {
+                        ankunft: None,
+                        abfahrt: None,
+                        betriebsstelle: "".to_string(),
+                        fahrplan_eintrag: Default::default(),
+                        ersatz_signal_zeile_plus_1: 0,
+                        fahrzeug_verband_aktion_wende_signal: false,
+                        fahrzeug_verband_aktion_wende_signal_abstand: 0.0,
+                        value: None,
+                    }
+                ],
+                /*value: vec![
                     ZugValue::FahrplanEintrag(FahrplanEintrag {
                         ankunft: None,
                         abfahrt: None,
@@ -75,7 +88,8 @@ fn expected_deserialized(include_optionals: bool) -> Zusi {
                         fahrzeug_verband_aktion_wende_signal_abstand: 0.0,
                         value: None,
                     })
-                ],
+                ],*/
+                unknown: HashMap::from([("@attr".into(), "val".into())]),
             }),
         ],
     }

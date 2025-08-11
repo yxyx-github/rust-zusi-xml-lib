@@ -2,6 +2,7 @@ pub mod aufgleis_referenz;
 pub mod fahrplan_eintrag;
 pub mod fahrzeug_varianten;
 
+use std::collections::HashMap;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
@@ -47,7 +48,7 @@ impl Default for ZugTyp {
 }
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
-#[serde(deny_unknown_fields)]
+// #[serde(deny_unknown_fields)]
 pub struct Zug {
     #[serde(rename = "@Gattung", default)]
     #[builder(default)]
@@ -185,8 +186,14 @@ pub struct Zug {
     #[builder(default)]
     pub tuer_system_bezeichner: String,
 
-    #[serde(rename = "$value")]
-    pub value: Vec<ZugValue>,
+    #[serde(rename = "FahrplanEintrag", default)]
+    pub fahrplan_eintraege: Vec<FahrplanEintrag>,
+
+    // #[serde(rename = "$value")]
+    // pub value: Vec<ZugValue>,
+
+    #[serde(flatten)]
+    pub unknown: HashMap<String, String>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
