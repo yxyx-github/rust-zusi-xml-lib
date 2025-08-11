@@ -50,7 +50,7 @@ pub struct ZusiResult {
     #[builder(default)]
     pub energie_vorgabe: f32,
 
-    #[serde(rename = "FahrtEintrag")]
+    #[serde(rename = "FahrtEintrag", default)]
     pub fahrt_eintraege: Vec<FahrtEintrag>,
 
     #[serde(flatten)]

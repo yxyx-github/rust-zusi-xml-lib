@@ -1,11 +1,7 @@
 mod utils;
 
-use crate::utils::read_xml_file;
-use quick_xml::{de, se};
+use crate::utils::TestRunner;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{Read, Write};
-use tempfile::tempdir;
 use time::macros::datetime;
 use zusi_xml_lib::delphi_timestamp::DelphiTimestamp;
 use zusi_xml_lib::xml::zusi::info::Info;
@@ -13,9 +9,8 @@ use zusi_xml_lib::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 use zusi_xml_lib::xml::zusi::result::ZusiResult;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 
-fn expected_serialized(include_optionals: bool) -> String {
-    read_xml_file(format!("./tests/xml/result{}.xml", if include_optionals { "" } else {"-without-optionals" }))
-}
+const XML_PATH: &str = "./tests/xml/result.xml";
+const XML_PATH_WITHOUT_OPTIONALS: &str = "./tests/xml/result-without-optionals.xml";
 
 fn expected_deserialized(include_optionals: bool) -> Zusi {
     Zusi {
@@ -79,56 +74,21 @@ fn expected_deserialized(include_optionals: bool) -> Zusi {
 }
 
 #[test]
-fn test_serialize_deserialize() {
-    let serialized = se::to_string(&expected_deserialized(true)).unwrap();
-    assert_eq!(serialized, expected_serialized(true));
-
-    let deserialized: Zusi = de::from_str(&serialized).unwrap();
-    assert_eq!(deserialized, expected_deserialized(true));
+fn test_serialize() {
+    TestRunner::new_with_file(XML_PATH, expected_deserialized(true)).test_serialize();
 }
 
 #[test]
-fn test_serialize_deserialize_optionals() {
-    let serialized = se::to_string(&expected_deserialized(false)).unwrap();
-    assert_eq!(serialized, expected_serialized(false));
-
-    let deserialized: Zusi = de::from_str(&serialized).unwrap();
-    assert_eq!(deserialized, expected_deserialized(false));
+fn test_serialize_optionals() {
+    TestRunner::new_with_file(XML_PATH_WITHOUT_OPTIONALS, expected_deserialized(false)).test_serialize();
 }
 
 #[test]
-fn test_from_xml() {
-    let zusi = Zusi::from_xml(&expected_serialized(true)).unwrap();
-    assert_eq!(zusi, expected_deserialized(true));
+fn test_deserialize() {
+    TestRunner::new_with_file(XML_PATH, expected_deserialized(true)).test_serialize();
 }
 
 #[test]
-fn test_from_xml_file_by_path() {
-    let tmp_dir = tempdir().unwrap();
-    let file_path = tmp_dir.path().join("xml_input_file.xml");
-    let mut file = File::create(&file_path).unwrap();
-    file.write_all(expected_serialized(true).as_bytes()).unwrap();
-
-    let zusi: Zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
-
-    assert_eq!(zusi, expected_deserialized(true));
-}
-
-#[test]
-fn test_to_xml() {
-    let xml = expected_deserialized(true).to_xml().unwrap();
-    assert_eq!(xml, expected_serialized(true));
-}
-
-#[test]
-fn test_to_xml_file_by_path() {
-    let tmp_dir = tempdir().unwrap();
-    let file_path = tmp_dir.path().join("xml_output_file.xml");
-
-    expected_deserialized(true).to_xml_file_by_path(&file_path).unwrap();
-
-    let mut file = File::open(&file_path).unwrap();
-    let mut xml = String::new();
-    file.read_to_string(&mut xml).unwrap();
-    assert_eq!(xml, expected_serialized(true));
+fn test_deserialize_optionals() {
+    TestRunner::new_with_file(XML_PATH_WITHOUT_OPTIONALS, expected_deserialized(false)).test_serialize();
 }
