@@ -19,12 +19,7 @@ pub struct ZusiResult {
     #[builder(default)]
     pub tf_nummer: String,
 
-    #[serde(
-        rename = "@AnfDatum",
-        with = "date_time_option_format",
-        default,
-        skip_serializing_if = "IsDefault::is_default",
-    )]
+    #[serde(rename = "@AnfDatum", with = "date_time_option_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub anfang_datum: Option<PrimitiveDateTime>,
 
@@ -56,7 +51,7 @@ pub struct ZusiResult {
 
     #[serde(flatten)]
     #[builder(default)]
-    pub unknown: HashMap<String, String>,
+    pub _unknown: HashMap<String, String>,
 }
 
 impl AsRef<ZusiResult> for ZusiResult {

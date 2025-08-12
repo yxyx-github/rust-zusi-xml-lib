@@ -21,7 +21,11 @@ pub struct Abhaengigkeit {
     #[builder(default)]
     pub abhaengigkeit_anderer_zug: String,
 
+    #[serde(rename = "@ETCSModus", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub etcs_modus: u8, // TODO: replace with enum
+
     #[serde(flatten)]
     #[builder(default)]
-    pub unknown: HashMap<String, String>,
+    pub _unknown: HashMap<String, String>,
 }

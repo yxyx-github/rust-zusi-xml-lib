@@ -6,6 +6,7 @@ use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 use zusi_xml_lib::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 use zusi_xml_lib::xml::zusi::result::ZusiResult;
 
+#[allow(dead_code)]
 pub fn all() -> Zusi {
     Zusi {
         info: Info {
@@ -14,7 +15,7 @@ pub fn all() -> Zusi {
             min_version: "A.0".into(),
             autor_eintrag: None,
             datei: None,
-            unknown: HashMap::new(),
+            _unknown: HashMap::new(),
         },
         value: ZusiValue::Result(ZusiResult {
             zugnummer: "12345".into(),
@@ -62,11 +63,12 @@ pub fn all() -> Zusi {
                     fahrt_fb_schalter: 3,
                 },
             ],
-            unknown: HashMap::new(),
+            _unknown: HashMap::new(),
         }),
     }
 }
 
+#[allow(dead_code)]
 pub fn with_defaults() -> Zusi {
     Zusi::builder()
         .info(

@@ -91,21 +91,11 @@ pub struct FahrtEintrag {
     #[builder(default)]
     pub fahrt_text: String,
 
-    #[serde(
-        rename = "@FahrtFplAnk",
-        with = "delphi_timestamp_option_format",
-        default,
-        skip_serializing_if = "IsDefault::is_default",
-    )]
+    #[serde(rename = "@FahrtFplAnk", with = "delphi_timestamp_option_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_fpl_ank: Option<DelphiTimestamp>,
 
-    #[serde(
-        rename = "@FahrtFplAbf",
-        with = "delphi_timestamp_option_format",
-        default,
-        skip_serializing_if = "IsDefault::is_default",
-    )]
+    #[serde(rename = "@FahrtFplAbf", with = "delphi_timestamp_option_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_fpl_abf: Option<DelphiTimestamp>,
 

@@ -5,6 +5,7 @@ use std::path::Path;
 
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
+use crate::xml::zusi::zug::Zug;
 pub use quick_xml::DeError;
 use quick_xml::{de, se, SeError};
 use serde::{Deserialize, Serialize};
@@ -13,6 +14,7 @@ use typed_builder::TypedBuilder;
 pub mod lib;
 pub mod info;
 pub mod result;
+pub mod zug;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 #[serde(deny_unknown_fields)]
@@ -71,6 +73,11 @@ pub enum ZusiXMLFileError {
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum ZusiValue {
+    /// Version A.1
     #[serde(rename = "result")]
     Result(ZusiResult),
+
+    /// Version A.5
+    #[serde(rename = "Zug")]
+    Zug(Zug),
 }

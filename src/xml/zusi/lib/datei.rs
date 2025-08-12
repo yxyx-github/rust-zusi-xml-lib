@@ -18,5 +18,5 @@ pub struct Datei {
 
     #[serde(flatten)]
     #[builder(default)]
-    pub unknown: HashMap<String, String>,
+    pub _unknown: HashMap<String, String>,
 }
