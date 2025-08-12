@@ -5,15 +5,15 @@ use zusi_xml_lib::xml::zusi::Zusi;
 use crate::deserialized::result;
 use crate::utils::TestRunner;
 
-const XML_PATH: &str = "./tests/serialized/result.xml";
-const XML_PATH_WITHOUT_OPTIONALS: &str = "./tests/serialized/result-without-optionals.xml";
+const XML_ALL: &str = "./tests/serialized/result.xml";
+const XML_WITH_DEFAULTS: &str = "./tests/serialized/result-with-defaults.xml";
 
 fn runner() -> TestRunner<Zusi> {
-    TestRunner::new_with_file(XML_PATH, result::deserialized(true))
+    TestRunner::new_with_file(XML_ALL, result::all())
 }
 
 fn runner_without_optionals() -> TestRunner<Zusi> {
-    TestRunner::new_with_file(XML_PATH_WITHOUT_OPTIONALS, result::deserialized(false))
+    TestRunner::new_with_file(XML_WITH_DEFAULTS, result::with_defaults())
 }
 
 #[test]

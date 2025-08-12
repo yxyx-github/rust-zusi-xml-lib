@@ -10,9 +10,9 @@ use quick_xml::{de, se, SeError};
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
+pub mod lib;
 pub mod info;
 pub mod result;
-pub mod lib;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 #[serde(deny_unknown_fields)]

@@ -1,10 +1,11 @@
 pub mod autor_eintrag;
 
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
-use typed_builder::TypedBuilder;
+use crate::serde_helpers::IsDefault;
 use crate::xml::zusi::info::autor_eintrag::AutorEintrag;
 use crate::xml::zusi::lib::datei::Datei;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 pub struct Info {
@@ -17,11 +18,11 @@ pub struct Info {
     #[serde(rename = "@MinVersion")]
     pub min_version: String,
 
-    #[serde(rename = "AutorEintrag", default, skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "AutorEintrag", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub autor_eintrag: Option<AutorEintrag>,
 
-    #[serde(rename = "Datei", default, skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "Datei", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub datei: Option<Datei>,
 

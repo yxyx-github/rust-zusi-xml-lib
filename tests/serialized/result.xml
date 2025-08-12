@@ -1,48 +1,12 @@
 <Zusi>
     <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
-    <result
-            Zugnummer="12345"
-            TfNummer="67890"
-            AnfDatum="2019-01-01 23:16:00"
-            Datum="2019-01-01 23:14:00"
-            Verbrauch="0"
-            Bemerkung=""
-            Schummel="false"
-            Schwierigkeitsgrad="0"
-            EnergieVorgabe="0"
-    >
-        <FahrtEintrag
-                FahrtTyp="0"
-                FahrtWeg="22.33"
-                FahrtZeit="2019-01-01 23:18:00"
-                Fahrtsp="0" FahrtspStrecke="0"
-                FahrtspSignal="0"
-                FahrtspZugsicherung="0"
-                FahrtAutopilot="false"
-                Fahrtkm="0"
-                FahrtHLDruck="0"
-                FahrtParameter="0"
-                FahrtText="ADorf"
-                FahrtFplAnk="43410.3125"
-                FahrtFplAbf="43410.316406"
-                FahrtFBSchalter="0"
-        />
-        <FahrtEintrag
-                FahrtTyp="0"
-                FahrtWeg="22.43"
-                FahrtZeit="2019-01-02 01:07:00"
-                Fahrtsp="0"
-                FahrtspStrecke="0"
-                FahrtspSignal="0"
-                FahrtspZugsicherung="0"
-                FahrtAutopilot="false"
-                Fahrtkm="0"
-                FahrtHLDruck="0"
-                FahrtParameter="0"
-                FahrtText="BDorf"
-                FahrtFplAnk="43410.347656"
-                FahrtFplAbf="43410.351563"
-                FahrtFBSchalter="0"
-        />
+    <result Zugnummer="12345" TfNummer="67890" AnfDatum="2019-01-01 23:16:00" Datum="2019-01-01 23:14:00"
+            Verbrauch="3.7" Schwierigkeitsgrad="1" EnergieVorgabe="3000">
+        <FahrtEintrag FahrtWeg="22.33" FahrtZeit="2019-01-01 23:18:00" Fahrtsp="20" FahrtspStrecke="30"
+                      FahrtspSignal="20" FahrtspZugsicherung="25" Fahrtkm="77.2" FahrtHLDruck="4.2" FahrtParameter="1"
+                      FahrtText="ADorf" FahrtFplAnk="43410.3125" FahrtFplAbf="43410.316406" FahrtFBSchalter="2"/>
+        <FahrtEintrag FahrtWeg="22.43" FahrtZeit="2019-01-02 01:07:00" Fahrtsp="10" FahrtspStrecke="40"
+                      FahrtspSignal="13" FahrtspZugsicherung="15" Fahrtkm="32" FahrtHLDruck="4" FahrtParameter="2"
+                      FahrtText="BDorf" FahrtFplAnk="43410.347656" FahrtFplAbf="43410.351563" FahrtFBSchalter="3"/>
     </result>
 </Zusi>

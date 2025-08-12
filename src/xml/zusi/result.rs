@@ -1,5 +1,6 @@
-use std::collections::HashMap;
+use crate::serde_helpers::IsDefault;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
@@ -10,11 +11,11 @@ pub mod fahrt_eintrag;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 pub struct ZusiResult {
-    #[serde(rename = "@Zugnummer", default)]
+    #[serde(rename = "@Zugnummer", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub zugnummer: String,
 
-    #[serde(rename = "@TfNummer", default)]
+    #[serde(rename = "@TfNummer", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub tf_nummer: String,
 
@@ -22,7 +23,7 @@ pub struct ZusiResult {
         rename = "@AnfDatum",
         with = "date_time_option_format",
         default,
-        skip_serializing_if = "Option::is_none",
+        skip_serializing_if = "IsDefault::is_default",
     )]
     #[builder(default)]
     pub anfang_datum: Option<PrimitiveDateTime>,
@@ -30,27 +31,27 @@ pub struct ZusiResult {
     #[serde(rename = "@Datum", with = "date_time_format")]
     pub datum: PrimitiveDateTime,
 
-    #[serde(rename = "@Verbrauch", default)]
+    #[serde(rename = "@Verbrauch", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub verbrauch: f32, // in Joule
 
-    #[serde(rename = "@Bemerkung", default)]
+    #[serde(rename = "@Bemerkung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub bemerkung: String,
 
-    #[serde(rename = "@Schummel", default)]
+    #[serde(rename = "@Schummel", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub schummel: bool,
 
-    #[serde(rename = "@Schwierigkeitsgrad", default)]
+    #[serde(rename = "@Schwierigkeitsgrad", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub schwierigkeitsgrad: u32,
 
-    #[serde(rename = "@EnergieVorgabe", default)]
+    #[serde(rename = "@EnergieVorgabe", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub energie_vorgabe: f32,
 
-    #[serde(rename = "FahrtEintrag", default)]
+    #[serde(rename = "FahrtEintrag", default, skip_serializing_if = "IsDefault::is_default")]
     pub fahrt_eintraege: Vec<FahrtEintrag>,
 
     #[serde(flatten)]

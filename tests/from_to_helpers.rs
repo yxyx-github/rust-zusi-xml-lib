@@ -1,46 +1,45 @@
 mod utils;
 
 use crate::utils::cleanup_xml;
-use std::collections::HashMap;
 use std::fs;
 use tempfile::tempdir;
 use time::macros::datetime;
 use zusi_xml_lib::xml::zusi::info::Info;
+use zusi_xml_lib::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
 use zusi_xml_lib::xml::zusi::result::ZusiResult;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 
 const EXPECTED_SERIALIZED: &'static str = r#"
     <Zusi>
-        <Info DateiTyp="" Version="" MinVersion=""/>
-        <result Zugnummer="" TfNummer="" Datum="2023-04-05 06:07:08" Verbrauch="0" Bemerkung="" Schummel="false"
-                Schwierigkeitsgrad="0" EnergieVorgabe="0"/>
+        <Info DateiTyp="result" Version="A.4" MinVersion="A.3"/>
+        <result Zugnummer="00000" TfNummer="12345" Datum="2019-01-01 23:14:00">
+            <FahrtEintrag FahrtZeit="2019-01-01 23:18:00"/>
+        </result>
     </Zusi>
 "#;
 
 fn expected_deserialized() -> Zusi {
-    Zusi {
-        info: Info {
-            datei_typ: "".into(),
-            version: "".into(),
-            min_version: "".into(),
-            autor_eintrag: None,
-            datei: None,
-            unknown: HashMap::new(),
-        },
-        value: ZusiValue::Result(ZusiResult {
-            zugnummer: "".into(),
-            tf_nummer: "".into(),
-            anfang_datum: None,
-            datum: datetime!(2023-04-05 06:07:08),
-            verbrauch: 0.0,
-            bemerkung: "".into(),
-            schummel: false,
-            schwierigkeitsgrad: 0,
-            energie_vorgabe: 0.0,
-            fahrt_eintraege: vec![],
-            unknown: HashMap::new(),
-        }),
-    }
+    Zusi::builder()
+        .info(
+            Info::builder()
+                .datei_typ("result".into())
+                .version("A.4".into())
+                .min_version("A.3".into())
+                .build()
+        )
+        .value(ZusiValue::Result(
+            ZusiResult::builder()
+                .zugnummer("00000".into())
+                .tf_nummer("12345".into())
+                .datum(datetime!(2019-01-01 23:14))
+                .fahrt_eintraege(vec![
+                    FahrtEintrag::builder()
+                        .fahrt_zeit(datetime!(2019-01-01 23:18))
+                        .build()
+                ])
+                .build()
+        ))
+        .build()
 }
 
 #[test]

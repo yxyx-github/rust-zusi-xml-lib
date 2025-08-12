@@ -1,8 +1,9 @@
+use crate::delphi_timestamp::DelphiTimestamp;
+use crate::serde_helpers::IsDefault;
+use crate::serde_helpers::{date_time_format, delphi_timestamp_option_format};
 use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
-use crate::delphi_timestamp::DelphiTimestamp;
-use crate::serde_helpers::{date_time_format, delphi_timestamp_option_format};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum FahrtTyp {
@@ -43,50 +44,50 @@ impl Default for FahrtTyp {
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct FahrtEintrag {
-    #[serde(rename = "@FahrtTyp", default)]
+    #[serde(rename = "@FahrtTyp", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_typ: FahrtTyp,
 
-    #[serde(rename = "@FahrtWeg", default)]
+    #[serde(rename = "@FahrtWeg", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_weg: f32,
 
     #[serde(rename = "@FahrtZeit", with = "date_time_format")]
     pub fahrt_zeit: PrimitiveDateTime,
 
-    #[serde(rename = "@Fahrtsp", default)]
+    #[serde(rename = "@Fahrtsp", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_speed: f32,
 
-    #[serde(rename = "@FahrtspStrecke", default)]
+    #[serde(rename = "@FahrtspStrecke", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_speed_strecke: f32,
 
-    #[serde(rename = "@FahrtspSignal", default)]
+    #[serde(rename = "@FahrtspSignal", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_speed_signal: f32,
 
-    #[serde(rename = "@FahrtspZugsicherung", default)]
+    #[serde(rename = "@FahrtspZugsicherung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_speed_zugsicherung: f32,
 
-    #[serde(rename = "@FahrtAutopilot", default)]
+    #[serde(rename = "@FahrtAutopilot", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_autopilot: bool,
 
-    #[serde(rename = "@Fahrtkm", default)]
+    #[serde(rename = "@Fahrtkm", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_km: f32,
 
-    #[serde(rename = "@FahrtHLDruck", default)]
+    #[serde(rename = "@FahrtHLDruck", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_hl_druck: f32,
 
-    #[serde(rename = "@FahrtParameter", default)]
+    #[serde(rename = "@FahrtParameter", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_parameter: u32,
 
-    #[serde(rename = "@FahrtText", default)]
+    #[serde(rename = "@FahrtText", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_text: String,
 
@@ -94,7 +95,7 @@ pub struct FahrtEintrag {
         rename = "@FahrtFplAnk",
         with = "delphi_timestamp_option_format",
         default,
-        skip_serializing_if = "Option::is_none",
+        skip_serializing_if = "IsDefault::is_default",
     )]
     #[builder(default)]
     pub fahrt_fpl_ank: Option<DelphiTimestamp>,
@@ -103,12 +104,12 @@ pub struct FahrtEintrag {
         rename = "@FahrtFplAbf",
         with = "delphi_timestamp_option_format",
         default,
-        skip_serializing_if = "Option::is_none",
+        skip_serializing_if = "IsDefault::is_default",
     )]
     #[builder(default)]
     pub fahrt_fpl_abf: Option<DelphiTimestamp>,
 
-    #[serde(rename = "@FahrtFBSchalter", default)]
+    #[serde(rename = "@FahrtFBSchalter", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_fb_schalter: u32,
 }
