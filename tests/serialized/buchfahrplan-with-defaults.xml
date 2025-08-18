@@ -1,0 +1,14 @@
+<Zusi>
+    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Buchfahrplan>
+        <Datei_fpn/>
+        <Datei_trn/>
+        <UTM/>
+        <FplZeile>
+            <FplName FplNameText="Name"/>
+        </FplZeile>
+        <FplZeile>
+            <FplNameRechts FplNameText="Name Rechts"/>
+        </FplZeile>
+    </Buchfahrplan>
+</Zusi>
