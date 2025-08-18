@@ -4,18 +4,18 @@ use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
-pub struct Datei {
-    #[serde(rename = "@Dateiname", default, skip_serializing_if = "IsDefault::is_default")]
+pub struct Phi {
+    #[serde(rename = "@X", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub dateiname: String,
+    pub x: f64,
 
-    #[serde(rename = "@inst", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Y", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub inst: i32,
+    pub y: f64,
 
-    #[serde(rename = "@NurInfo", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Z", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub nur_info: bool,
+    pub z: f64,
 
     #[serde(flatten)]
     #[builder(default)]

@@ -1,0 +1,27 @@
+<Zusi>
+    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Fahrplan AnfangsZeit="2022-09-12 08:32:29">
+        <BefehlsKonfiguration Dateiname="path/to/file"/>
+        <LaPDF/>
+        <StrebuPDF/>
+        <ErsatzfahrplaenePDF/>
+        <Begruessungsdatei/>
+        <Zug>
+            <Datei Dateiname="path/to/first.trn"/>
+        </Zug>
+        <Zug>
+            <Datei Dateiname="path/to/second.trn"/>
+        </Zug>
+        <StrModul>
+            <Datei Dateiname="path/to/strmod1.st3"/>
+            <p/>
+            <phi/>
+        </StrModul>
+        <StrModul>
+            <Datei Dateiname="path/to/strmod2.st3"/>
+            <p/>
+            <phi/>
+        </StrModul>
+        <UTM/>
+    </Fahrplan>
+</Zusi>

@@ -1,0 +1,35 @@
+<Zusi>
+    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Fahrplan AnfangsZeit="2023-04-07 03:23:07" Zeitmodus="1" ChaosVorschlagen="true" ChaosVorschlag="0.03"
+              trnDateien="true">
+        <BefehlsKonfiguration Dateiname="to/the/file.ext"/>
+        <LaPDF Dateiname="to/the/file.ext"/>
+        <StrebuPDF Dateiname="to/the/file.ext"/>
+        <ErsatzfahrplaenePDF Dateiname="to/the/file.ext"/>
+        <Begruessungsdatei Dateiname="to/the/file.ext"/>
+        <trn>
+            <Datei Dateiname="path/to/file"/>
+            <FahrplanEintrag/>
+            <FahrplanEintrag FplEintrag="1"/>
+            <FahrzeugVarianten/>
+        </trn>
+        <trn>
+            <Datei Dateiname="path/to/file"/>
+            <FahrplanEintrag/>
+            <FahrplanEintrag/>
+            <FahrzeugVarianten/>
+        </trn>
+        <Zug>
+            <Datei Dateiname="to/the/zug1.trn"/>
+        </Zug>
+        <Zug>
+            <Datei Dateiname="to/the/zug2.trn"/>
+        </Zug>
+        <StrModul>
+            <Datei Dateiname="to/the/mod1.st3"/>
+            <p X="0.1" Y="0.2" Z="0.3"/>
+            <phi X="0.4" Y="0.5" Z="0.6"/>
+        </StrModul>
+        <UTM UTM_WE="8" UTM_NS="7" UTM_Zone="33" UTM_Zone2="Zone2"/>
+    </Fahrplan>
+</Zusi>
