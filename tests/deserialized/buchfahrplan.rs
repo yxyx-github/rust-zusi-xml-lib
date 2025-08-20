@@ -16,7 +16,7 @@ use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_v_max_reduzi
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrzeug_zusatz_info::FahrzeugZusatzInfo;
 use zusi_xml_lib::xml::zusi::buchfahrplan::Buchfahrplan;
-use zusi_xml_lib::xml::zusi::info::Info;
+use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::bremsstellung::Bremsstellung;
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
 use zusi_xml_lib::xml::zusi::lib::ereignis::Ereignis;
@@ -28,7 +28,7 @@ use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 pub fn all() -> Zusi {
     Zusi {
         info: Info {
-            datei_typ: "result".into(),
+            datei_typ: DateiTyp::Buchfahrplan,
             version: "A.1".into(),
             min_version: "A.0".into(),
             autor_eintrag: None,
@@ -157,7 +157,7 @@ pub fn with_defaults() -> Zusi {
     Zusi::builder()
         .info(
             Info::builder()
-            .datei_typ("result".into())
+            .datei_typ(DateiTyp::Buchfahrplan)
             .version("A.1".into())
             .min_version("A.0".into())
             .build()

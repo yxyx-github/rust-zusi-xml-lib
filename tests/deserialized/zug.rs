@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use time::macros::datetime;
-use zusi_xml_lib::xml::zusi::info::Info;
+use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::bremsstellung::Bremsstellung;
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
 use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
@@ -17,7 +17,7 @@ use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 pub fn all() -> Zusi {
     Zusi {
         info: Info {
-            datei_typ: "result".into(),
+            datei_typ: DateiTyp::Zug,
             version: "A.1".into(),
             min_version: "A.0".into(),
             autor_eintrag: None,
@@ -246,7 +246,7 @@ pub fn with_defaults() -> Zusi {
     Zusi::builder()
         .info(
             Info::builder()
-            .datei_typ("result".into())
+            .datei_typ(DateiTyp::Zug)
             .version("A.1".into())
             .min_version("A.0".into())
             .build()

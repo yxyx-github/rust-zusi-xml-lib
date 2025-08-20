@@ -1,5 +1,5 @@
 <Zusi>
-    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Info DateiTyp="Zug" Version="A.1" MinVersion="A.0"/>
     <Zug Gattung="RE" Nummer="33333" Zuglauf="AStadt - BStadt" BRAngabe="442" Prio="1" Standortmodus="1"
          StartVorschubweg="10" FplBremsstellungTextvorgabe="R+Mg" EnergieVorgabe="20" spAnfang="10" MBrh="1.9"
          FplMasse="300" FplZuglaenge="100" Verkehrstage="Mo-Fr" Grenzlast="true" spZugNiedriger="30" APBeschl="0.7"

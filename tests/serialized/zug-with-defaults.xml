@@ -1,5 +1,5 @@
 <Zusi>
-    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Info DateiTyp="Zug" Version="A.1" MinVersion="A.0"/>
     <Zug>
         <Datei Dateiname="path/to/file"/>
         <FahrplanEintrag/>

@@ -1,5 +1,5 @@
 <Zusi>
-    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Info DateiTyp="Buchfahrplan" Version="A.1" MinVersion="A.0"/>
     <Buchfahrplan Gattung="RB" Nummer="2027" Zuglauf="ADorf - BDorf" BR="442" Masse="40" spMax="30" Bremsh="1.95"
                   MBrh="1.8" Verkehrstage="Mo - Fr" Grenzlast="true" Laenge="70" LaengeLoks="10" WagenzugLaenge="60"
                   kmStart="3.4" BremsstellungZug="5" FplBremsstellungTextvorgabe="R+Mg" GNTSpalte="true">

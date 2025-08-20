@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use time::macros::datetime;
 use zusi_xml_lib::delphi_timestamp::DelphiTimestamp;
-use zusi_xml_lib::xml::zusi::info::Info;
+use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 use zusi_xml_lib::xml::zusi::result::fahrt_eintrag::{FahrtEintrag, FahrtTyp};
 use zusi_xml_lib::xml::zusi::result::ZusiResult;
@@ -10,7 +10,7 @@ use zusi_xml_lib::xml::zusi::result::ZusiResult;
 pub fn all() -> Zusi {
     Zusi {
         info: Info {
-            datei_typ: "result".into(),
+            datei_typ: DateiTyp::Result,
             version: "A.1".into(),
             min_version: "A.0".into(),
             autor_eintrag: None,
@@ -73,7 +73,7 @@ pub fn with_defaults() -> Zusi {
     Zusi::builder()
         .info(
             Info::builder()
-            .datei_typ("result".into())
+            .datei_typ(DateiTyp::Result)
             .version("A.1".into())
             .min_version("A.0".into())
             .build()

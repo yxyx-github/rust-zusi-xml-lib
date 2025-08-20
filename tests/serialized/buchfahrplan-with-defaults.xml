@@ -1,5 +1,5 @@
 <Zusi>
-    <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
+    <Info DateiTyp="Buchfahrplan" Version="A.1" MinVersion="A.0"/>
     <Buchfahrplan>
         <Datei_fpn/>
         <Datei_trn/>

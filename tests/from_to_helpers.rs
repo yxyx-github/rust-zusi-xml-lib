@@ -4,7 +4,7 @@ use crate::utils::cleanup_xml;
 use std::fs;
 use tempfile::tempdir;
 use time::macros::datetime;
-use zusi_xml_lib::xml::zusi::info::Info;
+use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
 use zusi_xml_lib::xml::zusi::result::ZusiResult;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
@@ -22,7 +22,7 @@ fn expected_deserialized() -> Zusi {
     Zusi::builder()
         .info(
             Info::builder()
-                .datei_typ("result".into())
+                .datei_typ(DateiTyp::Result)
                 .version("A.4".into())
                 .min_version("A.3".into())
                 .build()
