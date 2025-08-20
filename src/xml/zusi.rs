@@ -1,8 +1,9 @@
-use std::fs::File;
-use std::io;
-use std::io::{Read, Write};
+use std::fmt::Debug;
 use std::path::Path;
+use std::{fs, io};
 
+use crate::xml::zusi::buchfahrplan::Buchfahrplan;
+use crate::xml::zusi::fahrplan::Fahrplan;
 use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
 use crate::xml::zusi::zug::Zug;
@@ -10,8 +11,6 @@ pub use quick_xml::DeError;
 use quick_xml::{de, se, SeError};
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
-use crate::xml::zusi::buchfahrplan::Buchfahrplan;
-use crate::xml::zusi::fahrplan::Fahrplan;
 
 pub mod lib;
 pub mod info;
@@ -36,13 +35,9 @@ impl Zusi {
     }
 
     pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadZusiXMLFileError> {
-        let mut file = File::open(path)
-            .map_err(|err| ReadZusiXMLFileError::IOError(err))?;
-        let mut contents = String::new();
-        file.read_to_string(&mut contents)
-            .map_err(|err| ReadZusiXMLFileError::IOError(err))?;
+        let xml = fs::read_to_string(path).map_err(|err| ReadZusiXMLFileError::IOError(err))?;
         Ok(
-            Zusi::from_xml(&contents)
+            Zusi::from_xml(&xml)
                 .map_err(|err| ReadZusiXMLFileError::DeError(err))?
         )
     }
@@ -54,10 +49,7 @@ impl Zusi {
     pub fn to_xml_file_by_path<P: AsRef<Path>>(&self, path: P) -> Result<(), WriteZusiXMLFileError> {
         let xml = self.to_xml()
             .map_err(|err| WriteZusiXMLFileError::SeError(err))?;
-        let mut file = File::create(path)
-            .map_err(|err| WriteZusiXMLFileError::IOError(err))?;
-        file.write_all(xml.as_bytes())
-            .map_err(|err| WriteZusiXMLFileError::IOError(err))?;
+        fs::write(path, xml).map_err(|err| WriteZusiXMLFileError::IOError(err))?;
         Ok(())
     }
 }
