@@ -35,15 +35,15 @@ impl Zusi {
         de::from_str(xml)
     }
 
-    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ZusiXMLFileError> {
+    pub fn from_xml_file_by_path<P: AsRef<Path>>(path: P) -> Result<Self, ReadZusiXMLFileError> {
         let mut file = File::open(path)
-            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+            .map_err(|err| ReadZusiXMLFileError::IOError(err))?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)
-            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+            .map_err(|err| ReadZusiXMLFileError::IOError(err))?;
         Ok(
             Zusi::from_xml(&contents)
-                .map_err(|err| ZusiXMLFileError::DeError(err))?
+                .map_err(|err| ReadZusiXMLFileError::DeError(err))?
         )
     }
 
@@ -51,13 +51,13 @@ impl Zusi {
         se::to_string(self)
     }
 
-    pub fn to_xml_file_by_path<P: AsRef<Path>>(&self, path: P) -> Result<(), ZusiXMLFileError> {
+    pub fn to_xml_file_by_path<P: AsRef<Path>>(&self, path: P) -> Result<(), WriteZusiXMLFileError> {
         let xml = self.to_xml()
-            .map_err(|err| ZusiXMLFileError::SeError(err))?;
+            .map_err(|err| WriteZusiXMLFileError::SeError(err))?;
         let mut file = File::create(path)
-            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+            .map_err(|err| WriteZusiXMLFileError::IOError(err))?;
         file.write_all(xml.as_bytes())
-            .map_err(|err| ZusiXMLFileError::IOError(err))?;
+            .map_err(|err| WriteZusiXMLFileError::IOError(err))?;
         Ok(())
     }
 }
@@ -69,10 +69,15 @@ impl AsRef<Zusi> for Zusi {
 }
 
 #[derive(Debug)]
-pub enum ZusiXMLFileError {
+pub enum ReadZusiXMLFileError {
+    IOError(io::Error),
+    DeError(DeError),
+}
+
+#[derive(Debug)]
+pub enum WriteZusiXMLFileError {
     IOError(io::Error),
     SeError(SeError),
-    DeError(DeError),
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
