@@ -90,3 +90,108 @@ pub enum ZusiValue {
     #[serde(rename = "Buchfahrplan")]
     Buchfahrplan(Buchfahrplan),
 }
+
+pub struct TypedZusi<T: ZusiValueType> {
+    pub info: Info,
+    pub value: T,
+}
+
+impl<T: ZusiValueType> From<TypedZusi<T>> for Zusi {
+    fn from(value: TypedZusi<T>) -> Self {
+        Zusi {
+            info: value.info,
+            value: value.value.into_zusi_value(),
+        }
+    }
+}
+
+pub trait ZusiValueType {
+    fn into_zusi_value(self) -> ZusiValue;
+}
+
+#[derive(Debug)]
+pub struct WrongVariant;
+
+impl ZusiValueType for ZusiResult {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Result(self)
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<ZusiResult> {
+    type Error = WrongVariant;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Result(variant) = value.value {
+            Ok(Self {
+                info: value.info,
+                value: variant,
+            })
+        } else {
+            Err(WrongVariant)
+        }
+    }
+}
+
+impl ZusiValueType for Fahrplan {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Fahrplan(self)
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<Fahrplan> {
+    type Error = WrongVariant;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Fahrplan(variant) = value.value {
+            Ok(Self {
+                info: value.info,
+                value: variant,
+            })
+        } else {
+            Err(WrongVariant)
+        }
+    }
+}
+
+impl ZusiValueType for Zug {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Zug(self)
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<Zug> {
+    type Error = WrongVariant;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Zug(variant) = value.value {
+            Ok(Self {
+                info: value.info,
+                value: variant,
+            })
+        } else {
+            Err(WrongVariant)
+        }
+    }
+}
+
+impl ZusiValueType for Buchfahrplan {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Buchfahrplan(self)
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
+    type Error = WrongVariant;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Buchfahrplan(variant) = value.value {
+            Ok(Self {
+                info: value.info,
+                value: variant,
+            })
+        } else {
+            Err(WrongVariant)
+        }
+    }
+}
