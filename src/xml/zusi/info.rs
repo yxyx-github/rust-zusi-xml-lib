@@ -32,7 +32,7 @@ pub struct Info {
     pub _unknown: HashMap<String, String>,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Debug, Clone)]
 pub enum DateiTyp {
     #[serde(rename = "result")]
     Result,
