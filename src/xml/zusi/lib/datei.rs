@@ -2,7 +2,7 @@ use crate::serde_helpers::IsDefault;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
-use crate::xml::zusi::lib::zusi_path::ZusiPath;
+use crate::xml::zusi::lib::path::zusi_path::ZusiPath;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Datei {

@@ -6,4 +6,4 @@ pub mod utm;
 pub mod ereignis;
 pub mod position;
 pub mod phi;
-pub mod zusi_path;
+pub mod path;
