@@ -6,7 +6,7 @@ use crate::utils::TestRunner;
 use zusi_xml_lib::xml::zusi::Zusi;
 
 const XML_ALL: &str = "./tests/serialized/zug.xml";
-const XML_WITH_DEFAULTS: &str = "./tests/serialized/zug-with-defaults.xml";
+const XML_WITH_DEFAULTS: &str = "./tests/serialized/zug_with-defaults.xml";
 
 fn runner() -> TestRunner<Zusi> {
     TestRunner::new_with_file(XML_ALL, zug::all())

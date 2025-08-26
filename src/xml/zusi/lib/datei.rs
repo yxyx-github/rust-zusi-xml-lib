@@ -2,12 +2,13 @@ use crate::serde_helpers::IsDefault;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
+use crate::xml::zusi::lib::zusi_path::ZusiPath;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Datei {
     #[serde(rename = "@Dateiname", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub dateiname: String,
+    pub dateiname: ZusiPath,
 
     #[serde(rename = "@inst", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

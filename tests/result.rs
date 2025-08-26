@@ -6,7 +6,7 @@ use crate::deserialized::result;
 use crate::utils::TestRunner;
 
 const XML_ALL: &str = "./tests/serialized/result.xml";
-const XML_WITH_DEFAULTS: &str = "./tests/serialized/result-with-defaults.xml";
+const XML_WITH_DEFAULTS: &str = "./tests/serialized/result_with-defaults.xml";
 
 fn runner() -> TestRunner<Zusi> {
     TestRunner::new_with_file(XML_ALL, result::all())
