@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use quick_xml::{de, DeError};
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Info {
     #[serde(rename = "@DateiTyp")]
     pub datei_typ: DateiTyp,
@@ -32,7 +32,7 @@ pub struct Info {
     pub _unknown: HashMap<String, String>,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum DateiTyp {
     #[serde(rename = "result")]
     Result,

@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum FahrtTyp {
     #[serde(rename = "0")]
     Standard,
@@ -41,7 +41,7 @@ impl Default for FahrtTyp {
     }
 }
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 #[serde(deny_unknown_fields)]
 pub struct FahrtEintrag {
     #[serde(rename = "@FahrtTyp", default, skip_serializing_if = "IsDefault::is_default")]

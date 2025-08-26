@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum LodZug {
     #[serde(rename = "0")]
     Alle,
@@ -33,7 +33,7 @@ impl Default for LodZug {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum ZugTyp {
     #[serde(rename = "0")]
     Gueterzug,
@@ -48,7 +48,7 @@ impl Default for ZugTyp {
     }
 }
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Zug {
     #[serde(rename = "@Gattung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

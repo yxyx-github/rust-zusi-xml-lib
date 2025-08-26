@@ -2,7 +2,7 @@ use crate::serde_helpers::IsDefault;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 #[serde(deny_unknown_fields)]
 pub struct Ereignis {
     #[serde(rename = "@Er", default, skip_serializing_if = "IsDefault::is_default")]

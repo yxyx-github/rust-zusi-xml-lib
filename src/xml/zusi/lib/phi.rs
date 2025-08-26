@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Phi {
     #[serde(rename = "@X", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

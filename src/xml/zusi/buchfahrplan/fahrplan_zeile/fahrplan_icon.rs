@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanIcon {
     #[serde(rename = "@FplIconNr", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

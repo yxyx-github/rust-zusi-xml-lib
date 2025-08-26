@@ -20,7 +20,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum DoppeltraktionsModus {
     #[serde(rename = "0")]
     LokfuehrerOderKeinAntrieb,
@@ -38,7 +38,7 @@ impl Default for DoppeltraktionsModus {
     }
 }
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrzeugInfo {
     #[serde(rename = "@IDHaupt", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

@@ -19,7 +19,7 @@ pub mod zug;
 pub mod fahrplan;
 pub mod buchfahrplan;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 #[serde(deny_unknown_fields)]
 pub struct Zusi {
     #[serde(rename = "Info")]
@@ -72,7 +72,7 @@ pub enum WriteZusiXMLFileError {
     SeError(SeError),
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub enum ZusiValue {
     /// Version A.1
     #[serde(rename = "result")]

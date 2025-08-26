@@ -13,7 +13,7 @@ use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanEintrag {
     #[serde(rename = "@Ank", with = "date_time_option_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

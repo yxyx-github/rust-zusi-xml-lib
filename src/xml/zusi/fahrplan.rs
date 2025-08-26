@@ -13,7 +13,7 @@ use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Fahrplan {
     #[serde(rename = "@AnfangsZeit", with = "date_time_format")]
     pub anfangs_zeit: PrimitiveDateTime,

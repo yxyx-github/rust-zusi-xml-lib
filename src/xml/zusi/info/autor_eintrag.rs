@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 use crate::serde_helpers::IsDefault;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct AutorEintrag {
     #[serde(rename = "@AutorID", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

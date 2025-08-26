@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanAbfahrt {
     #[serde(rename = "@Abf", with = "date_time_format")]
     pub abfahrt: PrimitiveDateTime,
