@@ -1,5 +1,5 @@
-use std::path::{Path, PathBuf};
 use crate::xml::zusi::lib::path::zusi_path::ZusiPath;
+use std::path::{Path, PathBuf};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PrejoinedZusiPath {
@@ -23,8 +23,8 @@ impl PrejoinedZusiPath {
         &self.base_path
     }
 
-    pub fn zusi_path(&self) -> &PathBuf {
-        &self.zusi_path.get_path()
+    pub fn zusi_path(&self) -> &ZusiPath {
+        &self.zusi_path
     }
 
     pub fn full_path(&self) -> &PathBuf {
@@ -34,6 +34,19 @@ impl PrejoinedZusiPath {
     pub fn into_zusi_path(self) -> ZusiPath {
         self.zusi_path
     }
+
+    pub fn join_to_zusi_path<P: AsRef<Path>>(&self, path: P) -> PrejoinedZusiPath {
+        PrejoinedZusiPath::new(
+            &self.base_path,
+            self.zusi_path.join(path.as_ref())
+        )
+    }
+}
+
+impl AsRef<ZusiPath> for PrejoinedZusiPath {
+    fn as_ref(&self) -> &ZusiPath {
+        &self.zusi_path()
+    }
 }
 
 #[cfg(test)]
@@ -42,10 +55,18 @@ mod tests {
 
     #[test]
     fn test_new() {
-        let managed_zusi_path = PrejoinedZusiPath::new("a/b", ZusiPath::new("c/d.e"));
+        let prejoined_zusi_path = PrejoinedZusiPath::new("a/b", ZusiPath::new("c/d.e"));
 
-        assert_eq!(managed_zusi_path.base_path().to_str().unwrap(), "a/b");
-        assert_eq!(managed_zusi_path.zusi_path().to_str().unwrap(), "c/d.e");
-        assert_eq!(managed_zusi_path.full_path().to_str().unwrap(), "a/b/c/d.e");
+        assert_eq!(prejoined_zusi_path.base_path().to_str().unwrap(), "a/b");
+        assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "c/d.e");
+        assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "a/b/c/d.e");
+    }
+
+    #[test]
+    fn test_join_to_zusi_path() {
+        assert_eq!(
+            PrejoinedZusiPath::new("a/b", ZusiPath::new("c/d.e")).join_to_zusi_path("f/g.h"),
+            PrejoinedZusiPath { base_path: "a/b".into(), zusi_path: "c/d.e/f/g.h".into(), full_path: "a/b/c/d.e/f/g.h".into() },
+        );
     }
 }

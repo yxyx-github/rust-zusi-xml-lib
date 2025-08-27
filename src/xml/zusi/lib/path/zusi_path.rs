@@ -1,6 +1,6 @@
+use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
-use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InvalidBasePath(());
@@ -24,14 +24,28 @@ impl ZusiPath {
         base_path.as_ref().join(&self.0)
     }
     
-    pub fn get_path(&self) -> &PathBuf {
+    pub fn get(&self) -> &PathBuf {
         &self.0
+    }
+
+    pub fn take(self) -> PathBuf {
+        self.0
+    }
+
+    pub fn join<P: AsRef<Path>>(&self, path: P) -> ZusiPath {
+        self.0.join(path.as_ref()).into()
     }
 }
 
 impl From<PrejoinedZusiPath> for ZusiPath {
     fn from(value: PrejoinedZusiPath) -> Self {
         value.into_zusi_path()
+    }
+}
+
+impl From<&ZusiPath> for ZusiPath {
+    fn from(value: &ZusiPath) -> Self {
+        value.clone()
     }
 }
 
@@ -47,9 +61,21 @@ impl From<&str> for ZusiPath {
     }
 }
 
+impl From<String> for ZusiPath {
+    fn from(value: String) -> Self {
+        Self(value.into())
+    }
+}
+
 impl Default for ZusiPath {
     fn default() -> Self {
         Self(PathBuf::default())
+    }
+}
+
+impl AsRef<ZusiPath> for ZusiPath {
+    fn as_ref(&self) -> &ZusiPath {
+        self
     }
 }
 
@@ -74,6 +100,14 @@ mod tests {
         assert_eq!(
             ZusiPath::new("c/d.e").resolve("a/b"),
             PathBuf::from("a/b/c/d.e"),
+        );
+    }
+
+    #[test]
+    fn test_join() {
+        assert_eq!(
+            ZusiPath::new("a/b.c").join("d/e/f.g"),
+            ZusiPath::new("a/b.c/d/e/f.g"),
         );
     }
 }
