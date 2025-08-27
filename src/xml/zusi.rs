@@ -91,6 +91,7 @@ pub enum ZusiValue {
     Buchfahrplan(Buchfahrplan),
 }
 
+#[derive(TypedBuilder, PartialEq, Debug, Clone)]
 pub struct TypedZusi<T: ZusiValueType> {
     pub info: Info,
     pub value: T,
