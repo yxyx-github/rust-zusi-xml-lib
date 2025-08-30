@@ -3,24 +3,24 @@ use std::path::{Path, PathBuf};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PrejoinedZusiPath {
-    base_path: PathBuf,
+    data_dir: PathBuf,
     zusi_path: ZusiPath,
     full_path: PathBuf,
 }
 
 impl PrejoinedZusiPath {
-    pub fn new<P: AsRef<Path> + Into<PathBuf>>(base_path: P, zusi_path: ZusiPath) -> Self {
-        let full_path = zusi_path.resolve(&base_path);
+    pub fn new<P: AsRef<Path> + Into<PathBuf>>(data_dir: P, zusi_path: ZusiPath) -> Self {
+        let full_path = zusi_path.resolve(&data_dir);
 
         Self {
-            base_path: base_path.into(),
+            data_dir: data_dir.into(),
             zusi_path,
             full_path,
         }
     }
 
-    pub fn base_path(&self) -> &PathBuf {
-        &self.base_path
+    pub fn data_dir(&self) -> &PathBuf {
+        &self.data_dir
     }
 
     pub fn zusi_path(&self) -> &ZusiPath {
@@ -37,7 +37,7 @@ impl PrejoinedZusiPath {
 
     pub fn join_to_zusi_path<P: AsRef<Path>>(&self, path: P) -> PrejoinedZusiPath {
         PrejoinedZusiPath::new(
-            &self.base_path,
+            &self.data_dir,
             self.zusi_path.join(path.as_ref())
         )
     }
@@ -57,7 +57,7 @@ mod tests {
     fn test_new() {
         let prejoined_zusi_path = PrejoinedZusiPath::new("a/b", ZusiPath::new("c/d.e"));
 
-        assert_eq!(prejoined_zusi_path.base_path().to_str().unwrap(), "a/b");
+        assert_eq!(prejoined_zusi_path.data_dir().to_str().unwrap(), "a/b");
         assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "c/d.e");
         assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "a/b/c/d.e");
     }
@@ -66,7 +66,7 @@ mod tests {
     fn test_join_to_zusi_path() {
         assert_eq!(
             PrejoinedZusiPath::new("a/b", ZusiPath::new("c/d.e")).join_to_zusi_path("f/g.h"),
-            PrejoinedZusiPath { base_path: "a/b".into(), zusi_path: "c/d.e/f/g.h".into(), full_path: "a/b/c/d.e/f/g.h".into() },
+            PrejoinedZusiPath { data_dir: "a/b".into(), zusi_path: "c/d.e/f/g.h".into(), full_path: "a/b/c/d.e/f/g.h".into() },
         );
     }
 }

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct InvalidBasePath(());
+pub struct InvalidPathOrDataDir(());
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct ZusiPath(PathBuf);
@@ -13,15 +13,15 @@ impl ZusiPath {
         Self(path.into())
     }
 
-    pub fn new_using_base<P1: AsRef<Path>, P2: AsRef<Path>>(path: P1, base_path: P2) -> Result<Self, InvalidBasePath> {
-        match path.as_ref().strip_prefix(base_path) {
+    pub fn new_using_data_dir<P1: AsRef<Path>, P2: AsRef<Path>>(path: P1, data_dir: P2) -> Result<Self, InvalidPathOrDataDir> {
+        match path.as_ref().strip_prefix(data_dir) {
             Ok(path) => Ok(Self(path.into())),
-            Err(_) => Err(InvalidBasePath(())),
+            Err(_) => Err(InvalidPathOrDataDir(())),
         }
     }
 
-    pub fn resolve<P: AsRef<Path>>(&self, base_path: P) -> PathBuf {
-        base_path.as_ref().join(&self.0)
+    pub fn resolve<P: AsRef<Path>>(&self, data_dir: P) -> PathBuf {
+        data_dir.as_ref().join(&self.0)
     }
     
     pub fn get(&self) -> &PathBuf {
@@ -84,14 +84,14 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_new_using_base() {
+    fn test_new_using_data_dir() {
         assert_eq!(
-            ZusiPath::new_using_base("a/b/c/d.e", "a/b").unwrap(),
+            ZusiPath::new_using_data_dir("a/b/c/d.e", "a/b").unwrap(),
             ZusiPath::new("c/d.e"),
         );
         assert_eq!(
-            ZusiPath::new_using_base("a/b/c/d.e", "a/g"),
-            Err(InvalidBasePath(())),
+            ZusiPath::new_using_data_dir("a/b/c/d.e", "a/g"),
+            Err(InvalidPathOrDataDir(())),
         );
     }
 
