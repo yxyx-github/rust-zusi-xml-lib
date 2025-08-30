@@ -9,8 +9,8 @@ use crate::xml::zusi::zug::Zug;
 pub use quick_xml::DeError;
 use quick_xml::SeError;
 use serde::{Deserialize, Serialize};
-pub use serde_helpers::xml::{FromXML, ToXML};
 use typed_builder::TypedBuilder;
+pub use serde_helpers::xml::{FromXML, ToXML};
 
 pub mod lib;
 pub mod info;
@@ -28,9 +28,6 @@ pub struct Zusi {
     #[serde(rename = "$value")]
     pub value: ZusiValue,
 }
-
-impl FromXML for Zusi {}
-impl ToXML for Zusi {}
 
 impl AsRef<Zusi> for Zusi {
     fn as_ref(&self) -> &Zusi {
