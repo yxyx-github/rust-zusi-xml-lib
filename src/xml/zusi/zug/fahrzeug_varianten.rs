@@ -1,6 +1,6 @@
 pub mod fahrzeug_info;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::FahrzeugInfo;
 use serde::{Deserialize, Serialize};

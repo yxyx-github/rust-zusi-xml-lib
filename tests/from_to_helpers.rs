@@ -1,6 +1,6 @@
 mod utils;
 
-use crate::utils::cleanup_xml;
+use serde_helpers::xml::test_utils::cleanup_xml;
 use std::fs;
 use tempfile::tempdir;
 use time::macros::datetime;

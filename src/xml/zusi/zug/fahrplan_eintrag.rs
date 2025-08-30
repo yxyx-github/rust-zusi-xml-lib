@@ -2,8 +2,8 @@ pub mod fahrplan_signal_eintrag;
 pub mod fahrplan_fahrstrasse_eintrag;
 pub mod fahrplan_vorgang;
 
-use crate::serde_helpers::date_time_option_format;
-use crate::serde_helpers::IsDefault;
+use serde_helpers::with::date_time::date_time_option_format;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::ereignis::Ereignis;
 use crate::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrplan_signal_eintrag::FahrplanSignalEintrag;

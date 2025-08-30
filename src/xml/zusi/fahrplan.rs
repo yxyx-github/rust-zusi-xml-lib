@@ -1,8 +1,8 @@
 pub mod zug_datei_eintrag;
 pub mod strecken_modul;
 
-use crate::serde_helpers::date_time_format;
-use crate::serde_helpers::IsDefault;
+use serde_helpers::with::date_time::date_time_format;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::fahrplan::strecken_modul::StreckenModul;
 use crate::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
 use crate::xml::zusi::lib::datei::Datei;

@@ -1,6 +1,6 @@
 pub mod autor_eintrag;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::info::autor_eintrag::AutorEintrag;
 use crate::xml::zusi::lib::datei::Datei;
 use serde::{Deserialize, Serialize};

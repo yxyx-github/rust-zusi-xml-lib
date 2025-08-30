@@ -12,7 +12,7 @@ pub mod fahrplan_abfahrt;
 pub mod fahrplan_richtungswechsel;
 pub mod fahrplan_v_max_reduzierungen;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_abfahrt::FahrplanAbfahrt;
 use crate::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_ankunft::FahrplanAnkunft;
 use crate::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_icon::FahrplanIcon;

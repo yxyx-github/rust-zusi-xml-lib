@@ -1,5 +1,5 @@
-use crate::serde_helpers::IsDefault;
-use crate::serde_helpers::date_time_format;
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::date_time::date_time_format;
 use crate::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;

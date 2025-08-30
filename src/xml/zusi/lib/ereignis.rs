@@ -1,4 +1,4 @@
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 

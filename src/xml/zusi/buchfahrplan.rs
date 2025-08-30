@@ -1,7 +1,7 @@
 pub mod fahrzeug_zusatz_info;
 pub mod fahrplan_zeile;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
 use crate::xml::zusi::buchfahrplan::fahrzeug_zusatz_info::FahrzeugZusatzInfo;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;

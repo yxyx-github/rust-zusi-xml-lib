@@ -2,7 +2,7 @@ pub mod aufgleis_referenz;
 pub mod fahrplan_eintrag;
 pub mod fahrzeug_varianten;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
 use crate::xml::zusi::zug::aufgleis_referenz::AufgleisReferenz;

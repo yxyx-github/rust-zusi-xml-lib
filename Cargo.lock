@@ -171,6 +171,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde-helpers"
+version = "0.1.0"
+dependencies = [
+ "quick-xml",
+ "regex",
+ "serde",
+ "time",
+]
+
+[[package]]
 name = "serde_derive"
 version = "1.0.219"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -349,8 +359,8 @@ name = "zusi-xml-lib"
 version = "0.6.2"
 dependencies = [
  "quick-xml",
- "regex",
  "serde",
+ "serde-helpers",
  "tempfile",
  "time",
  "typed-builder",

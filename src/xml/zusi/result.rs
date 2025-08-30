@@ -1,11 +1,11 @@
-use crate::serde_helpers::IsDefault;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
 use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
-use crate::serde_helpers::{date_time_format, date_time_option_format};
 use crate::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
+use serde_helpers::with::date_time::{date_time_format, date_time_option_format};
 
 pub mod fahrt_eintrag;
 

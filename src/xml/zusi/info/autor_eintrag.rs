@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct AutorEintrag {

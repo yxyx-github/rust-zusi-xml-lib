@@ -6,7 +6,7 @@ pub mod zugdaten_indusi_analog;
 pub mod zugdaten_indusi_rechner;
 pub mod zugdaten_pzb80;
 
-use crate::serde_helpers::IsDefault;
+use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_etcs::ZugdatenETCS;

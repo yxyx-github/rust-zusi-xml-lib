@@ -5,5 +5,5 @@
 /// Includes all the required data structures. At the moment `.result.xml` files are supported only.
 /// For details about the schema, please refer to the demo files included in the [Zusi](https://www.zusi.de/) installation.
 pub mod xml;
-mod serde_helpers;
 pub mod delphi_timestamp;
+mod serde_helpers;
