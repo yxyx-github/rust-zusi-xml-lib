@@ -1,5 +1,4 @@
 use std::fmt::Debug;
-use std::io;
 
 use crate::xml::zusi::buchfahrplan::Buchfahrplan;
 use crate::xml::zusi::fahrplan::Fahrplan;
@@ -7,7 +6,6 @@ use crate::xml::zusi::info::Info;
 use crate::xml::zusi::result::ZusiResult;
 use crate::xml::zusi::zug::Zug;
 pub use quick_xml::DeError;
-use quick_xml::SeError;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 pub use serde_helpers::xml::{FromXML, ToXML};
@@ -33,18 +31,6 @@ impl AsRef<Zusi> for Zusi {
     fn as_ref(&self) -> &Zusi {
         &self
     }
-}
-
-#[derive(Debug)]
-pub enum ReadZusiXMLFileError {
-    IOError(io::Error),
-    DeError(DeError),
-}
-
-#[derive(Debug)]
-pub enum WriteZusiXMLFileError {
-    IOError(io::Error),
-    SeError(SeError),
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
