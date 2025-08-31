@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
@@ -8,11 +9,14 @@ pub enum ZusiPathError {
     ZusiPathMustBeRelative,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct InvalidPathOrDataDir(());
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ZusiPathMustBeRelative(());
+impl Display for ZusiPathError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ZusiPathError::PathDoesNotContainDataDir => write!(f, "The path does not contain the data directory."),
+            ZusiPathError::ZusiPathMustBeRelative => write!(f, "The path must be relative."),
+        }
+    }
+}
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct ZusiPath(PathBuf);
