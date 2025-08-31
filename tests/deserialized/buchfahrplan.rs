@@ -54,13 +54,13 @@ pub fn all() -> Zusi {
             fahrplan_bremsstellung_textvorgabe: "R+Mg".into(),
             gnt_spalte: true,
             datei_fpn: Datei {
-                dateiname: "to/the/file.fpn".into(),
+                dateiname: "to/the/file.fpn".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             datei_trn: Datei {
-                dateiname: "to/the/file.trn".into(),
+                dateiname: "to/the/file.trn".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),

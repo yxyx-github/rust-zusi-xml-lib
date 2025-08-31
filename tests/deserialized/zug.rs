@@ -60,25 +60,25 @@ pub fn all() -> Zusi {
             buchfahrplan_dll: "my.dll".into(),
             tuer_system_bezeichner: "TAV".into(),
             fahrplan_datei: Datei {
-                dateiname: "this/is/it.fpn".into(),
+                dateiname: "this/is/it.fpn".try_into().unwrap(),
                 inst: 1,
                 nur_info: true,
                 _unknown: HashMap::new(),
             },
             buchfahrplan_roh_datei: Some(Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             }),
             buchfahrplan_bmp_datei: Some(Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             }),
             anfangsbefehl: Some(Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
@@ -86,7 +86,7 @@ pub fn all() -> Zusi {
             aufgleis_referenz: Some(AufgleisReferenz {
                 referenz_nummer: 3,
                 datei: Datei {
-                    dateiname: "to/the/file.ext".into(),
+                    dateiname: "to/the/file.ext".try_into().unwrap(),
                     inst: 0,
                     nur_info: false,
                     _unknown: HashMap::new(),
@@ -148,7 +148,7 @@ pub fn all() -> Zusi {
                         fahrzeug_zusatzinfo: "Info".into(),
                         nvr_nummer: "NVR".into(),
                         datei: Datei {
-                            dateiname: "to/the/file.ext".into(),
+                            dateiname: "to/the/file.ext".try_into().unwrap(),
                             inst: 0,
                             nur_info: false,
                             _unknown: HashMap::new(),
@@ -199,7 +199,7 @@ pub fn all() -> Zusi {
                         fahrzeug_zusatzinfo: "Info".into(),
                         nvr_nummer: "NVR".into(),
                         datei: Datei {
-                            dateiname: "to/the/file.ext".into(),
+                            dateiname: "to/the/file.ext".try_into().unwrap(),
                             inst: 0,
                             nur_info: false,
                             _unknown: HashMap::new(),
@@ -253,7 +253,7 @@ pub fn with_defaults() -> Zusi {
         )
         .value(ZusiValue::Zug(
             Zug::builder()
-                .fahrplan_datei(Datei::builder().dateiname("path/to/file".into()).build())
+                .fahrplan_datei(Datei::builder().dateiname("path/to/file".try_into().unwrap()).build())
                 .fahrplan_eintraege(vec![
                     FahrplanEintrag::builder().build(),
                     FahrplanEintrag::builder().fahrplan_eintrag(FahrplanEintragsTyp::Hilfseintrag).build(),

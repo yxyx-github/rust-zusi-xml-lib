@@ -14,21 +14,21 @@ pub fn dateien() -> DateiTestWrapper {
     DateiTestWrapper {
         value: vec![
             Datei {
-                dateiname: "./a/b/c.d".into(),
+                dateiname: "./a/b/c.d".try_into().unwrap(),
                 inst: 1,
                 nur_info: true,
                 _unknown: HashMap::new(),
             },
             Datei {
-                dateiname: "a/b/c.d".into(),
+                dateiname: "a/b/c.d".try_into().unwrap(),
                 inst: 1,
                 nur_info: true,
                 _unknown: HashMap::new(),
             },
             Datei {
-                dateiname: "/a/b/c.d".into(),
-                inst: 1,
-                nur_info: true,
+                dateiname: "a/b/c.d".try_into().unwrap(),
+                inst: 0,
+                nur_info: false,
                 _unknown: HashMap::new(),
             },
             Datei::builder().build(),

@@ -3,20 +3,33 @@ use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+pub enum ZusiPathError {
+    PathDoesNotContainDataDir,
+    ZusiPathMustBeRelative,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InvalidPathOrDataDir(());
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ZusiPathMustBeRelative(());
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct ZusiPath(PathBuf);
 
 impl ZusiPath {
-    pub fn new<P: Into<PathBuf>>(path: P) -> Self {
-        Self(path.into())
+    pub fn new<P: AsRef<Path> + Into<PathBuf>>(path: P) -> Result<Self, ZusiPathError> {
+        if path.as_ref().is_relative() {
+            Ok(Self(path.into()))
+        } else {
+            Err(ZusiPathError::ZusiPathMustBeRelative)
+        }
     }
 
-    pub fn new_using_data_dir<P1: AsRef<Path>, P2: AsRef<Path>>(path: P1, data_dir: P2) -> Result<Self, InvalidPathOrDataDir> {
+    pub fn new_using_data_dir<P1: AsRef<Path>, P2: AsRef<Path>>(path: P1, data_dir: P2) -> Result<Self, ZusiPathError> {
         match path.as_ref().strip_prefix(data_dir) {
             Ok(path) => Ok(Self(path.into())),
-            Err(_) => Err(InvalidPathOrDataDir(())),
+            Err(_) => Err(ZusiPathError::PathDoesNotContainDataDir),
         }
     }
 
@@ -32,8 +45,8 @@ impl ZusiPath {
         self.0
     }
 
-    pub fn join<P: AsRef<Path>>(&self, path: P) -> ZusiPath {
-        self.0.join(path.as_ref()).into()
+    pub fn join<P: AsRef<Path>>(&self, path: P) -> Result<ZusiPath, ZusiPathError> {
+        self.0.join(path.as_ref()).try_into()
     }
 }
 
@@ -49,21 +62,27 @@ impl From<&ZusiPath> for ZusiPath {
     }
 }
 
-impl From<PathBuf> for ZusiPath {
-    fn from(value: PathBuf) -> Self {
-        Self(value)
+impl TryFrom<PathBuf> for ZusiPath {
+    type Error = ZusiPathError;
+
+    fn try_from(value: PathBuf) -> Result<Self, Self::Error> {
+        ZusiPath::new(value)
     }
 }
 
-impl From<&str> for ZusiPath {
-    fn from(value: &str) -> Self {
-        Self(value.into())
+impl TryFrom<&str> for ZusiPath {
+    type Error = ZusiPathError;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        ZusiPath::new(PathBuf::from(value))
     }
 }
 
-impl From<String> for ZusiPath {
-    fn from(value: String) -> Self {
-        Self(value.into())
+impl TryFrom<String> for ZusiPath {
+    type Error = ZusiPathError;
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        ZusiPath::new(PathBuf::from(value))
     }
 }
 
@@ -84,30 +103,63 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_new() {
+        assert!(ZusiPath::new("a/b/c.d").is_ok());
+        assert_eq!(
+            ZusiPath::new("/a/b/c.d").unwrap_err(),
+            ZusiPathError::ZusiPathMustBeRelative,
+        );
+    }
+
+    #[test]
     fn test_new_using_data_dir() {
         assert_eq!(
             ZusiPath::new_using_data_dir("a/b/c/d.e", "a/b").unwrap(),
-            ZusiPath::new("c/d.e"),
+            ZusiPath::new("c/d.e").unwrap(),
         );
         assert_eq!(
-            ZusiPath::new_using_data_dir("a/b/c/d.e", "a/g"),
-            Err(InvalidPathOrDataDir(())),
+            ZusiPath::new_using_data_dir("/a/b/c/d.e", "/a/b").unwrap(),
+            ZusiPath::new("c/d.e").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new_using_data_dir("/a/b/c/d.e", "a/b").unwrap_err(),
+            ZusiPathError::PathDoesNotContainDataDir,
+        );
+        assert_eq!(
+            ZusiPath::new_using_data_dir("a/b/c/d.e", "/a/b").unwrap_err(),
+            ZusiPathError::PathDoesNotContainDataDir,
+        );
+        assert_eq!(
+            ZusiPath::new_using_data_dir("a/b/c/d.e", "a/g").unwrap_err(),
+            ZusiPathError::PathDoesNotContainDataDir,
         );
     }
 
     #[test]
     fn test_resolve() {
         assert_eq!(
-            ZusiPath::new("c/d.e").resolve("a/b"),
+            ZusiPath::new("c/d.e").unwrap().resolve("a/b"),
             PathBuf::from("a/b/c/d.e"),
+        );
+        assert_eq!(
+            ZusiPath::new("c/d.e").unwrap().resolve("/a/b"),
+            PathBuf::from("/a/b/c/d.e"),
         );
     }
 
     #[test]
     fn test_join() {
         assert_eq!(
-            ZusiPath::new("a/b.c").join("d/e/f.g"),
-            ZusiPath::new("a/b.c/d/e/f.g"),
+            ZusiPath::new("a/b.c").unwrap().join("d/e/f.g").unwrap(),
+            ZusiPath::new("a/b.c/d/e/f.g").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("a/b.c").unwrap().join("./d/e/f.g").unwrap(),
+            ZusiPath::new("a/b.c/d/e/f.g").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("a/b.c").unwrap().join("/d/e/f.g").unwrap_err(),
+            ZusiPathError::ZusiPathMustBeRelative,
         );
     }
 }

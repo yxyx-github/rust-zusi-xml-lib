@@ -32,38 +32,38 @@ pub fn all() -> Zusi {
             chaos_vorschlag: 0.03,
             trn_dateien: true,
             befehls_konfiguration: Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             la_pdf: Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             streckenbuch_pdf: Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             ersatzfahrplaene_pdf: Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             begruessungs_datei: Datei {
-                dateiname: "to/the/file.ext".into(),
+                dateiname: "to/the/file.ext".try_into().unwrap(),
                 inst: 0,
                 nur_info: false,
                 _unknown: HashMap::new(),
             },
             zug_eintraege: vec![
                 Zug::builder()
-                    .fahrplan_datei(Datei::builder().dateiname("path/to/file".into()).build())
+                    .fahrplan_datei(Datei::builder().dateiname("path/to/file".try_into().unwrap()).build())
                     .fahrplan_eintraege(vec![
                         FahrplanEintrag::builder().build(),
                         FahrplanEintrag::builder().fahrplan_eintrag(FahrplanEintragsTyp::Hilfseintrag).build(),
@@ -71,7 +71,7 @@ pub fn all() -> Zusi {
                     .fahrzeug_varianten(FahrzeugVarianten::builder().build())
                     .build(),
                 Zug::builder()
-                    .fahrplan_datei(Datei::builder().dateiname("path/to/file".into()).build())
+                    .fahrplan_datei(Datei::builder().dateiname("path/to/file".try_into().unwrap()).build())
                     .fahrplan_eintraege(vec![
                         FahrplanEintrag::builder().build(),
                         FahrplanEintrag::builder().fahrplan_eintrag(FahrplanEintragsTyp::Standard).build(),
@@ -82,7 +82,7 @@ pub fn all() -> Zusi {
             zug_dateien: vec![
                 ZugDateiEintrag {
                     datei: Datei {
-                        dateiname: "to/the/zug1.trn".into(),
+                        dateiname: "to/the/zug1.trn".try_into().unwrap(),
                         inst: 0,
                         nur_info: false,
                         _unknown: HashMap::new(),
@@ -91,7 +91,7 @@ pub fn all() -> Zusi {
                 },
                 ZugDateiEintrag {
                     datei: Datei {
-                        dateiname: "to/the/zug2.trn".into(),
+                        dateiname: "to/the/zug2.trn".try_into().unwrap(),
                         inst: 0,
                         nur_info: false,
                         _unknown: HashMap::new(),
@@ -102,7 +102,7 @@ pub fn all() -> Zusi {
             strecken_module: vec![
                 StreckenModul {
                     datei: Datei {
-                        dateiname: "to/the/mod1.st3".into(),
+                        dateiname: "to/the/mod1.st3".try_into().unwrap(),
                         inst: 0,
                         nur_info: false,
                         _unknown: HashMap::new(),
@@ -147,18 +147,18 @@ pub fn with_defaults() -> Zusi {
         .value(ZusiValue::Fahrplan(
             Fahrplan::builder()
                 .anfangs_zeit(datetime!(2022-09-12 08:32:29))
-                .befehls_konfiguration(Datei::builder().dateiname("path/to/file".into()).build())
+                .befehls_konfiguration(Datei::builder().dateiname("path/to/file".try_into().unwrap()).build())
                 .la_pdf(Datei::builder().build())
                 .streckenbuch_pdf(Datei::builder().build())
                 .ersatzfahrplaene_pdf(Datei::builder().build())
                 .begruessungs_datei(Datei::builder().build())
                 .zug_dateien(vec![
-                    ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/first.trn".into()).build()).build(),
-                    ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/second.trn".into()).build()).build(),
+                    ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/first.trn".try_into().unwrap()).build()).build(),
+                    ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/second.trn".try_into().unwrap()).build()).build(),
                 ])
                 .strecken_module(vec![
-                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".into()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
-                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".into()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
+                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
+                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
                 ])
                 .utm(UTM::builder().build())
                 .build(),
