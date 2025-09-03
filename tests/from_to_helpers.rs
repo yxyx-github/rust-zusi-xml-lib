@@ -52,7 +52,8 @@ fn test_from_xml() {
 #[test]
 fn test_from_xml_file_by_path() {
     let tmp_dir = tempdir().unwrap();
-    let file_path = tmp_dir.path().join("xml_input_file.xml");    
+    let file_path = tmp_dir.path().join("some_dir/xml_input_file.xml");
+    fs::create_dir_all(file_path.parent().unwrap()).unwrap();
     fs::write(&file_path, EXPECTED_SERIALIZED).unwrap();
 
     let zusi: Zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
@@ -69,7 +70,7 @@ fn test_to_xml() {
 #[test]
 fn test_to_xml_file_by_path() {
     let tmp_dir = tempdir().unwrap();
-    let file_path = tmp_dir.path().join("xml_output_file.xml");
+    let file_path = tmp_dir.path().join("some_dir/xml_output_file.xml");
 
     expected_deserialized().to_xml_file_by_path(&file_path, false).unwrap();
 
