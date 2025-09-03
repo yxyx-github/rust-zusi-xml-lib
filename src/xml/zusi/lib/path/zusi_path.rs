@@ -49,6 +49,12 @@ impl ZusiPath {
         self.0
     }
 
+    pub fn parent(&self) -> Option<Self> {
+        self.get().parent().map(|parent| {
+            Self::new(parent).unwrap() // parent of relative path is always relative
+        })
+    }
+
     pub fn join<P: AsRef<Path>>(&self, path: P) -> Result<ZusiPath, ZusiPathError> {
         self.0.join(path.as_ref()).try_into()
     }
@@ -148,6 +154,22 @@ mod tests {
         assert_eq!(
             ZusiPath::new("c/d.e").unwrap().resolve("/a/b"),
             PathBuf::from("/a/b/c/d.e"),
+        );
+    }
+
+    #[test]
+    fn test_parent() {
+        assert_eq!(
+            ZusiPath::new("c/d.e").unwrap().parent().unwrap(),
+            ZusiPath::new("c").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("c/d.e").unwrap().parent().unwrap().parent().unwrap(),
+            ZusiPath::new("").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("").unwrap().parent(),
+            None,
         );
     }
 

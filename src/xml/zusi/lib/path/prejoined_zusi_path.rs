@@ -35,6 +35,16 @@ impl PrejoinedZusiPath {
         self.zusi_path
     }
 
+    pub fn parent(&self) -> Option<Self> {
+        self.zusi_path.parent().map(|parent_zusi_path| {
+            PrejoinedZusiPath {
+                full_path: self.data_dir.join(parent_zusi_path.get()),
+                zusi_path: parent_zusi_path,
+                data_dir: self.data_dir.clone(),
+            }
+        })
+    }
+
     pub fn join_to_zusi_path<P: AsRef<Path>>(&self, path: P) -> Result<PrejoinedZusiPath, ZusiPathError> {
         Ok(PrejoinedZusiPath::new(
             &self.data_dir,
@@ -69,6 +79,34 @@ mod tests {
         assert_eq!(prejoined_zusi_path.data_dir().to_str().unwrap(), "/a/b");
         assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "c/d.e");
         assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "/a/b/c/d.e");
+    }
+
+    #[test]
+    fn test_parent() {
+        let prejoined_zusi_path = PrejoinedZusiPath::new("/a/b", ZusiPath::new("c/d.e").unwrap())
+            .parent().unwrap();
+
+        assert_eq!(prejoined_zusi_path.data_dir().to_str().unwrap(), "/a/b");
+        assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "c");
+        assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "/a/b/c");
+    }
+
+    #[test]
+    fn test_grand_parent() {
+        let prejoined_zusi_path = PrejoinedZusiPath::new("/a/b", ZusiPath::new("c/d.e").unwrap())
+            .parent().unwrap().parent().unwrap();
+
+        assert_eq!(prejoined_zusi_path.data_dir().to_str().unwrap(), "/a/b");
+        assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "");
+        assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "/a/b/");
+    }
+
+    #[test]
+    fn test_parent_of_root() {
+        assert_eq!(
+            PrejoinedZusiPath::new("/a/b", ZusiPath::new("").unwrap()).parent(),
+            None,
+        );
     }
 
     #[test]
