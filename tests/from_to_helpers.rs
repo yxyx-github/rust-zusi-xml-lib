@@ -56,7 +56,7 @@ fn test_from_xml_file_by_path() {
     fs::create_dir_all(file_path.parent().unwrap()).unwrap();
     fs::write(&file_path, EXPECTED_SERIALIZED).unwrap();
 
-    let zusi: Zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
+    let zusi = Zusi::from_xml_file_by_path(&file_path).unwrap();
 
     assert_eq!(zusi, expected_deserialized());
 }
