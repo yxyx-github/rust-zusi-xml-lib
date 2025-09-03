@@ -1,6 +1,6 @@
 <Dateien>
-    <Datei Dateiname="./a/b/c.d" inst="1" NurInfo="true"/>
-    <Datei Dateiname="a/b/c.d" inst="1" NurInfo="true"/>
+    <Datei Dateiname="./a/b/c.d" inst="1" NurInfo="1"/>
+    <Datei Dateiname="a/b/c.d" inst="1" NurInfo="1"/>
     <Datei Dateiname="a/b/c.d"/>
     <Datei/>
 </Dateien>

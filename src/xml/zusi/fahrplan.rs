@@ -1,6 +1,7 @@
 pub mod zug_datei_eintrag;
 pub mod strecken_modul;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::with::date_time::date_time_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::fahrplan::strecken_modul::StreckenModul;
@@ -22,7 +23,7 @@ pub struct Fahrplan {
     #[builder(default)]
     pub zeitmodus: i32,
 
-    #[serde(rename = "@ChaosVorschlagen", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@ChaosVorschlagen", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub chaos_vorschlagen: bool,
 
@@ -30,7 +31,7 @@ pub struct Fahrplan {
     #[builder(default)]
     pub chaos_vorschlag: f32,
 
-    #[serde(rename = "@trnDateien", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@trnDateien", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub trn_dateien: bool,
 

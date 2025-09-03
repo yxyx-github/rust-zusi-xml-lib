@@ -1,3 +1,4 @@
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::default::IsDefault;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -9,7 +10,7 @@ pub struct FahrplanTunnel {
     #[builder(default)]
     pub fahrplan_name_text: String,
 
-    #[serde(rename = "@FplTunnelAnfang", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@FplTunnelAnfang", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrplan_tunnel_anfang: bool,
 

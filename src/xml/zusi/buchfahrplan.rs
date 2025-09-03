@@ -1,6 +1,7 @@
 pub mod fahrzeug_zusatz_info;
 pub mod fahrplan_zeile;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
 use crate::xml::zusi::buchfahrplan::fahrzeug_zusatz_info::FahrzeugZusatzInfo;
@@ -49,7 +50,7 @@ pub struct Buchfahrplan {
     #[builder(default)]
     pub verkehrstage: String,
 
-    #[serde(rename = "@Grenzlast", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Grenzlast", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub grenzlast: bool,
 
@@ -77,7 +78,7 @@ pub struct Buchfahrplan {
     #[builder(default)]
     pub fahrplan_bremsstellung_textvorgabe: String,
 
-    #[serde(rename = "@GNTSpalte", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@GNTSpalte", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub gnt_spalte: bool,
 

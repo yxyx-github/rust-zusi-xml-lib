@@ -2,6 +2,7 @@ pub mod fahrplan_signal_eintrag;
 pub mod fahrplan_fahrstrasse_eintrag;
 pub mod fahrplan_vorgang;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::with::date_time::date_time_option_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::ereignis::Ereignis;
@@ -27,7 +28,7 @@ pub struct FahrplanEintrag {
     #[builder(default)]
     pub signal_vorlauf: f32,
 
-    #[serde(rename = "@SignalBleibtAufHalt", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@SignalBleibtAufHalt", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub signal_bleibt_auf_halt: bool,
 
@@ -43,11 +44,11 @@ pub struct FahrplanEintrag {
     #[builder(default)]
     pub ersatz_signal_zeile_plus_1: i32,
 
-    #[serde(rename = "@FzgVerbandAktionWendesignal", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@FzgVerbandAktionWendesignal", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrzeug_verband_aktion_wende_signal: bool,
 
-    #[serde(rename = "@KuerzungLoeschen", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@KuerzungLoeschen", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub kuerzung_loeschen: bool,
 

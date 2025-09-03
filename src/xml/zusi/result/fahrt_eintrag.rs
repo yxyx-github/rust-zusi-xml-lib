@@ -1,3 +1,4 @@
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use crate::delphi_timestamp::DelphiTimestamp;
 use crate::serde_helpers::delphi_timestamp_option_format;
 use serde::{Deserialize, Serialize};
@@ -72,7 +73,7 @@ pub struct FahrtEintrag {
     #[builder(default)]
     pub fahrt_speed_zugsicherung: f32,
 
-    #[serde(rename = "@FahrtAutopilot", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@FahrtAutopilot", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrt_autopilot: bool,
 

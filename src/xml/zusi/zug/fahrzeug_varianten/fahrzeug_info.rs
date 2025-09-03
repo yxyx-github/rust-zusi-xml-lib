@@ -6,6 +6,7 @@ pub mod zugdaten_indusi_analog;
 pub mod zugdaten_indusi_rechner;
 pub mod zugdaten_pzb80;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
@@ -52,7 +53,7 @@ pub struct FahrzeugInfo {
     #[builder(default)]
     pub start_antrieb_index: i32,
 
-    #[serde(rename = "@EigeneBremsstellung", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@EigeneBremsstellung", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub eigene_bremsstellung: bool,
 
@@ -60,11 +61,11 @@ pub struct FahrzeugInfo {
     #[builder(default)]
     pub bremsstellung_fahrzeug: Bremsstellung,
 
-    #[serde(rename = "@EigeneZugart", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@EigeneZugart", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub eigene_zugart: bool,
 
-    #[serde(rename = "@Tuerignorieren", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Tuerignorieren", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub tuer_ignorieren: bool,
 
@@ -76,11 +77,11 @@ pub struct FahrzeugInfo {
     #[builder(default)]
     pub stromabnehmer_schaltung: i32,
 
-    #[serde(rename = "@Gedreht", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Gedreht", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub gedreht: bool,
 
-    #[serde(rename = "@Feststellbremse", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Feststellbremse", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub feststellbremse: bool,
 

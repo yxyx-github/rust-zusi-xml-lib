@@ -1,8 +1,8 @@
 <Zusi>
     <Info DateiTyp="Buchfahrplan" Version="A.1" MinVersion="A.0"/>
     <Buchfahrplan Gattung="RB" Nummer="2027" Zuglauf="ADorf - BDorf" BR="442" Masse="40" spMax="30" Bremsh="1.95"
-                  MBrh="1.8" Verkehrstage="Mo - Fr" Grenzlast="true" Laenge="70" LaengeLoks="10" WagenzugLaenge="60"
-                  kmStart="3.4" BremsstellungZug="5" FplBremsstellungTextvorgabe="R+Mg" GNTSpalte="true">
+                  MBrh="1.8" Verkehrstage="Mo - Fr" Grenzlast="1" Laenge="70" LaengeLoks="10" WagenzugLaenge="60"
+                  kmStart="3.4" BremsstellungZug="5" FplBremsstellungTextvorgabe="R+Mg" GNTSpalte="1">
         <Datei_fpn Dateiname="to/the/file.fpn"/>
         <Datei_trn Dateiname="to/the/file.trn"/>
         <UTM UTM_WE="4" UTM_NS="9" UTM_Zone="7" UTM_Zone2="Z"/>
@@ -10,11 +10,11 @@
         <FplZeile FplRglGgl="2" FplLaufweg="3" FahrstrStrecke="A -&gt; B">
             <FplvMax vMaxTyp="2" vMax="20"/>
             <FplvMaxGNT vMax="3.7"/>
-            <Fplkm km="3.8" FplSprung="true" FplkmNeu="2.7"/>
+            <Fplkm km="3.8" FplSprung="1" FplkmNeu="2.7"/>
             <FplName FplNameText="Eintrag" FplWichtigkeit="3"/>
-            <FplSignaltyp FplSignaltypNr="2" FplHilfssignal="true"/>
+            <FplSignaltyp FplSignaltypNr="2" FplHilfssignal="1"/>
             <FplIcon FplIconNr="4"/>
-            <FplTunnel FplNameText="Großer Tunnel" FplTunnelAnfang="true"/>
+            <FplTunnel FplNameText="Großer Tunnel" FplTunnelAnfang="1"/>
             <FplNameRechts FplNameText="Rechts"/>
             <FplSaegelinien FplAnzahl="2"/>
             <FplAnk Ank="2000-12-31 12:37:20" FplEintrag="1"/>

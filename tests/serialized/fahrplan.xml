@@ -1,7 +1,7 @@
 <Zusi>
     <Info DateiTyp="Fahrplan" Version="A.1" MinVersion="A.0"/>
-    <Fahrplan AnfangsZeit="2023-04-07 03:23:07" Zeitmodus="1" ChaosVorschlagen="true" ChaosVorschlag="0.03"
-              trnDateien="true">
+    <Fahrplan AnfangsZeit="2023-04-07 03:23:07" Zeitmodus="1" ChaosVorschlagen="1" ChaosVorschlag="0.03"
+              trnDateien="1">
         <BefehlsKonfiguration Dateiname="to/the/file.ext"/>
         <LaPDF Dateiname="to/the/file.ext"/>
         <StrebuPDF Dateiname="to/the/file.ext"/>

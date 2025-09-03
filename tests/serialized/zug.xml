@@ -2,12 +2,12 @@
     <Info DateiTyp="Zug" Version="A.1" MinVersion="A.0"/>
     <Zug Gattung="RE" Nummer="33333" Zuglauf="AStadt - BStadt" BRAngabe="442" Prio="1" Standortmodus="1"
          StartVorschubweg="10" FplBremsstellungTextvorgabe="R+Mg" EnergieVorgabe="20" spAnfang="10" MBrh="1.9"
-         FplMasse="300" FplZuglaenge="100" Verkehrstage="Mo-Fr" Grenzlast="true" spZugNiedriger="30" APBeschl="0.7"
-         KeineVorplanKorrektur="true" Dekozug="true" LODzug="2" ReisendenDichte="0.4" FahrplanGruppe="1a"
-         Rekursionstiefe="3" ZugsicherungStartmodus="1" ColdMovement="true" FahrstrName="A -&gt; B"
-         AufgleisenRegisterpruefen="true" Zugtyp="1" Ueberschrift="keine" odtDateiAbs="some/where/located"
-         BuchfahrplanEinfach="true" Buchfahrplandll="my.dll" TuerSystemBezeichner="TAV">
-        <Datei Dateiname="this/is/it.fpn" inst="1" NurInfo="true"/>
+         FplMasse="300" FplZuglaenge="100" Verkehrstage="Mo-Fr" Grenzlast="1" spZugNiedriger="30" APBeschl="0.7"
+         KeineVorplanKorrektur="1" Dekozug="1" LODzug="2" ReisendenDichte="0.4" FahrplanGruppe="1a"
+         Rekursionstiefe="3" ZugsicherungStartmodus="1" ColdMovement="1" FahrstrName="A -&gt; B"
+         AufgleisenRegisterpruefen="1" Zugtyp="1" Ueberschrift="keine" odtDateiAbs="some/where/located"
+         BuchfahrplanEinfach="1" Buchfahrplandll="my.dll" TuerSystemBezeichner="TAV">
+        <Datei Dateiname="this/is/it.fpn" inst="1" NurInfo="1"/>
         <BuchfahrplanRohDatei Dateiname="to/the/file.ext"/>
         <BuchfahrplanBMPDatei Dateiname="to/the/file.ext"/>
         <Anfangsbefehl Dateiname="to/the/file.ext"/>
@@ -15,15 +15,15 @@
             <Datei Dateiname="to/the/file.ext"/>
         </Aufgleisreferenz>
         <FahrplanEintrag Ank="2020-10-01 03:43:21" Abf="2020-10-01 03:46:21" Signalvorlauf="180"
-                         SignalBleibtAufHalt="true" Betrst="Blersdorf" FplEintrag="3" ErsatzsignalzeilePlus1="1"
-                         FzgVerbandAktionWendesignal="true" KuerzungLoeschen="true"
+                         SignalBleibtAufHalt="1" Betrst="Blersdorf" FplEintrag="3" ErsatzsignalzeilePlus1="1"
+                         FzgVerbandAktionWendesignal="1" KuerzungLoeschen="1"
                          FzgVerbandAktionWendeSignalabstand="30"/>
-        <FahrzeugVarianten Bezeichnung="Triebzug" PerZufallUebernehmen="true" Gattung="Gattung" ZugTypVorgeben="true"
+        <FahrzeugVarianten Bezeichnung="Triebzug" PerZufallUebernehmen="1" Gattung="Gattung" ZugTypVorgeben="1"
                            Zugtyp="1" MBrh="1.2" FplMasse="10" FplZuglaenge="200" BremsstellungZug="5"
                            FplBremsstellungTextvorgabe="R+Mg" spZugNiedriger="20" ZufallsWert="0.3" FzgPosition="2">
-            <FahrzeugInfo IDHaupt="2" IDNeben="3" StartAntriebIndex="2" EigeneBremsstellung="true"
-                          BremsstellungFahrzeug="1" EigeneZugart="true" Tuerignorieren="true" DotraModus="1"
-                          SASchaltung="1" Gedreht="true" Feststellbremse="true" LastwechselBeladen="1" Ueberladung="20"
+            <FahrzeugInfo IDHaupt="2" IDNeben="3" StartAntriebIndex="2" EigeneBremsstellung="1"
+                          BremsstellungFahrzeug="1" EigeneZugart="1" Tuerignorieren="1" DotraModus="1"
+                          SASchaltung="1" Gedreht="1" Feststellbremse="1" LastwechselBeladen="1" Ueberladung="20"
                           Bremsstoerung="1" MgBremseSenken="1" MgBremseStrom="20" FahrzeugZusatzinfo="Info"
                           NVRNummer="NVR">
                 <Datei Dateiname="to/the/file.ext"/>
@@ -31,14 +31,14 @@
                              Startsystem="A" ZugsicherungHS="1" Lufthahn="1" ZBSStoerschalter="1"/>
                 <ZugdatenPZB80 IndusiZugart="2"/>
             </FahrzeugInfo>
-            <FahrzeugInfo IDHaupt="1" IDNeben="4" StartAntriebIndex="2" EigeneBremsstellung="true"
-                          BremsstellungFahrzeug="1" EigeneZugart="true" Tuerignorieren="true" DotraModus="1"
-                          SASchaltung="1" Gedreht="true" Feststellbremse="true" LastwechselBeladen="1" Ueberladung="20"
+            <FahrzeugInfo IDHaupt="1" IDNeben="4" StartAntriebIndex="2" EigeneBremsstellung="1"
+                          BremsstellungFahrzeug="1" EigeneZugart="1" Tuerignorieren="1" DotraModus="1"
+                          SASchaltung="1" Gedreht="1" Feststellbremse="1" LastwechselBeladen="1" Ueberladung="20"
                           Bremsstoerung="1" MgBremseSenken="1" MgBremseStrom="20" FahrzeugZusatzinfo="Info"
                           NVRNummer="NVR">
                 <Datei Dateiname="to/the/file.ext"/>
             </FahrzeugInfo>
-            <FahrzeugVarianten Bezeichnung="Triebwagen" PerZufallUebernehmen="true" Gattung="Die Gattung" MBrh="1.2"
+            <FahrzeugVarianten Bezeichnung="Triebwagen" PerZufallUebernehmen="1" Gattung="Die Gattung" MBrh="1.2"
                                FplMasse="10" FplZuglaenge="300" BremsstellungZug="5" FplBremsstellungTextvorgabe="R+Mg"
                                spZugNiedriger="20" ZufallsWert="0.3" FzgPosition="2"/>
         </FahrzeugVarianten>

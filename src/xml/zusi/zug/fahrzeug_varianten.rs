@@ -1,5 +1,6 @@
 pub mod fahrzeug_info;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::FahrzeugInfo;
@@ -13,7 +14,7 @@ pub struct FahrzeugVarianten {
     #[builder(default)]
     pub bezeichnung: String,
 
-    #[serde(rename = "@PerZufallUebernehmen", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@PerZufallUebernehmen", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub per_zufall_uebernehmen: bool,
 
@@ -21,7 +22,7 @@ pub struct FahrzeugVarianten {
     #[builder(default)]
     pub gattung: String,
 
-    #[serde(rename = "@ZugTypVorgeben", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@ZugTypVorgeben", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub zug_typ_vorgeben: bool,
 

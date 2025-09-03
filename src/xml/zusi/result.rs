@@ -1,3 +1,4 @@
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde::{Deserialize, Serialize};
 use serde_helpers::default::IsDefault;
 use std::collections::HashMap;
@@ -34,7 +35,7 @@ pub struct ZusiResult {
     #[builder(default)]
     pub bemerkung: String,
 
-    #[serde(rename = "@Schummel", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Schummel", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub schummel: bool,
 

@@ -2,6 +2,7 @@ pub mod aufgleis_referenz;
 pub mod fahrplan_eintrag;
 pub mod fahrzeug_varianten;
 
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
@@ -110,7 +111,7 @@ pub struct Zug {
     #[builder(default)]
     pub verkehrstage: String,
 
-    #[serde(rename = "@Grenzlast", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Grenzlast", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub grenzlast: bool,
 
@@ -122,11 +123,11 @@ pub struct Zug {
     #[builder(default)]
     pub autopilot_beschleunigung: f32,
 
-    #[serde(rename = "@KeineVorplanKorrektur", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@KeineVorplanKorrektur", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub keine_vorplan_korrektur: bool,
 
-    #[serde(rename = "@Dekozug", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Dekozug", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub dekozug: bool,
 
@@ -150,7 +151,7 @@ pub struct Zug {
     #[builder(default)]
     pub zugsicherung_startmodus: u8, // TODO: replace with enum
 
-    #[serde(rename = "@ColdMovement", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@ColdMovement", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub cold_movement: bool,
 
@@ -158,7 +159,7 @@ pub struct Zug {
     #[builder(default)]
     pub fahrstrassen_name: String,
 
-    #[serde(rename = "@AufgleisenRegisterpruefen", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@AufgleisenRegisterpruefen", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub aufgleisen_register_pruefen: bool,
 
@@ -174,7 +175,7 @@ pub struct Zug {
     #[builder(default)]
     pub odt_datei_absolut: String,
 
-    #[serde(rename = "@BuchfahrplanEinfach", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@BuchfahrplanEinfach", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub buchfahrplan_einfach: bool,
 
