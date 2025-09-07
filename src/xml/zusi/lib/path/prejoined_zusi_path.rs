@@ -125,7 +125,7 @@ mod tests {
         );
         assert_eq!(
             PrejoinedZusiPath::new("/a/b", ZusiPath::new("c/d.e").unwrap()).join_to_zusi_path("/f/g.h").unwrap_err(),
-            ZusiPathError::ZusiPathMustBeRelative,
+            ZusiPathError::PathMustBeRelative,
         );
     }
 }

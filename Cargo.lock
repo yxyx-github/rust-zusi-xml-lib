@@ -383,6 +383,7 @@ dependencies = [
  "serde",
  "serde-helpers",
  "tempfile",
+ "thiserror",
  "time",
  "typed-builder",
 ]

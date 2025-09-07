@@ -2,20 +2,15 @@ use std::fmt::{Display, Formatter};
 use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
+use thiserror::Error;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
 pub enum ZusiPathError {
+    #[error("The path does not contain the data directory.")]
     PathDoesNotContainDataDir,
-    ZusiPathMustBeRelative,
-}
 
-impl Display for ZusiPathError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ZusiPathError::PathDoesNotContainDataDir => write!(f, "The path does not contain the data directory."),
-            ZusiPathError::ZusiPathMustBeRelative => write!(f, "The path must be relative."),
-        }
-    }
+    #[error("The path must be relative.")]
+    PathMustBeRelative,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
@@ -26,7 +21,7 @@ impl ZusiPath {
         if path.as_ref().is_relative() {
             Ok(Self(path.into()))
         } else {
-            Err(ZusiPathError::ZusiPathMustBeRelative)
+            Err(ZusiPathError::PathMustBeRelative)
         }
     }
 
@@ -117,7 +112,7 @@ mod tests {
         assert!(ZusiPath::new("a/b/c.d").is_ok());
         assert_eq!(
             ZusiPath::new("/a/b/c.d").unwrap_err(),
-            ZusiPathError::ZusiPathMustBeRelative,
+            ZusiPathError::PathMustBeRelative,
         );
     }
 
@@ -185,7 +180,7 @@ mod tests {
         );
         assert_eq!(
             ZusiPath::new("a/b.c").unwrap().join("/d/e/f.g").unwrap_err(),
-            ZusiPathError::ZusiPathMustBeRelative,
+            ZusiPathError::PathMustBeRelative,
         );
     }
 }
