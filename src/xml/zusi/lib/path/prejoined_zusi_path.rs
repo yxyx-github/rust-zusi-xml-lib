@@ -53,6 +53,18 @@ impl PrejoinedZusiPath {
     }
 }
 
+impl From<&PrejoinedZusiPath> for PrejoinedZusiPath {
+    fn from(value: &PrejoinedZusiPath) -> Self {
+        value.clone()
+    }
+}
+
+impl AsRef<PrejoinedZusiPath> for PrejoinedZusiPath {
+    fn as_ref(&self) -> &PrejoinedZusiPath {
+        self
+    }
+}
+
 impl AsRef<ZusiPath> for PrejoinedZusiPath {
     fn as_ref(&self) -> &ZusiPath {
         &self.zusi_path()
