@@ -1,5 +1,6 @@
 use crate::xml::zusi::lib::path::zusi_path::{ZusiPath, ZusiPathError};
 use std::path::{Path, PathBuf};
+use path_clean::clean;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PrejoinedZusiPath {
@@ -50,6 +51,12 @@ impl PrejoinedZusiPath {
             &self.data_dir,
             self.zusi_path.join(path.as_ref())?
         ))
+    }
+
+    pub fn clean(&mut self) {
+        self.data_dir = clean(self.data_dir());
+        self.zusi_path.clean();
+        self.full_path = self.zusi_path.resolve(self.data_dir());
     }
 }
 
@@ -138,6 +145,17 @@ mod tests {
         assert_eq!(
             PrejoinedZusiPath::new("/a/b", ZusiPath::new("c/d.e").unwrap()).join_to_zusi_path("/f/g.h").unwrap_err(),
             ZusiPathError::PathMustBeRelative,
+        );
+    }
+
+    #[test]
+    fn test_clean() {
+        let mut path = PrejoinedZusiPath::new("a/./b//../c", ZusiPath::new("../d/./e//../f.g").unwrap());
+        path.clean();
+
+        assert_eq!(
+            path,
+            PrejoinedZusiPath::new("a/c", ZusiPath::new("../d/f.g").unwrap()),
         );
     }
 }

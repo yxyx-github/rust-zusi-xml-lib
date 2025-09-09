@@ -1,6 +1,7 @@
 use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
+use path_clean::clean;
 use thiserror::Error;
 
 #[derive(Error, Debug, Clone, PartialEq, Eq)]
@@ -51,6 +52,10 @@ impl ZusiPath {
 
     pub fn join<P: AsRef<Path>>(&self, path: P) -> Result<ZusiPath, ZusiPathError> {
         self.0.join(path.as_ref()).try_into()
+    }
+
+    pub fn clean(&mut self) {
+        self.0 = clean(&self.0)
     }
 }
 
@@ -180,6 +185,17 @@ mod tests {
         assert_eq!(
             ZusiPath::new("a/b.c").unwrap().join("/d/e/f.g").unwrap_err(),
             ZusiPathError::PathMustBeRelative,
+        );
+    }
+
+    #[test]
+    fn test_clean() {
+        let mut path = ZusiPath::new("../a/./b//../c.d").unwrap();
+        path.clean();
+
+        assert_eq!(
+            path,
+            ZusiPath::new("../a/c.d").unwrap(),
         );
     }
 }
