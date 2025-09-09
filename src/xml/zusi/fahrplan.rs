@@ -1,15 +1,17 @@
 pub mod zug_datei_eintrag;
 pub mod strecken_modul;
+pub mod zeit_modus;
 
-use serde_helpers::with::bool_as_int::bool_as_int_format;
-use serde_helpers::with::date_time::date_time_format;
-use serde_helpers::default::IsDefault;
 use crate::xml::zusi::fahrplan::strecken_modul::StreckenModul;
+use crate::xml::zusi::fahrplan::zeit_modus::ZeitModus;
 use crate::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
 use crate::xml::zusi::lib::datei::Datei;
 use crate::xml::zusi::lib::utm::UTM;
 use crate::xml::zusi::zug::Zug;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
+use serde_helpers::with::date_time::date_time_format;
 use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
@@ -21,7 +23,7 @@ pub struct Fahrplan {
 
     #[serde(rename = "@Zeitmodus", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub zeitmodus: i32,
+    pub zeit_modus: ZeitModus,
 
     #[serde(rename = "@ChaosVorschlagen", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

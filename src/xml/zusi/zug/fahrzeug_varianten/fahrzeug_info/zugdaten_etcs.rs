@@ -1,5 +1,10 @@
-use serde_helpers::default::IsDefault;
+pub mod etcs_level;
+pub mod etcs_modus;
+
+use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_etcs::etcs_level::ETCSLevel;
+use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_etcs::etcs_modus::ETCSModus;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
@@ -35,11 +40,11 @@ pub struct ZugdatenETCS {
 
     #[serde(rename = "@ETCSLevel", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub etcs_level: u8, // TODO: replace with enum
+    pub etcs_level: ETCSLevel,
 
     #[serde(rename = "@ETCSModus", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub etcs_modus: u8, // TODO: replace with enum
+    pub etcs_modus: ETCSModus,
 
     #[serde(rename = "@Startsystem", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

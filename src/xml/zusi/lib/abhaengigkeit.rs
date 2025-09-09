@@ -1,5 +1,11 @@
-use serde_helpers::default::IsDefault;
+pub mod abhaengigkeit_operator;
+pub mod abhaengigkeit_bedingung;
+
+use crate::xml::zusi::lib::abhaengigkeit::abhaengigkeit_bedingung::AbhaengigkeitBedingung;
+use crate::xml::zusi::lib::abhaengigkeit::abhaengigkeit_operator::AbhaengigkeitOperator;
+use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_etcs::etcs_modus::ETCSModus;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
@@ -7,11 +13,11 @@ use typed_builder::TypedBuilder;
 pub struct Abhaengigkeit {
     #[serde(rename = "@AbhOperator", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub abhaengigkeit_operator: u8, // TODO: replace with enum
+    pub abhaengigkeit_operator: AbhaengigkeitOperator,
 
     #[serde(rename = "@AbhBedingung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub abhaengigkeit_bedingung: u8, // TODO: replace with enum
+    pub abhaengigkeit_bedingung: AbhaengigkeitBedingung,
 
     #[serde(rename = "@AbhParameter", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
@@ -23,7 +29,7 @@ pub struct Abhaengigkeit {
 
     #[serde(rename = "@ETCSModus", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub etcs_modus: u8, // TODO: replace with enum
+    pub etcs_modus: ETCSModus,
 
     #[serde(flatten)]
     #[builder(default)]

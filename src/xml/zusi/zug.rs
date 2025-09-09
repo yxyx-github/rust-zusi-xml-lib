@@ -1,53 +1,25 @@
 pub mod aufgleis_referenz;
 pub mod fahrplan_eintrag;
 pub mod fahrzeug_varianten;
+pub mod zugsicherung_start_modus;
+pub mod standort_modus;
+pub mod zug_typ;
+pub mod lod_zug;
 
-use serde_helpers::with::bool_as_int::bool_as_int_format;
-use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
 use crate::xml::zusi::zug::aufgleis_referenz::AufgleisReferenz;
 use crate::xml::zusi::zug::fahrplan_eintrag::FahrplanEintrag;
 use crate::xml::zusi::zug::fahrzeug_varianten::FahrzeugVarianten;
+use crate::xml::zusi::zug::lod_zug::LodZug;
+use crate::xml::zusi::zug::standort_modus::StandortModus;
+use crate::xml::zusi::zug::zug_typ::ZugTyp;
+use crate::xml::zusi::zug::zugsicherung_start_modus::ZugsicherungStartModus;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
-
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-pub enum LodZug {
-    #[serde(rename = "0")]
-    Alle,
-
-    #[serde(rename = "1")]
-    Viele,
-
-    #[serde(rename = "2")]
-    Wichtige,
-
-    #[serde(rename = "3")]
-    NurWichtigste,
-}
-
-impl Default for LodZug {
-    fn default() -> Self {
-        LodZug::Alle
-    }
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-pub enum ZugTyp {
-    #[serde(rename = "0")]
-    Gueterzug,
-
-    #[serde(rename = "1")]
-    Reisezug,
-}
-
-impl Default for ZugTyp {
-    fn default() -> Self {
-        ZugTyp::Gueterzug
-    }
-}
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct Zug {
@@ -73,7 +45,7 @@ pub struct Zug {
 
     #[serde(rename = "@Standortmodus", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub standort_modus: u8, // TODO: replace with enum
+    pub standort_modus: StandortModus,
 
     #[serde(rename = "@StartVorschubweg", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
@@ -149,7 +121,7 @@ pub struct Zug {
 
     #[serde(rename = "@ZugsicherungStartmodus", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub zugsicherung_startmodus: u8, // TODO: replace with enum
+    pub zugsicherung_startmodus: ZugsicherungStartModus,
 
     #[serde(rename = "@ColdMovement", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

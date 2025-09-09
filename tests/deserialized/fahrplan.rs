@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use time::macros::datetime;
 use zusi_xml_lib::xml::zusi::fahrplan::strecken_modul::StreckenModul;
+use zusi_xml_lib::xml::zusi::fahrplan::zeit_modus::ZeitModus;
 use zusi_xml_lib::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
 use zusi_xml_lib::xml::zusi::fahrplan::Fahrplan;
 use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
@@ -27,7 +28,7 @@ pub fn all() -> Zusi {
         },
         value: ZusiValue::Fahrplan(Fahrplan {
             anfangs_zeit: datetime!(2023-04-07 03:23:07),
-            zeitmodus: 1,
+            zeit_modus: ZeitModus::InsAktuelleJahrSchiebenMonatTagZeitGemaesFahrplanvorgabe,
             chaos_vorschlagen: true,
             chaos_vorschlag: 0.03,
             trn_dateien: true,

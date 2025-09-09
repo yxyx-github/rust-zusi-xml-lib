@@ -1,10 +1,11 @@
 pub mod fahrzeug_info;
 
-use serde_helpers::with::bool_as_int::bool_as_int_format;
-use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::FahrzeugInfo;
+use crate::xml::zusi::zug::zug_typ::ZugTyp;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
@@ -28,7 +29,7 @@ pub struct FahrzeugVarianten {
 
     #[serde(rename = "@Zugtyp", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub zug_typ: u8, // TODO: replace with enum
+    pub zug_typ: ZugTyp,
 
     #[serde(rename = "@MBrh", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

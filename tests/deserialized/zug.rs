@@ -10,7 +10,11 @@ use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_pz
 use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_zbs::ZugdatenZBS;
 use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::{DoppeltraktionsModus, FahrzeugInfo};
 use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::FahrzeugVarianten;
-use zusi_xml_lib::xml::zusi::zug::{LodZug, Zug, ZugTyp};
+use zusi_xml_lib::xml::zusi::zug::lod_zug::LodZug;
+use zusi_xml_lib::xml::zusi::zug::standort_modus::StandortModus;
+use zusi_xml_lib::xml::zusi::zug::zug_typ::ZugTyp;
+use zusi_xml_lib::xml::zusi::zug::zugsicherung_start_modus::ZugsicherungStartModus;
+use zusi_xml_lib::xml::zusi::zug::Zug;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 
 #[allow(dead_code)]
@@ -30,7 +34,7 @@ pub fn all() -> Zusi {
             zuglauf: "AStadt - BStadt".into(),
             baureihe_angabe: "442".into(),
             prioritaet: 1,
-            standort_modus: 1,
+            standort_modus: StandortModus::Fahrstrassenanfang,
             start_vorschubweg: 10.0,
             bremsstellung_zug: Default::default(),
             fahrplan_bremsstellung_textvorgabe: "R+Mg".into(),
@@ -49,7 +53,7 @@ pub fn all() -> Zusi {
             reisenden_dichte: 0.4,
             fahrplan_gruppe: "1a".into(),
             rekursionstiefe: 3,
-            zugsicherung_startmodus: 1,
+            zugsicherung_startmodus: ZugsicherungStartModus::ZugdatenMuessenEingegebenWerden,
             cold_movement: true,
             fahrstrassen_name: "A -> B".into(),
             aufgleisen_register_pruefen: true,
@@ -118,7 +122,7 @@ pub fn all() -> Zusi {
                 per_zufall_uebernehmen: true,
                 gattung: "Gattung".into(),
                 zug_typ_vorgeben: true,
-                zug_typ: 1,
+                zug_typ: ZugTyp::Reisezug,
                 mindest_bremshundertstel: 1.2,
                 fahrplan_masse: 10.0,
                 fahrplan_zug_laenge: 200.0,
@@ -220,7 +224,7 @@ pub fn all() -> Zusi {
                         per_zufall_uebernehmen: true,
                         gattung: "Die Gattung".into(),
                         zug_typ_vorgeben: false,
-                        zug_typ: 0,
+                        zug_typ: ZugTyp::Gueterzug,
                         mindest_bremshundertstel: 1.2,
                         fahrplan_masse: 10.0,
                         fahrplan_zug_laenge: 300.0,
