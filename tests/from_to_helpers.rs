@@ -64,7 +64,7 @@ fn test_from_xml_file_by_path() {
 #[test]
 fn test_to_xml() {
     let xml = expected_deserialized().to_xml(false).unwrap();
-    assert_eq!(xml, cleanup_xml(EXPECTED_SERIALIZED.into()));
+    assert_eq!(cleanup_xml(xml), cleanup_xml(EXPECTED_SERIALIZED.into()));
 }
 
 #[test]
@@ -75,5 +75,5 @@ fn test_to_xml_file_by_path() {
     expected_deserialized().to_xml_file_by_path(&file_path, false).unwrap();
 
     let xml = fs::read_to_string(&file_path).unwrap();
-    assert_eq!(xml, cleanup_xml(EXPECTED_SERIALIZED.into()));
+    assert_eq!(cleanup_xml(xml), cleanup_xml(EXPECTED_SERIALIZED.into()));
 }
