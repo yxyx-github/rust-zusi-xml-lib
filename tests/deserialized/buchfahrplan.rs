@@ -89,12 +89,12 @@ pub fn all() -> Zusi {
                         v_max: 3.7,
                         _unknown: HashMap::new(),
                     }),
-                    fahrplan_km: Some(FahrplanKm {
+                    fahrplan_km: vec![FahrplanKm {
                         km: 3.8,
                         fahrplan_sprung: true,
                         fahrplan_km_neu: 2.7,
                         _unknown: HashMap::new(),
-                    }),
+                    }],
                     fahrplan_name: Some(FahrplanName {
                         fahrplan_name_text: "Eintrag".into(),
                         fahrplan_wichtigkeit: 3,
@@ -105,10 +105,10 @@ pub fn all() -> Zusi {
                         fahrplan_hilfs_signal: true,
                         _unknown: HashMap::new(),
                     }),
-                    fahrplan_icon: Some(FahrplanIcon {
+                    fahrplan_icon: vec![FahrplanIcon {
                         fahrplan_icon_nummer: 4,
                         _unknown: HashMap::new(),
-                    }),
+                    }],
                     fahrplan_tunnel: Some(FahrplanTunnel {
                         fahrplan_name_text: "Großer Tunnel".into(),
                         fahrplan_tunnel_anfang: true,

@@ -54,7 +54,7 @@ pub struct FahrplanZeile {
 
     #[serde(rename = "Fplkm", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub fahrplan_km: Option<FahrplanKm>,
+    pub fahrplan_km: Vec<FahrplanKm>,
 
     #[serde(rename = "FplName", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
@@ -66,7 +66,7 @@ pub struct FahrplanZeile {
 
     #[serde(rename = "FplIcon", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub fahrplan_icon: Option<FahrplanIcon>,
+    pub fahrplan_icon: Vec<FahrplanIcon>,
 
     #[serde(rename = "FplTunnel", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
