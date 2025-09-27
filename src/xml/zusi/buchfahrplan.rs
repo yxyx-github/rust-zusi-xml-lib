@@ -93,7 +93,7 @@ pub struct Buchfahrplan {
 
     #[serde(rename = "Fzg", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub fahrzeug_info: Option<FahrzeugZusatzInfo>,
+    pub fahrzeug_info: Vec<FahrzeugZusatzInfo>,
 
     #[serde(rename = "FplZeile", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

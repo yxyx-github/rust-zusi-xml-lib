@@ -72,9 +72,9 @@ pub fn all() -> Zusi {
                 utm_zone_2: "Z".to_string(),
                 _unknown: HashMap::new(),
             },
-            fahrzeug_info: Some(FahrzeugZusatzInfo {
+            fahrzeug_info: vec![FahrzeugZusatzInfo {
                 fahrzeug_zusatzinfo: "Zusatz".into(),
-            }),
+            }],
             fahrplan_zeilen: vec![
                 FahrplanZeile {
                     fahrplan_regelgleis_gegengleis: 2,
