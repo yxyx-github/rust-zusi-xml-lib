@@ -16,7 +16,7 @@
         </Aufgleisreferenz>
         <FahrplanEintrag Ank="2020-10-01 03:43:21" Abf="2020-10-01 03:46:21" Signalvorlauf="180"
                          SignalBleibtAufHalt="1" Betrst="Blersdorf" FplEintrag="3" ErsatzsignalzeilePlus1="1"
-                         FzgVerbandAktionWendesignal="1" KuerzungLoeschen="1"
+                         FzgVerbandAktion="2" FzgVerbandAktionWendesignal="1" KuerzungLoeschen="1"
                          FzgVerbandAktionWendeSignalabstand="30"/>
         <FahrzeugVarianten Bezeichnung="Triebzug" PerZufallUebernehmen="1" Gattung="Gattung" ZugTypVorgeben="1"
                            Zugtyp="1" MBrh="1.2" FplMasse="10" FplZuglaenge="200" BremsstellungZug="5"

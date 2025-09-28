@@ -16,6 +16,7 @@ use zusi_xml_lib::xml::zusi::zug::zug_typ::ZugTyp;
 use zusi_xml_lib::xml::zusi::zug::zugsicherung_start_modus::ZugsicherungStartModus;
 use zusi_xml_lib::xml::zusi::zug::Zug;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
+use zusi_xml_lib::xml::zusi::zug::fahrplan_eintrag::fahrzeug_verband_aktion::FahrzeugVerbandAktion;
 
 #[allow(dead_code)]
 pub fn all() -> Zusi {
@@ -106,6 +107,7 @@ pub fn all() -> Zusi {
                     betriebsstelle: "Blersdorf".into(),
                     fahrplan_eintrag: FahrplanEintragsTyp::Betriebshalt,
                     ersatz_signal_zeile_plus_1: 1,
+                    fahrzeug_verband_aktion: FahrzeugVerbandAktion::Fueherstandswechsel,
                     fahrzeug_verband_aktion_wende_signal: true,
                     kuerzung_loeschen: true,
                     fahrzeug_verband_aktion_wende_signal_abstand: 30.0,

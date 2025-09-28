@@ -1,6 +1,7 @@
 pub mod fahrplan_signal_eintrag;
 pub mod fahrplan_fahrstrasse_eintrag;
 pub mod fahrplan_vorgang;
+pub mod fahrzeug_verband_aktion;
 
 use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde_helpers::with::date_time::date_time_option_format;
@@ -13,6 +14,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
+use crate::xml::zusi::zug::fahrplan_eintrag::fahrzeug_verband_aktion::FahrzeugVerbandAktion;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanEintrag {
@@ -43,6 +45,10 @@ pub struct FahrplanEintrag {
     #[serde(rename = "@ErsatzsignalzeilePlus1", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub ersatz_signal_zeile_plus_1: i32,
+
+    #[serde(rename = "@FzgVerbandAktion", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrzeug_verband_aktion: FahrzeugVerbandAktion,
 
     #[serde(rename = "@FzgVerbandAktionWendesignal", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
