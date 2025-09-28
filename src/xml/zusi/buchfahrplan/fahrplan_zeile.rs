@@ -44,6 +44,16 @@ pub struct FahrplanZeile {
     #[builder(default)]
     pub fahrstrasse_strecke: String,
 
+    /// not documented
+    #[serde(rename = "@FahrstrStreckeLa", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrstrasse_strecke_la: String,
+
+    /// not documented
+    #[serde(rename = "@FahrstrStreckeStrukturnummer", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrstrasse_strecke_struktur_nummer: String,
+
     #[serde(rename = "FplvMax", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrplan_v_max: Option<FahrplanVMax>,

@@ -7,7 +7,7 @@
         <Datei_trn Dateiname="to/the/file.trn"/>
         <UTM UTM_WE="4" UTM_NS="9" UTM_Zone="7" UTM_Zone2="Z"/>
         <Fzg FahrzeugZusatzinfo="Zusatz"/>
-        <FplZeile FplRglGgl="2" FplLaufweg="3" FahrstrStrecke="A -&gt; B">
+        <FplZeile FplRglGgl="2" FplLaufweg="3" FahrstrStrecke="180a" FahrstrStreckeLa="170a" FahrstrStreckeStrukturnummer="187">
             <FplvMax vMaxTyp="2" vMax="20"/>
             <FplvMaxGNT vMax="3.7"/>
             <Fplkm km="3.8" FplSprung="1" FplkmNeu="2.7"/>

@@ -79,7 +79,9 @@ pub fn all() -> Zusi {
                 FahrplanZeile {
                     fahrplan_regelgleis_gegengleis: 2,
                     fahrplan_laufweg: 3.0,
-                    fahrstrasse_strecke: "A -> B".into(),
+                    fahrstrasse_strecke: "180a".into(),
+                    fahrstrasse_strecke_la: "170a".into(),
+                    fahrstrasse_strecke_struktur_nummer: "187".into(),
                     fahrplan_v_max: Some(FahrplanVMax {
                         v_max_typ: 2,
                         v_max: 20.0,
