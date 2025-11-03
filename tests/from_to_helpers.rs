@@ -32,7 +32,7 @@ fn expected_deserialized() -> Zusi {
             ZusiResult::builder()
                 .zugnummer("00000".into())
                 .tf_nummer("12345".into())
-                .datum(datetime!(2019-01-01 23:14))
+                .datum(Some(datetime!(2019-01-01 23:14)))
                 .fahrt_eintraege(vec![
                     FahrtEintrag::builder()
                         .fahrt_zeit(datetime!(2019-01-01 23:18))

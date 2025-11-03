@@ -21,7 +21,7 @@ pub fn all() -> Zusi {
             zugnummer: "12345".into(),
             tf_nummer: "67890".into(),
             anfang_datum: Some(datetime!(2019-01-01 23:16)),
-            datum: datetime!(2019-01-01 23:14),
+            datum: Some(datetime!(2019-01-01 23:14)),
             verbrauch: 3.7,
             bemerkung: "".to_string(),
             schummel: false,
@@ -80,7 +80,6 @@ pub fn with_defaults() -> Zusi {
         )
         .value(ZusiValue::Result(
             ZusiResult::builder()
-                .datum(datetime!(2019-01-01 23:14))
                 .fahrt_eintraege(vec![
                     FahrtEintrag::builder()
                         .fahrt_zeit(datetime!(2019-01-01 23:18))

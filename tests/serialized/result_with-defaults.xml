@@ -1,6 +1,6 @@
 <Zusi>
     <Info DateiTyp="result" Version="A.1" MinVersion="A.0"/>
-    <result Datum="2019-01-01 23:14:00">
+    <result>
         <FahrtEintrag FahrtZeit="2019-01-01 23:18:00"/>
     </result>
 </Zusi>

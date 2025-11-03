@@ -1,12 +1,12 @@
-use serde_helpers::with::bool_as_int::bool_as_int_format;
 use serde::{Deserialize, Serialize};
 use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
 
 use crate::xml::zusi::result::fahrt_eintrag::FahrtEintrag;
-use serde_helpers::with::date_time::{date_time_format, date_time_option_format};
+use serde_helpers::with::date_time::date_time_option_format;
 
 pub mod fahrt_eintrag;
 
@@ -24,8 +24,9 @@ pub struct ZusiResult {
     #[builder(default)]
     pub anfang_datum: Option<PrimitiveDateTime>,
 
-    #[serde(rename = "@Datum", with = "date_time_format")]
-    pub datum: PrimitiveDateTime,
+    #[serde(rename = "@Datum", with = "date_time_option_format", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub datum: Option<PrimitiveDateTime>,
 
     #[serde(rename = "@Verbrauch", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
