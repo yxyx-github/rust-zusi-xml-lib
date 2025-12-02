@@ -52,10 +52,20 @@ pub enum ZusiValue {
     Buchfahrplan(Buchfahrplan),
 }
 
-#[derive(TypedBuilder, PartialEq, Debug, Clone)]
-pub struct TypedZusi<T: ZusiValueType> {
+#[derive(Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
+#[serde(deny_unknown_fields, rename = "Zusi")]
+pub struct TypedZusi<T> {
+    #[serde(rename = "Info")]
     pub info: Info,
+
+    #[serde(rename = "$value")]
     pub value: T,
+}
+
+impl<T: ZusiValueType> AsRef<TypedZusi<T>> for TypedZusi<T> {
+    fn as_ref(&self) -> &TypedZusi<T> {
+        &self
+    }
 }
 
 impl<T: ZusiValueType> From<TypedZusi<T>> for Zusi {
