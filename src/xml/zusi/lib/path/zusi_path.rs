@@ -1,7 +1,8 @@
 use crate::xml::zusi::lib::path::prejoined_zusi_path::PrejoinedZusiPath;
-use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
 use path_clean::clean;
+use serde::{Deserialize, Serialize};
+use std::ffi::OsStr;
+use std::path::{Path, PathBuf};
 use thiserror::Error;
 
 #[derive(Error, Debug, Clone, PartialEq, Eq)]
@@ -48,6 +49,10 @@ impl ZusiPath {
         self.get().parent().map(|parent| {
             Self::new(parent).unwrap() // parent of relative path is always relative
         })
+    }
+
+    pub fn with_extension<S: AsRef<OsStr>>(&self, extension: S) -> Self {
+        Self::new(self.get().with_extension(extension)).unwrap() // path is still valid, just the extension has changed
     }
 
     pub fn join<P: AsRef<Path>>(&self, path: P) -> Result<ZusiPath, ZusiPathError> {
@@ -169,6 +174,26 @@ mod tests {
         assert_eq!(
             ZusiPath::new("").unwrap().parent(),
             None,
+        );
+    }
+
+    #[test]
+    fn test_with_extension() {
+        assert_eq!(
+            ZusiPath::new("c/d.e").unwrap().with_extension("xml"),
+            ZusiPath::new("c/d.xml").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("c/d.e").unwrap().with_extension(""),
+            ZusiPath::new("c/d").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("").unwrap().with_extension("xml"),
+            ZusiPath::new("").unwrap(),
+        );
+        assert_eq!(
+            ZusiPath::new("").unwrap().with_extension(""),
+            ZusiPath::new("").unwrap(),
         );
     }
 

@@ -1,6 +1,7 @@
 use crate::xml::zusi::lib::path::zusi_path::{ZusiPath, ZusiPathError};
-use std::path::{Path, PathBuf};
 use path_clean::clean;
+use std::ffi::OsStr;
+use std::path::{Path, PathBuf};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PrejoinedZusiPath {
@@ -38,12 +39,21 @@ impl PrejoinedZusiPath {
 
     pub fn parent(&self) -> Option<Self> {
         self.zusi_path.parent().map(|parent_zusi_path| {
-            PrejoinedZusiPath {
+            Self {
                 full_path: self.data_dir.join(parent_zusi_path.get()),
                 zusi_path: parent_zusi_path,
                 data_dir: self.data_dir.clone(),
             }
         })
+    }
+
+    pub fn with_extension<S: AsRef<OsStr>>(&self, extension: S) -> Self {
+        let zusi_path_with_extension = self.zusi_path().with_extension(extension);
+        Self {
+            full_path: self.data_dir.join(zusi_path_with_extension.get()),
+            zusi_path: zusi_path_with_extension,
+            data_dir: self.data_dir.clone(),
+        }
     }
 
     pub fn join_to_zusi_path<P: AsRef<Path>>(&self, path: P) -> Result<PrejoinedZusiPath, ZusiPathError> {
@@ -126,6 +136,16 @@ mod tests {
             PrejoinedZusiPath::new("/a/b", ZusiPath::new("").unwrap()).parent(),
             None,
         );
+    }
+
+    #[test]
+    fn test_with_extension() {
+        let prejoined_zusi_path = PrejoinedZusiPath::new("/a/b", ZusiPath::new("c/d.e").unwrap())
+            .with_extension("xml");
+
+        assert_eq!(prejoined_zusi_path.data_dir().to_str().unwrap(), "/a/b");
+        assert_eq!(prejoined_zusi_path.zusi_path().get().to_str().unwrap(), "c/d.xml");
+        assert_eq!(prejoined_zusi_path.full_path().to_str().unwrap(), "/a/b/c/d.xml");
     }
 
     #[test]
