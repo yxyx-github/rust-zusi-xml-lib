@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
-pub struct StreckenModul {
+pub struct StreckenModulEintrag {
     #[serde(rename = "Datei")]
     pub datei: Datei,
 

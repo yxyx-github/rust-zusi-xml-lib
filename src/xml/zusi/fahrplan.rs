@@ -1,8 +1,8 @@
 pub mod zug_datei_eintrag;
-pub mod strecken_modul;
+pub mod strecken_modul_eintrag;
 pub mod zeit_modus;
 
-use crate::xml::zusi::fahrplan::strecken_modul::StreckenModul;
+use crate::xml::zusi::fahrplan::strecken_modul_eintrag::StreckenModulEintrag;
 use crate::xml::zusi::fahrplan::zeit_modus::ZeitModus;
 use crate::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
 use crate::xml::zusi::lib::datei::Datei;
@@ -62,7 +62,7 @@ pub struct Fahrplan {
 
     #[serde(rename = "StrModul", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub strecken_module: Vec<StreckenModul>,
+    pub strecken_modul_eintraege: Vec<StreckenModulEintrag>,
 
     #[serde(rename = "UTM")]
     pub utm: UTM,

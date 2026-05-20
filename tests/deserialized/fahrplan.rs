@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use time::macros::datetime;
-use zusi_xml_lib::xml::zusi::fahrplan::strecken_modul::StreckenModul;
+use zusi_xml_lib::xml::zusi::fahrplan::strecken_modul_eintrag::StreckenModulEintrag;
 use zusi_xml_lib::xml::zusi::fahrplan::zeit_modus::ZeitModus;
 use zusi_xml_lib::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
 use zusi_xml_lib::xml::zusi::fahrplan::Fahrplan;
@@ -100,8 +100,8 @@ pub fn all() -> Zusi {
                     _unknown: HashMap::new(),
                 },
             ],
-            strecken_module: vec![
-                StreckenModul {
+            strecken_modul_eintraege: vec![
+                StreckenModulEintrag {
                     datei: Datei {
                         dateiname: "to/the/mod1.st3".try_into().unwrap(),
                         inst: 0,
@@ -157,9 +157,9 @@ pub fn with_defaults() -> Zusi {
                     ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/first.trn".try_into().unwrap()).build()).build(),
                     ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/second.trn".try_into().unwrap()).build()).build(),
                 ])
-                .strecken_module(vec![
-                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
-                    StreckenModul::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
+                .strecken_modul_eintraege(vec![
+                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
+                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
                 ])
                 .utm(UTM::builder().build())
                 .build(),
