@@ -1,13 +1,7 @@
-pub mod fahrzeug_zusatz_info;
-pub mod fahrplan_zeile;
-pub mod fahrplan_zug_parameter;
+pub mod fahrplan_anmerkung;
 
-use crate::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
-use crate::xml::zusi::buchfahrplan::fahrzeug_zusatz_info::FahrzeugZusatzInfo;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
-use crate::xml::zusi::lib::datei::Datei;
-use crate::xml::zusi::lib::daten_aenderung::DatenAenderung;
-use crate::xml::zusi::lib::utm::UTM;
+use crate::xml::zusi::lib::daten_aenderung::fahrplan_anmerkung::FahrplanAnmerkung;
 use serde::{Deserialize, Serialize};
 use serde_helpers::default::IsDefault;
 use serde_helpers::with::bool_as_int::bool_as_int_format;
@@ -15,7 +9,7 @@ use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
-pub struct Buchfahrplan {
+pub struct DatenAenderung {
     #[serde(rename = "@Gattung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub gattung: String,
@@ -68,10 +62,6 @@ pub struct Buchfahrplan {
     #[builder(default)]
     pub wagenzug_laenge: f32,
 
-    #[serde(rename = "@kmStart", default, skip_serializing_if = "IsDefault::is_default")]
-    #[builder(default)]
-    pub km_start: f32,
-
     #[serde(rename = "@BremsstellungZug", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub bremsstellung_zug: Bremsstellung,
@@ -80,30 +70,9 @@ pub struct Buchfahrplan {
     #[builder(default)]
     pub fahrplan_bremsstellung_textvorgabe: String,
 
-    #[serde(rename = "@GNTSpalte", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "FplAnmerkung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub gnt_spalte: bool,
-
-    #[serde(rename = "DatenAenderung", default, skip_serializing_if = "IsDefault::is_default")]
-    #[builder(default)]
-    pub daten_aenderung: Option<DatenAenderung>,
-
-    #[serde(rename = "Datei_fpn")]
-    pub datei_fpn: Datei,
-
-    #[serde(rename = "Datei_trn")]
-    pub datei_trn: Datei,
-
-    #[serde(rename = "UTM")]
-    pub utm: UTM,
-
-    #[serde(rename = "Fzg", default, skip_serializing_if = "IsDefault::is_default")]
-    #[builder(default)]
-    pub fahrzeug_info: Vec<FahrzeugZusatzInfo>,
-
-    #[serde(rename = "FplZeile", default, skip_serializing_if = "IsDefault::is_default")]
-    #[builder(default)]
-    pub fahrplan_zeilen: Vec<FahrplanZeile>,
+    pub fahrplan_anmerkung: Option<FahrplanAnmerkung>,
 
     #[serde(flatten)]
     #[builder(default)]

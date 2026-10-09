@@ -3,18 +3,19 @@ pub mod fahrplan_fahrstrasse_eintrag;
 pub mod fahrplan_vorgang;
 pub mod fahrzeug_verband_aktion;
 
-use serde_helpers::with::bool_as_int::bool_as_int_format;
-use serde_helpers::with::date_time::date_time_option_format;
-use serde_helpers::default::IsDefault;
+use crate::xml::zusi::lib::daten_aenderung::DatenAenderung;
 use crate::xml::zusi::lib::ereignis::Ereignis;
 use crate::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrplan_signal_eintrag::FahrplanSignalEintrag;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrplan_vorgang::FahrplanVorgang;
+use crate::xml::zusi::zug::fahrplan_eintrag::fahrzeug_verband_aktion::FahrzeugVerbandAktion;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
+use serde_helpers::with::date_time::date_time_option_format;
 use std::collections::HashMap;
 use time::PrimitiveDateTime;
 use typed_builder::TypedBuilder;
-use crate::xml::zusi::zug::fahrplan_eintrag::fahrzeug_verband_aktion::FahrzeugVerbandAktion;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanEintrag {
@@ -70,6 +71,10 @@ pub struct FahrplanEintrag {
     #[builder(default)]
     pub fahrplan_fahrstrassen_eintraege: Vec<FahrplanSignalEintrag>,
 
+    #[serde(rename = "Ereignis", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub ereignisse: Vec<Ereignis>,
+
     #[serde(rename = "FahrplanVorgangEreignisse", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrplan_vorgang_ereignisse: Option<FahrplanVorgang>,
@@ -78,9 +83,9 @@ pub struct FahrplanEintrag {
     #[builder(default)]
     pub fahrplan_vorgang_fahrstrasse: Option<FahrplanVorgang>,
 
-    #[serde(rename = "Ereignis", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "DatenAenderung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub ereignisse: Vec<Ereignis>,
+    pub daten_aenderung: Option<DatenAenderung>,
 
     #[serde(flatten)]
     #[builder(default)]

@@ -170,6 +170,10 @@ pub struct Zug {
     #[builder(default)]
     pub buchfahrplan_bmp_datei: Option<Datei>,
 
+    #[serde(rename = "LaRohDatei", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub la_roh_datei: Option<Datei>,
+
     #[serde(rename = "Anfangsbefehl", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub anfangsbefehl: Option<Datei>,

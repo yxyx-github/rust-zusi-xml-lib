@@ -6,8 +6,6 @@ pub mod zugdaten_indusi_analog;
 pub mod zugdaten_indusi_rechner;
 pub mod zugdaten_pzb80;
 
-use serde_helpers::with::bool_as_int::bool_as_int_format;
-use serde_helpers::default::IsDefault;
 use crate::xml::zusi::lib::bremsstellung::Bremsstellung;
 use crate::xml::zusi::lib::datei::Datei;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_etcs::ZugdatenETCS;
@@ -18,6 +16,8 @@ use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_lzb80::Zu
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_pzb80::ZugdatenPZB80;
 use crate::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_zbs::ZugdatenZBS;
 use serde::{Deserialize, Serialize};
+use serde_helpers::default::IsDefault;
+use serde_helpers::with::bool_as_int::bool_as_int_format;
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
@@ -81,9 +81,9 @@ pub struct FahrzeugInfo {
     #[builder(default)]
     pub gedreht: bool,
 
-    #[serde(rename = "@Feststellbremse", with = "bool_as_int_format", default, skip_serializing_if = "IsDefault::is_default")]
+    #[serde(rename = "@Feststellbremse", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub feststellbremse: bool,
+    pub feststellbremse: i32,
 
     #[serde(rename = "@LastwechselBeladen", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
@@ -104,6 +104,30 @@ pub struct FahrzeugInfo {
     #[serde(rename = "@MgBremseStrom", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub mg_bremse_strom: i32,
+
+    #[serde(rename = "@DieselGestoppt", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub diesel_gestoppt: i32,
+
+    #[serde(rename = "@AkkuAntriebDeaktiviert", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub akku_antrieb_deaktiviert: i32,
+
+    #[serde(rename = "@SAundHSDeaktiviert", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub stromabnehmer_und_hauptschalter_deaktiviert: i32,
+
+    #[serde(rename = "@AkkuTankVerbrauchterAnteil", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub akku_tank_verbrauchter_anteil: f32,
+
+    #[serde(rename = "@SchalterPultaktivierung", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub schalter_pultaktivierung: i32,
+
+    #[serde(rename = "@SchalterRichtung", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub schalter_richtung: i32,
 
     #[serde(rename = "@FahrzeugZusatzinfo", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]

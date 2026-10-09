@@ -30,6 +30,14 @@ pub struct ZugdatenETCS {
     #[builder(default)]
     pub achslast: i32,
 
+    #[serde(rename = "@Fahrzeugbegrenzungslinie", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrzeug_begrenzungs_linie: i32,
+
+    #[serde(rename = "@Druckdicht", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub druckdicht: i32,
+
     #[serde(rename = "@TfNummer", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub tf_nummer: String,
@@ -65,6 +73,10 @@ pub struct ZugdatenETCS {
     #[serde(rename = "@ETCSPassivschalter", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub etcs_passiv_schalter: i32,
+
+    #[serde(rename = "@GUIKurve", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub gui_kurve: i32,
 
     #[serde(flatten)]
     #[builder(default)]

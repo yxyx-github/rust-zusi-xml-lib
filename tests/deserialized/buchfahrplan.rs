@@ -53,6 +53,7 @@ pub fn all() -> Zusi {
             bremsstellung_zug: Bremsstellung::RMg,
             fahrplan_bremsstellung_textvorgabe: "R+Mg".into(),
             gnt_spalte: true,
+            daten_aenderung: None,
             datei_fpn: Datei {
                 dateiname: "to/the/file.fpn".try_into().unwrap(),
                 inst: 0,
@@ -109,6 +110,7 @@ pub fn all() -> Zusi {
                     }),
                     fahrplan_icon: vec![FahrplanIcon {
                         fahrplan_icon_nummer: 4,
+                        fahrplan_icon_parameter: "".into(),
                         _unknown: HashMap::new(),
                     }],
                     fahrplan_tunnel: Some(FahrplanTunnel {
@@ -137,6 +139,8 @@ pub fn all() -> Zusi {
                         _unknown: HashMap::new(),
                     }),
                     fahrplan_v_max_reduzierungen: Some(FahrplanVMaxReduzierungen {
+                        fahrplan_vmax: 0,
+                        fahrplan_punktuell: false,
                         v_max_reduzierungen: vec![
                             Ereignis {
                                 ereignis: 58,

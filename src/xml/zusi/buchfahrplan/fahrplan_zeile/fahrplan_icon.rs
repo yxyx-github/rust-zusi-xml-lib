@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use serde_helpers::default::IsDefault;
 use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
@@ -8,6 +8,10 @@ pub struct FahrplanIcon {
     #[serde(rename = "@FplIconNr", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrplan_icon_nummer: i32, // TODO: replace with enum?
+
+    #[serde(rename = "@FplIconParam", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrplan_icon_parameter: String,
 
     #[serde(flatten)]
     #[builder(default)]

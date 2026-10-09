@@ -10,6 +10,7 @@
         <Datei Dateiname="this/is/it.fpn" inst="1" NurInfo="1"/>
         <BuchfahrplanRohDatei Dateiname="to/the/file.ext"/>
         <BuchfahrplanBMPDatei Dateiname="to/the/file.ext"/>
+        <LaRohDatei Dateiname="to/the/file.ext"/>
         <Anfangsbefehl Dateiname="to/the/file.ext"/>
         <Aufgleisreferenz ReferenzNr="3">
             <Datei Dateiname="to/the/file.ext"/>

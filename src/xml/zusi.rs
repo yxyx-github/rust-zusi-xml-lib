@@ -39,15 +39,15 @@ pub enum ZusiValue {
     #[serde(rename = "result")]
     Result(ZusiResult),
 
-    /// Version A.6
+    /// Version A.6 => latest dev version
     #[serde(rename = "Fahrplan")]
     Fahrplan(Fahrplan),
 
-    /// Version A.6
+    /// Version A.6 => latest dev version
     #[serde(rename = "Zug")]
     Zug(Zug),
 
-    /// Version A.4
+    /// Version A.4 => latest dev version
     #[serde(rename = "Buchfahrplan")]
     Buchfahrplan(Buchfahrplan),
 }
