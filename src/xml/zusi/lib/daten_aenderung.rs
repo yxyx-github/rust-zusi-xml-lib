@@ -72,7 +72,7 @@ pub struct DatenAenderung {
 
     #[serde(rename = "FplAnmerkung", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub fahrplan_anmerkung: Option<FahrplanAnmerkung>,
+    pub fahrplan_anmerkung: Vec<FahrplanAnmerkung>,
 
     #[serde(flatten)]
     #[builder(default)]
