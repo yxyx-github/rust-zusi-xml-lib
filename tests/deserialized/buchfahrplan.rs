@@ -150,6 +150,7 @@ pub fn all() -> Zusi {
                         ],
                         _unknown: HashMap::new(),
                     }),
+                    fahrplan_zug_parameter: None,
                     _unknown: HashMap::new(),
                 },
             ],

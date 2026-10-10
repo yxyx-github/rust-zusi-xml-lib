@@ -29,6 +29,7 @@ use crate::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_v_max_reduzierungen
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
+use crate::xml::zusi::buchfahrplan::fahrplan_zug_parameter::FahrplanZugParameter;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 pub struct FahrplanZeile {
@@ -105,6 +106,10 @@ pub struct FahrplanZeile {
     #[serde(rename = "FplvMaxReduzierungen", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub fahrplan_v_max_reduzierungen: Option<FahrplanVMaxReduzierungen>,
+
+    #[serde(rename = "FplZugparameter", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub fahrplan_zug_parameter: Option<FahrplanZugParameter>,
 
     #[serde(flatten)]
     #[builder(default)]
