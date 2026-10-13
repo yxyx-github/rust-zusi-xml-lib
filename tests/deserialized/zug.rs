@@ -3,7 +3,7 @@ use time::macros::datetime;
 use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::bremsstellung::Bremsstellung;
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
-use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
+use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrags_typ::FahrplanEintragsTyp;
 use zusi_xml_lib::xml::zusi::zug::aufgleis_referenz::AufgleisReferenz;
 use zusi_xml_lib::xml::zusi::zug::fahrplan_eintrag::FahrplanEintrag;
 use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::fahrzeug_info::zugdaten_pzb80::ZugdatenPZB80;

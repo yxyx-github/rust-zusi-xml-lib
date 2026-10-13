@@ -5,7 +5,7 @@ pub mod fahrzeug_verband_aktion;
 
 use crate::xml::zusi::lib::daten_aenderung::DatenAenderung;
 use crate::xml::zusi::lib::ereignis::Ereignis;
-use crate::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
+use crate::xml::zusi::lib::fahrplan_eintrags_typ::FahrplanEintragsTyp;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrplan_signal_eintrag::FahrplanSignalEintrag;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrplan_vorgang::FahrplanVorgang;
 use crate::xml::zusi::zug::fahrplan_eintrag::fahrzeug_verband_aktion::FahrzeugVerbandAktion;

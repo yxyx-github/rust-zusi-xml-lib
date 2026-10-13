@@ -4,18 +4,18 @@ use std::collections::HashMap;
 use typed_builder::TypedBuilder;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
-pub struct Phi {
+pub struct PunktXYZ {
     #[serde(rename = "@X", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub x: f64,
+    pub x: f32,
 
     #[serde(rename = "@Y", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub y: f64,
+    pub y: f32,
 
     #[serde(rename = "@Z", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub z: f64,
+    pub z: f32,
 
     #[serde(flatten)]
     #[builder(default)]

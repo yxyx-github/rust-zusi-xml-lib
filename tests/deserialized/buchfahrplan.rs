@@ -20,7 +20,7 @@ use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::bremsstellung::Bremsstellung;
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
 use zusi_xml_lib::xml::zusi::lib::ereignis::Ereignis;
-use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
+use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrags_typ::FahrplanEintragsTyp;
 use zusi_xml_lib::xml::zusi::lib::utm::UTM;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 

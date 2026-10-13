@@ -1,6 +1,5 @@
-use crate::xml::zusi::lib::phi::Phi;
-use crate::xml::zusi::lib::position::Position;
 use crate::xml::zusi::lib::datei::Datei;
+use crate::xml::zusi::lib::punkt_xyz::PunktXYZ;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use typed_builder::TypedBuilder;
@@ -11,10 +10,10 @@ pub struct StreckenModulEintrag {
     pub datei: Datei,
 
     #[serde(rename = "p")]
-    pub position: Position,
+    pub position: PunktXYZ,
 
     #[serde(rename = "phi")]
-    pub phi: Phi,
+    pub phi: PunktXYZ,
 
     #[serde(flatten)]
     #[builder(default)]

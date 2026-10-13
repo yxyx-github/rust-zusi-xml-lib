@@ -1,10 +1,10 @@
 pub mod datei;
 pub mod bremsstellung;
-pub mod fahrplan_eintrag;
+pub mod fahrplan_eintrags_typ;
 pub mod abhaengigkeit;
 pub mod utm;
 pub mod ereignis;
-pub mod position;
-pub mod phi;
+pub mod punkt_xyz;
 pub mod path;
 pub mod daten_aenderung;
+pub mod beschreibung;

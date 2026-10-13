@@ -1,6 +1,6 @@
 use serde_helpers::default::IsDefault;
 use serde_helpers::with::date_time::date_time_format;
-use crate::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
+use crate::xml::zusi::lib::fahrplan_eintrags_typ::FahrplanEintragsTyp;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use time::PrimitiveDateTime;

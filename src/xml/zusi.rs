@@ -9,6 +9,7 @@ pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 pub use serde_helpers::xml::{FromXML, ToXML};
+use crate::xml::zusi::strecke::Strecke;
 
 pub mod lib;
 pub mod info;
@@ -16,6 +17,7 @@ pub mod result;
 pub mod zug;
 pub mod fahrplan;
 pub mod buchfahrplan;
+pub mod strecke;
 
 #[derive(Serialize, Deserialize, TypedBuilder, PartialEq, Debug, Clone)]
 #[serde(deny_unknown_fields)]
@@ -50,6 +52,10 @@ pub enum ZusiValue {
     /// Version A.4 => latest dev version
     #[serde(rename = "Buchfahrplan")]
     Buchfahrplan(Buchfahrplan),
+
+    /// Version A.6
+    #[serde(rename = "Strecke")]
+    Strecke(Strecke),
 }
 
 #[derive(Deserialize, TypedBuilder, PartialEq, Debug, Clone)]

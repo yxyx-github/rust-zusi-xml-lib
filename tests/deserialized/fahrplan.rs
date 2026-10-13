@@ -1,18 +1,17 @@
 use std::collections::HashMap;
 use time::macros::datetime;
+use zusi_xml_lib::xml::zusi::fahrplan::Fahrplan;
 use zusi_xml_lib::xml::zusi::fahrplan::strecken_modul_eintrag::StreckenModulEintrag;
 use zusi_xml_lib::xml::zusi::fahrplan::zeit_modus::ZeitModus;
 use zusi_xml_lib::xml::zusi::fahrplan::zug_datei_eintrag::ZugDateiEintrag;
-use zusi_xml_lib::xml::zusi::fahrplan::Fahrplan;
 use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
-use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrag::FahrplanEintragsTyp;
-use zusi_xml_lib::xml::zusi::lib::phi::Phi;
-use zusi_xml_lib::xml::zusi::lib::position::Position;
+use zusi_xml_lib::xml::zusi::lib::fahrplan_eintrags_typ::FahrplanEintragsTyp;
+use zusi_xml_lib::xml::zusi::lib::punkt_xyz::PunktXYZ;
 use zusi_xml_lib::xml::zusi::lib::utm::UTM;
+use zusi_xml_lib::xml::zusi::zug::Zug;
 use zusi_xml_lib::xml::zusi::zug::fahrplan_eintrag::FahrplanEintrag;
 use zusi_xml_lib::xml::zusi::zug::fahrzeug_varianten::FahrzeugVarianten;
-use zusi_xml_lib::xml::zusi::zug::Zug;
 use zusi_xml_lib::xml::zusi::{Zusi, ZusiValue};
 
 #[allow(dead_code)]
@@ -108,13 +107,13 @@ pub fn all() -> Zusi {
                         nur_info: false,
                         _unknown: HashMap::new(),
                     },
-                    position: Position {
+                    position: PunktXYZ {
                         x: 0.1,
                         y: 0.2,
                         z: 0.3,
                         _unknown: HashMap::new(),
                     },
-                    phi: Phi {
+                    phi: PunktXYZ {
                         x: 0.4,
                         y: 0.5,
                         z: 0.6,
@@ -158,8 +157,8 @@ pub fn with_defaults() -> Zusi {
                     ZugDateiEintrag::builder().datei(Datei::builder().dateiname("path/to/second.trn".try_into().unwrap()).build()).build(),
                 ])
                 .strecken_modul_eintraege(vec![
-                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
-                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".try_into().unwrap()).build()).position(Position::builder().build()).phi(Phi::builder().build()).build(),
+                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod1.st3".try_into().unwrap()).build()).position(PunktXYZ::builder().build()).phi(PunktXYZ::builder().build()).build(),
+                    StreckenModulEintrag::builder().datei(Datei::builder().dateiname("path/to/strmod2.st3".try_into().unwrap()).build()).position(PunktXYZ::builder().build()).phi(PunktXYZ::builder().build()).build(),
                 ])
                 .utm(UTM::builder().build())
                 .build(),
