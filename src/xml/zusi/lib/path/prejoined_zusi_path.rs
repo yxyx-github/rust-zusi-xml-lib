@@ -11,7 +11,7 @@ pub struct PrejoinedZusiPath {
 }
 
 impl PrejoinedZusiPath {
-    pub fn new<P: AsRef<Path> + Into<PathBuf>>(data_dir: P, zusi_path: ZusiPath) -> Self {
+    pub fn new(data_dir: impl AsRef<Path> + Into<PathBuf>, zusi_path: ZusiPath) -> Self {
         let full_path = zusi_path.resolve(&data_dir);
 
         Self {
@@ -47,7 +47,7 @@ impl PrejoinedZusiPath {
         })
     }
 
-    pub fn with_extension<S: AsRef<OsStr>>(&self, extension: S) -> Self {
+    pub fn with_extension(&self, extension: impl AsRef<OsStr>) -> Self {
         let zusi_path_with_extension = self.zusi_path().with_extension(extension);
         Self {
             full_path: self.data_dir.join(zusi_path_with_extension.get()),
@@ -56,7 +56,7 @@ impl PrejoinedZusiPath {
         }
     }
 
-    pub fn join_to_zusi_path<P: AsRef<Path>>(&self, path: P) -> Result<PrejoinedZusiPath, ZusiPathError> {
+    pub fn join_to_zusi_path(&self, path: impl AsRef<Path>) -> Result<PrejoinedZusiPath, ZusiPathError> {
         Ok(PrejoinedZusiPath::new(
             &self.data_dir,
             self.zusi_path.join(path.as_ref())?

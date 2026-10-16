@@ -18,7 +18,7 @@ pub enum ZusiPathError {
 pub struct ZusiPath(PathBuf);
 
 impl ZusiPath {
-    pub fn new<P: AsRef<Path> + Into<PathBuf>>(path: P) -> Result<Self, ZusiPathError> {
+    pub fn new(path: impl AsRef<Path> + Into<PathBuf>) -> Result<Self, ZusiPathError> {
         if path.as_ref().is_relative() {
             Ok(Self(path.into()))
         } else {
@@ -26,7 +26,7 @@ impl ZusiPath {
         }
     }
 
-    pub fn new_using_data_dir<P1: AsRef<Path>, P2: AsRef<Path>>(path: P1, data_dir: P2) -> Result<Self, ZusiPathError> {
+    pub fn new_using_data_dir(path: impl AsRef<Path>, data_dir: impl AsRef<Path>) -> Result<Self, ZusiPathError> {
         match path.as_ref().strip_prefix(data_dir) {
             Ok(path) => Ok(Self(path.into())),
             Err(_) => Err(ZusiPathError::PathDoesNotContainDataDir),
@@ -51,11 +51,11 @@ impl ZusiPath {
         })
     }
 
-    pub fn with_extension<S: AsRef<OsStr>>(&self, extension: S) -> Self {
+    pub fn with_extension(&self, extension: impl AsRef<OsStr>) -> Self {
         Self::new(self.get().with_extension(extension)).unwrap() // path is still valid, just the extension has changed
     }
 
-    pub fn join<P: AsRef<Path>>(&self, path: P) -> Result<ZusiPath, ZusiPathError> {
+    pub fn join(&self, path: impl AsRef<Path>) -> Result<ZusiPath, ZusiPathError> {
         self.0.join(path.as_ref()).try_into()
     }
 
