@@ -21,7 +21,7 @@ impl PrejoinedZusiPath {
         }
     }
 
-    pub fn data_dir(&self) -> &PathBuf {
+    pub fn data_dir(&self) -> &Path {
         &self.data_dir
     }
 
@@ -29,7 +29,7 @@ impl PrejoinedZusiPath {
         &self.zusi_path
     }
 
-    pub fn full_path(&self) -> &PathBuf {
+    pub fn full_path(&self) -> &Path {
         &self.full_path
     }
 
