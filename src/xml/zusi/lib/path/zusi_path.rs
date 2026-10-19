@@ -14,7 +14,7 @@ pub enum ZusiPathError {
     PathMustBeRelative,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Debug, Clone)]
 pub struct ZusiPath(PathBuf);
 
 impl ZusiPath {

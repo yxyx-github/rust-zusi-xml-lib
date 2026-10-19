@@ -3,7 +3,7 @@ use path_clean::clean;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(PartialEq, Eq, Debug, Clone)]
 pub struct PrejoinedZusiPath {
     data_dir: PathBuf,
     zusi_path: ZusiPath,
@@ -38,7 +38,7 @@ impl PrejoinedZusiPath {
     }
 
     pub fn parent(&self) -> Option<Self> {
-        self.zusi_path.parent().map(|parent_zusi_path| {
+        self.zusi_path().parent().map(|parent_zusi_path| {
             Self {
                 full_path: self.data_dir.join(parent_zusi_path.get()),
                 zusi_path: parent_zusi_path,
