@@ -119,7 +119,7 @@ impl ZusiEnvironmentPath {
     }
 
     pub fn read_xml_file<T: FromXML>(&self) -> Result<T, ReadXMLFileError> {
-        T::from_xml_file_by_path(self.read_path().map_err(|err| ReadXMLFileError::IOError(err))?.full_path())
+        T::from_xml_file_by_path(self.read_path()?.full_path())
     }
 
     pub fn write_xml_file<T: ToXML>(&self, object: T, declaration_header: bool) -> Result<(), WriteXMLFileError> {
