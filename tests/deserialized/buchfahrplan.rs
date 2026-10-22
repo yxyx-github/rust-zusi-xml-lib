@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 use time::macros::datetime;
+use zusi_xml_lib::xml::zusi::buchfahrplan::Buchfahrplan;
+use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_abfahrt::FahrplanAbfahrt;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_ankunft::FahrplanAnkunft;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_icon::FahrplanIcon;
@@ -13,9 +15,7 @@ use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_tunnel::Fahr
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_v_max::FahrplanVMax;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_v_max_gnt::FahrplanVMaxGNT;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::fahrplan_v_max_reduzierungen::FahrplanVMaxReduzierungen;
-use zusi_xml_lib::xml::zusi::buchfahrplan::fahrplan_zeile::FahrplanZeile;
 use zusi_xml_lib::xml::zusi::buchfahrplan::fahrzeug_zusatz_info::FahrzeugZusatzInfo;
-use zusi_xml_lib::xml::zusi::buchfahrplan::Buchfahrplan;
 use zusi_xml_lib::xml::zusi::info::{DateiTyp, Info};
 use zusi_xml_lib::xml::zusi::lib::bremsstellung::Bremsstellung;
 use zusi_xml_lib::xml::zusi::lib::datei::Datei;
@@ -35,7 +35,7 @@ pub fn all() -> Zusi {
             datei: None,
             _unknown: HashMap::new(),
         },
-        value: ZusiValue::Buchfahrplan(Buchfahrplan {
+        value: ZusiValue::Buchfahrplan(vec![Buchfahrplan {
             gattung: "RB".into(),
             nummer: "2027".into(),
             zuglauf: "ADorf - BDorf".into(),
@@ -155,7 +155,7 @@ pub fn all() -> Zusi {
                 },
             ],
             _unknown: HashMap::new(),
-        }),
+        }]),
     }
 }
 
@@ -169,16 +169,25 @@ pub fn with_defaults() -> Zusi {
             .min_version("A.0".into())
             .build()
         )
-        .value(ZusiValue::Buchfahrplan(
+        .value(ZusiValue::Buchfahrplan(vec![
             Buchfahrplan::builder()
                 .datei_fpn(Datei::builder().build())
                 .datei_trn(Datei::builder().build())
                 .utm(UTM::builder().build())
                 .fahrplan_zeilen(vec![
-                    FahrplanZeile::builder().fahrplan_name(Some(FahrplanName::builder().fahrplan_name_text("Name".into()).build())).build(),
-                    FahrplanZeile::builder().fahrplan_name_rechts(Some(FahrplanNameRechts::builder().fahrplan_name_text("Name Rechts".into()).build())).build(),
+                    FahrplanZeile::builder().fahrplan_name(Some(FahrplanName::builder().fahrplan_name_text("NameX".into()).build())).build(),
+                    FahrplanZeile::builder().fahrplan_name_rechts(Some(FahrplanNameRechts::builder().fahrplan_name_text("NameX Rechts".into()).build())).build(),
                 ])
-                .build()
-        ))
+                .build(),
+            Buchfahrplan::builder()
+                .datei_fpn(Datei::builder().build())
+                .datei_trn(Datei::builder().build())
+                .utm(UTM::builder().build())
+                .fahrplan_zeilen(vec![
+                    FahrplanZeile::builder().fahrplan_name(Some(FahrplanName::builder().fahrplan_name_text("NameY".into()).build())).build(),
+                    FahrplanZeile::builder().fahrplan_name_rechts(Some(FahrplanNameRechts::builder().fahrplan_name_text("NameY Rechts".into()).build())).build(),
+                ])
+                .build(),
+        ]))
         .build()
 }

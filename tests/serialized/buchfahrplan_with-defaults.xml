@@ -5,10 +5,21 @@
         <Datei_trn/>
         <UTM/>
         <FplZeile>
-            <FplName FplNameText="Name"/>
+            <FplName FplNameText="NameX"/>
         </FplZeile>
         <FplZeile>
-            <FplNameRechts FplNameText="Name Rechts"/>
+            <FplNameRechts FplNameText="NameX Rechts"/>
+        </FplZeile>
+    </Buchfahrplan>
+    <Buchfahrplan>
+        <Datei_fpn/>
+        <Datei_trn/>
+        <UTM/>
+        <FplZeile>
+            <FplName FplNameText="NameY"/>
+        </FplZeile>
+        <FplZeile>
+            <FplNameRechts FplNameText="NameY Rechts"/>
         </FplZeile>
     </Buchfahrplan>
 </Zusi>

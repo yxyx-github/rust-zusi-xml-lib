@@ -9,6 +9,7 @@ pub use quick_xml::DeError;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 pub use serde_helpers::xml::{FromXML, ToXML};
+use thiserror::Error;
 use crate::xml::zusi::strecke::Strecke;
 
 pub mod lib;
@@ -51,7 +52,7 @@ pub enum ZusiValue {
 
     /// Version A.4 => latest dev version
     #[serde(rename = "Buchfahrplan")]
-    Buchfahrplan(Buchfahrplan),
+    Buchfahrplan(Vec<Buchfahrplan>),
 
     /// Version A.6
     #[serde(rename = "Strecke")]
@@ -87,8 +88,9 @@ pub trait ZusiValueType {
     fn into_zusi_value(self) -> ZusiValue;
 }
 
-#[derive(Debug)]
-pub struct WrongVariant;
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
+#[error("The value of the file is invalid.")]
+pub struct InvalidValue;
 
 impl ZusiValueType for ZusiResult {
     fn into_zusi_value(self) -> ZusiValue {
@@ -97,7 +99,7 @@ impl ZusiValueType for ZusiResult {
 }
 
 impl TryFrom<Zusi> for TypedZusi<ZusiResult> {
-    type Error = WrongVariant;
+    type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
         if let ZusiValue::Result(variant) = value.value {
@@ -106,7 +108,7 @@ impl TryFrom<Zusi> for TypedZusi<ZusiResult> {
                 value: variant,
             })
         } else {
-            Err(WrongVariant)
+            Err(InvalidValue)
         }
     }
 }
@@ -118,7 +120,7 @@ impl ZusiValueType for Fahrplan {
 }
 
 impl TryFrom<Zusi> for TypedZusi<Fahrplan> {
-    type Error = WrongVariant;
+    type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
         if let ZusiValue::Fahrplan(variant) = value.value {
@@ -127,7 +129,7 @@ impl TryFrom<Zusi> for TypedZusi<Fahrplan> {
                 value: variant,
             })
         } else {
-            Err(WrongVariant)
+            Err(InvalidValue)
         }
     }
 }
@@ -139,7 +141,7 @@ impl ZusiValueType for Zug {
 }
 
 impl TryFrom<Zusi> for TypedZusi<Zug> {
-    type Error = WrongVariant;
+    type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
         if let ZusiValue::Zug(variant) = value.value {
@@ -148,19 +150,45 @@ impl TryFrom<Zusi> for TypedZusi<Zug> {
                 value: variant,
             })
         } else {
-            Err(WrongVariant)
+            Err(InvalidValue)
         }
     }
 }
 
 impl ZusiValueType for Buchfahrplan {
     fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Buchfahrplan(vec![self])
+    }
+}
+
+impl ZusiValueType for Vec<Buchfahrplan> {
+    fn into_zusi_value(self) -> ZusiValue {
         ZusiValue::Buchfahrplan(self)
     }
 }
 
 impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
-    type Error = WrongVariant;
+    type Error = InvalidValue;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Buchfahrplan(variant) = value.value {
+            if variant.len() == 1 {
+                Ok(Self {
+                    info: value.info,
+                    value: variant.first().unwrap().to_owned(),
+                })
+            }
+            else {
+                Err(InvalidValue)
+            }
+        } else {
+            Err(InvalidValue)
+        }
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<Vec<Buchfahrplan>> {
+    type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
         if let ZusiValue::Buchfahrplan(variant) = value.value {
@@ -169,7 +197,7 @@ impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
                 value: variant,
             })
         } else {
-            Err(WrongVariant)
+            Err(InvalidValue)
         }
     }
 }
