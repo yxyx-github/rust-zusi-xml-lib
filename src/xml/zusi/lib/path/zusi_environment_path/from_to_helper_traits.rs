@@ -16,6 +16,8 @@ where
 
 pub trait ToZusiXMLFile: ToXML {
     fn to_zusi_xml_file(&self, path: impl AsRef<ZusiEnvironmentPath>, declaration_header: bool) -> Result<(), WriteXMLFileError>;
+
+    fn force_to_zusi_xml_file(&self, path: impl AsRef<ZusiEnvironmentPath>, declaration_header: bool) -> Result<(), WriteXMLFileError>;
 }
 
 impl<T> ToZusiXMLFile for T
@@ -24,6 +26,10 @@ where
 {
     fn to_zusi_xml_file(&self, path: impl AsRef<ZusiEnvironmentPath>, declaration_header: bool) -> Result<(), WriteXMLFileError> {
         path.as_ref().write_xml_file(self, declaration_header)
+    }
+
+    fn force_to_zusi_xml_file(&self, path: impl AsRef<ZusiEnvironmentPath>, declaration_header: bool) -> Result<(), WriteXMLFileError> {
+        path.as_ref().force_write_xml_file(self, declaration_header)
     }
 }
 
@@ -73,7 +79,7 @@ mod tests {
     }
 
     #[test]
-    fn test_from_xml_file_by_path() {
+    fn test_from_zusi_xml_file() {
         let tmp_dir = tempdir().unwrap();
         let file_path = tmp_dir.path().join("some_dir/xml_input_file.xml");
         fs::create_dir_all(file_path.parent().unwrap()).unwrap();
@@ -86,7 +92,7 @@ mod tests {
     }
 
     #[test]
-    fn test_from_xml_file_by_path_with_declaration_header() {
+    fn test_from_zusi_xml_file_with_declaration_header() {
         let tmp_dir = tempdir().unwrap();
         let file_path = tmp_dir.path().join("some_dir/xml_input_file.xml");
         fs::create_dir_all(file_path.parent().unwrap()).unwrap();
@@ -99,7 +105,7 @@ mod tests {
     }
 
     #[test]
-    fn test_to_xml_file_by_path() {
+    fn test_to_zusi_xml_file() {
         let tmp_dir = tempdir().unwrap();
         let file_path = tmp_dir.path().join("some_dir/xml_output_file.xml");
 
@@ -111,12 +117,36 @@ mod tests {
     }
 
     #[test]
-    fn test_to_xml_file_by_path_with_declaration_header() {
+    fn test_to_zusi_xml_file_with_declaration_header() {
         let tmp_dir = tempdir().unwrap();
         let file_path = tmp_dir.path().join("some_dir/xml_output_file.xml");
 
         let env = ZusiEnvironmentPath::new(tmp_dir.path(), tmp_dir.path()).with_path("some_dir/xml_output_file.xml").unwrap();
         expected_deserialized().to_zusi_xml_file(&env, true).unwrap();
+
+        let xml = fs::read_to_string(&file_path).unwrap();
+        assert_eq!(cleanup_xml(xml), cleanup_xml(EXPECTED_SERIALIZED_WITH_DECLARATION_HEADER.into()));
+    }
+
+    #[test]
+    fn test_force_to_zusi_xml_file() {
+        let tmp_dir = tempdir().unwrap();
+        let file_path = tmp_dir.path().join("some_dir/xml_output_file.xml");
+
+        let env = ZusiEnvironmentPath::new(tmp_dir.path(), tmp_dir.path()).with_path("some_dir/xml_output_file.xml").unwrap();
+        expected_deserialized().force_to_zusi_xml_file(&env, false).unwrap();
+
+        let xml = fs::read_to_string(&file_path).unwrap();
+        assert_eq!(cleanup_xml(xml), cleanup_xml(EXPECTED_SERIALIZED.into()));
+    }
+
+    #[test]
+    fn test_force_to_zusi_xml_file_with_declaration_header() {
+        let tmp_dir = tempdir().unwrap();
+        let file_path = tmp_dir.path().join("some_dir/xml_output_file.xml");
+
+        let env = ZusiEnvironmentPath::new(tmp_dir.path(), tmp_dir.path()).with_path("some_dir/xml_output_file.xml").unwrap();
+        expected_deserialized().force_to_zusi_xml_file(&env, true).unwrap();
 
         let xml = fs::read_to_string(&file_path).unwrap();
         assert_eq!(cleanup_xml(xml), cleanup_xml(EXPECTED_SERIALIZED_WITH_DECLARATION_HEADER.into()));

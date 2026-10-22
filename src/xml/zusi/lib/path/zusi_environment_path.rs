@@ -6,8 +6,9 @@ use path_clean::clean;
 use serde_helpers::xml::{FromXML, ReadXMLFileError, ToXML, WriteXMLFileError};
 use std::ffi::OsStr;
 use std::fmt::{Display, Formatter};
-use std::io;
+use std::{fs, io};
 use std::path::{Path, PathBuf};
+use serde_helpers::xml::test_utils::cleanup_xml;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ZusiEnvironmentPath {
@@ -123,6 +124,16 @@ impl ZusiEnvironmentPath {
     }
 
     pub fn write_xml_file<T: ToXML>(&self, object: T, declaration_header: bool) -> Result<(), WriteXMLFileError> {
+        let new_xml = cleanup_xml(object.to_xml(declaration_header)?);
+        let current_xml = cleanup_xml(fs::read_to_string(self.read_path()?.full_path()).unwrap_or_default());
+        if new_xml == current_xml {
+            Ok(())
+        } else {
+            object.to_xml_file_by_path(self.write_path().full_path(), declaration_header)
+        }
+    }
+
+    pub fn force_write_xml_file<T: ToXML>(&self, object: T, declaration_header: bool) -> Result<(), WriteXMLFileError> {
         object.to_xml_file_by_path(self.write_path().full_path(), declaration_header)
     }
 }
@@ -568,7 +579,302 @@ mod tests {
         zug.value.gattung = "IRE".into();
         zug.value.nummer = "30003".into();
 
+        env.write_xml_file::<Zusi>(zug.into(), false).unwrap();
+
+        tmp_dir_helper.assert_with(vec![
+            ("user_dir/test.trn", r#"
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="IRE" Nummer="30003">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ], true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_write_xml_file_with_declaration_header() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir).with_path("test.trn").unwrap();
+
+        let mut zug = env.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        zug.value.gattung = "IRE".into();
+        zug.value.nummer = "30003".into();
+
         env.write_xml_file::<Zusi>(zug.into(), true).unwrap();
+
+        tmp_dir_helper.assert_with(vec![
+            ("user_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="IRE" Nummer="30003">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ], true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_write_xml_file_with_declaration_header_with_existing_equal_file() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir).with_path("test.trn").unwrap();
+
+        let zug = env.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        env.write_xml_file::<Zusi>(zug.into(), true).unwrap();
+
+        tmp_dir_helper.assert_with(Vec::<(&str, &str)>::new(), true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_write_xml_file_with_declaration_header_with_existing_unequal_file() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir).with_path("test.trn").unwrap();
+
+        let mut zug = env.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        zug.value.gattung = "IRE".into();
+        zug.value.nummer = "30003".into();
+
+        env.write_xml_file::<Zusi>(zug.into(), true).unwrap();
+
+        tmp_dir_helper.assert_with(vec![
+            ("user_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="IRE" Nummer="30003">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ], true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_write_xml_file_with_declaration_header_with_non_existing_file() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir);
+        let input_path = env.with_path("test.trn").unwrap();
+        let output_path = env.with_path("output/test.trn").unwrap();
+
+        let zug = input_path.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        output_path.write_xml_file::<Zusi>(zug.into(), true).unwrap();
+
+        tmp_dir_helper.assert_with(vec![
+            ("user_dir/output/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ], true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_force_write_xml_file() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir).with_path("test.trn").unwrap();
+
+        let mut zug = env.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        zug.value.gattung = "IRE".into();
+        zug.value.nummer = "30003".into();
+
+        env.force_write_xml_file::<Zusi>(zug.into(), false).unwrap();
+
+        tmp_dir_helper.assert_with(vec![
+            ("user_dir/test.trn", r#"
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="IRE" Nummer="30003">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ], true, |path_actual, (_, content_expected)| {
+            assert_eq!(read_xml_file(path_actual), cleanup_xml(content_expected));
+        });
+    }
+
+    #[test]
+    fn test_force_write_xml_file_with_declaration_header() {
+        let tmp_dir_helper = TmpDirHelper::<ListInputValue>::from(vec![
+            ("central_dir/test.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RB" Nummer="10001">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+            ("user_dir/testxyz.trn", r#"
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Zusi>
+                    <Info DateiTyp="Zug" Version="A.5" MinVersion="A.1"/>
+                    <Zug Gattung="RE" Nummer="20002">
+                        <Datei/>
+                        <FahrzeugVarianten/>
+                    </Zug>
+                </Zusi>
+            "#),
+        ]).unwrap();
+
+        let central_dir = tmp_dir_helper.path().join("central_dir");
+        let user_dir = tmp_dir_helper.path().join("user_dir");
+        let env = ZusiEnvironmentPath::new(&central_dir, &user_dir).with_path("test.trn").unwrap();
+
+        let mut zug = env.read_xml_file::<TypedZusi::<Zug>>().unwrap();
+
+        zug.value.gattung = "IRE".into();
+        zug.value.nummer = "30003".into();
+
+        env.force_write_xml_file::<Zusi>(zug.into(), true).unwrap();
 
         tmp_dir_helper.assert_with(vec![
             ("user_dir/test.trn", r#"
