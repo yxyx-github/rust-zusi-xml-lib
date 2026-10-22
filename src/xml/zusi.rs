@@ -171,18 +171,12 @@ impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
     type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
-        if let ZusiValue::Buchfahrplan(variant) = value.value {
-            if variant.len() == 1 {
-                Ok(Self {
-                    info: value.info,
-                    value: variant.first().unwrap().to_owned(),
-                })
-            }
-            else {
-                Err(InvalidValue)
-            }
-        } else {
-            Err(InvalidValue)
+        match value.value {
+            ZusiValue::Buchfahrplan(variant) if variant.len() == 1 => Ok(Self {
+                info: value.info,
+                value: variant.first().unwrap().to_owned(),
+            }),
+            _ => Err(InvalidValue),
         }
     }
 }
