@@ -21,11 +21,11 @@ pub struct Info {
 
     #[serde(rename = "AutorEintrag", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub autor_eintrag: Option<AutorEintrag>,
+    pub autor_eintrag: Vec<AutorEintrag>,
 
     #[serde(rename = "Datei", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub datei: Option<Datei>,
+    pub datei: Vec<Datei>,
 
     #[serde(flatten)]
     #[builder(default)]

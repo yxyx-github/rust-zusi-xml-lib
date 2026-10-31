@@ -13,8 +13,8 @@ pub fn all() -> Zusi {
             datei_typ: DateiTyp::Result,
             version: "A.1".into(),
             min_version: "A.0".into(),
-            autor_eintrag: None,
-            datei: None,
+            autor_eintrag: vec![],
+            datei: vec![],
             _unknown: HashMap::new(),
         },
         value: ZusiValue::Result(ZusiResult {
