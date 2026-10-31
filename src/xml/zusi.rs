@@ -161,12 +161,6 @@ impl ZusiValueType for Buchfahrplan {
     }
 }
 
-impl ZusiValueType for Vec<Buchfahrplan> {
-    fn into_zusi_value(self) -> ZusiValue {
-        ZusiValue::Buchfahrplan(self)
-    }
-}
-
 impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
     type Error = InvalidValue;
 
@@ -181,11 +175,38 @@ impl TryFrom<Zusi> for TypedZusi<Buchfahrplan> {
     }
 }
 
+impl ZusiValueType for Vec<Buchfahrplan> {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Buchfahrplan(self)
+    }
+}
+
 impl TryFrom<Zusi> for TypedZusi<Vec<Buchfahrplan>> {
     type Error = InvalidValue;
 
     fn try_from(value: Zusi) -> Result<Self, Self::Error> {
         if let ZusiValue::Buchfahrplan(variant) = value.value {
+            Ok(Self {
+                info: value.info,
+                value: variant,
+            })
+        } else {
+            Err(InvalidValue)
+        }
+    }
+}
+
+impl ZusiValueType for Strecke {
+    fn into_zusi_value(self) -> ZusiValue {
+        ZusiValue::Strecke(self)
+    }
+}
+
+impl TryFrom<Zusi> for TypedZusi<Strecke> {
+    type Error = InvalidValue;
+
+    fn try_from(value: Zusi) -> Result<Self, Self::Error> {
+        if let ZusiValue::Strecke(variant) = value.value {
             Ok(Self {
                 info: value.info,
                 value: variant,
