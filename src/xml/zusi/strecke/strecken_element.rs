@@ -59,11 +59,13 @@ pub struct StreckenElement {
     #[serde(rename = "b")]
     pub blau: PunktXYZ,
 
-    #[serde(rename = "InfoNormRichtung")]
-    pub info_norm_richtung: InfoRichtung,
+    #[serde(rename = "InfoNormRichtung", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub info_norm_richtung: Option<InfoRichtung>,
 
-    #[serde(rename = "InfoGegenRichtung")]
-    pub info_gegen_richtung: InfoRichtung,
+    #[serde(rename = "InfoGegenRichtung", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub info_gegen_richtung: Option<InfoRichtung>,
 
     #[serde(rename = "NachNorm", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
