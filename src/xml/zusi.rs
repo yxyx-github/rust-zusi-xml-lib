@@ -54,7 +54,7 @@ pub enum ZusiValue {
     #[serde(rename = "Buchfahrplan")]
     Buchfahrplan(Vec<Buchfahrplan>),
 
-    /// Version A.6
+    /// Version A.6 => + Konfliktmodule
     #[serde(rename = "Strecke")]
     Strecke(Strecke),
 }

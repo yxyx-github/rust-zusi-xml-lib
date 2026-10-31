@@ -45,6 +45,10 @@ pub struct Strecke {
     #[serde(rename = "Datei")]
     pub datei: Datei,
 
+    #[serde(rename = "Konfliktmodul", default, skip_serializing_if = "IsDefault::is_default")]
+    #[builder(default)]
+    pub konflikt_module: Vec<Datei>,
+
     #[serde(rename = "HintergrundDatei", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
     pub hintergrund_datei: Option<Datei>,
