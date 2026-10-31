@@ -61,7 +61,7 @@ pub struct Strecke {
 
     #[serde(rename = "LoeschFahrstrasse", default, skip_serializing_if = "IsDefault::is_default")]
     #[builder(default)]
-    pub loesch_fahrstrasse: Option<LoeschFahrstrasse>,
+    pub loesch_fahrstrasse: Vec<LoeschFahrstrasse>,
 
     #[serde(rename = "UTM")]
     pub utm: UTM,
