@@ -45,6 +45,9 @@ pub enum DateiTyp {
 
     #[serde(rename = "Buchfahrplan")]
     Buchfahrplan,
+
+    #[serde(rename = "Strecke")]
+    Strecke,
 }
 
 impl AsRef<Info> for Info {
